@@ -25,11 +25,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $credentials = $request->only('email', 'password');
+        $guards = ['web', 'admin', 'superadmin'];
 
-        $request->session()->regenerate();
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->attempt($credentials)) {
+                $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+                // Redirect based on guard
+                if ($guard === 'admin') {
+                    return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+                } elseif ($guard === 'superadmin') {
+                    return redirect()->intended(RouteServiceProvider::SUPERADMIN_HOME);
+                } else {
+                    return redirect()->intended(RouteServiceProvider::HOME);
+                }
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
     /**
@@ -37,12 +53,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        $guards = ['web', 'admin', 'superadmin'];
 
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                Auth::guard($guard)->logout();
+            }
+        }
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');
     }
+
 }
