@@ -29,8 +29,8 @@ Route::get('/dashboard', function () {
 
 // Auth Admin
 Route::middleware(['auth:admin', 'verified'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index']);
-    Route::get('/admin/dashboard', [AdminController::class, 'index']);
+    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/dokumen', [AdminController::class, 'dokumen']);
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });
 
@@ -38,6 +38,8 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
 Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::get('/superAdmin', [superAdminController::class, 'index']);
     Route::get('/superAdmin', [superAdminController::class, 'index']);
+    Route::get('/lembaga', [superAdminController::class, 'lembaga']);
+    Route::post('/addLembaga', [superAdminController::class, 'addLembaga']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
 });
 

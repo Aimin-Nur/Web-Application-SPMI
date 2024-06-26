@@ -17,4 +17,8 @@ class AdminController extends BaseController
         $admin = Auth::guard('admin')->user();
         return view('admin.index', compact('admin'));
     }
+
+    public function dokumen (){
+        return view('admin.dokumen');
+    }
 }

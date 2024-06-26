@@ -13,10 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lembaga', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->uuid('id_lembaga')->nullable();
+            $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_lembaga')->references('id')->on('lembaga')->onDelete('cascade');
         });
     }
 
@@ -27,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lembaga');
+        Schema::dropIfExists('users');
     }
 };

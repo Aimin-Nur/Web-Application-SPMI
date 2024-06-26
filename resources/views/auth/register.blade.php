@@ -16,29 +16,43 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
+       <!-- Lembaga -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Lembaga')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <select id="password" name="password" class="block mt-1 w-full" required>
+                <option value="">Pilih Lembaga</option>
+                @foreach ($getData as $item)
+                    <option value="password1">{{$item->nama_lembaga}}</option>
+                @endforeach
+            </select>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
+         <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password awal pengguna secara default disetel sama dengan alamat email yang terdaftar.')" style="text-align:center; font-size: smaller;" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                        type="hidden"
+                        name="password"
+                        required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        {{-- <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                        type="hidden"
+                        name="password_confirmation"
+                        required autocomplete="new-password"  />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
+        </div> --}}
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
@@ -50,3 +64,5 @@
         </div>
     </form>
 </x-guest-layout>
+
+
