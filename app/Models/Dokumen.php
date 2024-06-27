@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
 
-class Lembaga extends Model
+class Dokumen extends Model
 {
     use HasFactory;
-    protected $table = 'lembaga';
-    protected $primaryKey = 'id';
-    public $incrementing = false; // pastikan primary key tidak auto increment
-    protected $keyType = 'string';
+    protected $table = "dokumen";
 
     protected $fillable = [
-        'nama_lembaga',
+        'judul',
+        'tautan',
+        'status_pengembalian',
+        'id_lembaga',
+        'status_docs',
         'created_at',
         'updated_at',
     ];
@@ -34,15 +33,10 @@ class Lembaga extends Model
         });
     }
 
-    public function user()
+    // Definisikan relasi Many-to-One dengan Lembaga
+    public function lembaga()
     {
-        return $this->hasOne(User::class, 'id_lembaga', 'id');
-    }
-
-    // Relasi One-to-Many dengan model Dokumen
-    public function dokumen()
-    {
-        return $this->hasMany(Dokumen::class, 'id_lembaga', 'id');
+        return $this->belongsTo(Lembaga::class, 'id_lembaga', 'id');
     }
 
 }

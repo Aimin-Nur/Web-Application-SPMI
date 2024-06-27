@@ -267,7 +267,7 @@
                   </g>
                 </svg>
               </div>
-              <span class="nav-link-text ms-1">Virtual Reality</span>
+              <span class="nav-link-text ms-1">RTM</span>
             </a>
           </li>
           <li class="nav-item">
@@ -288,7 +288,7 @@
                   </g>
                 </svg>
               </div>
-              <span class="nav-link-text ms-1">RTL</span>
+              <span class="nav-link-text ms-1">Schedule</span>
             </a>
           </li>
           <li class="nav-item mt-3">

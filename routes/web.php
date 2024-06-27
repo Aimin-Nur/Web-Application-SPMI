@@ -31,6 +31,9 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::get('/dokumen', [AdminController::class, 'dokumen']);
+    Route::get('/manageUser', [AdminController::class, 'displayUser']);
+    Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
+    Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });
 
