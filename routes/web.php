@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\superAdminController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -23,9 +24,17 @@ Route::get('/', function () {
 
 
 // Auth User
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// Auth User
+Route::middleware(['auth:web', 'verified'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'index']);
+    Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
+});
+
 
 // Auth Admin
 Route::middleware(['auth:admin', 'verified'])->group(function () {
