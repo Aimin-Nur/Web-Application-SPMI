@@ -51,4 +51,15 @@ class AdminController extends BaseController
             return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahakan Dokumen' . $e->getMessage());
         }
     }
+
+    public function displayRTM(){
+        return view('admin.rtm');
+    }
+
+    public function addRTM(){
+        $getData = Lembaga::get();
+        return view('admin.addRTM', compact('getData'));
+    }
+
+
 }
