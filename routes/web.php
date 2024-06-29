@@ -32,7 +32,7 @@ Route::get('/', function () {
 // Auth User
 Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index']);
-    Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
+    Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
 });
 
 

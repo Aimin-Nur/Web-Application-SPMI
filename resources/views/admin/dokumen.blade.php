@@ -127,8 +127,9 @@
                                             </td>
                                             <td class="align-middle">
                                                 <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
-                                                <i class="fa fa-share-square-o ms-3 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
-                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+                                                <a href="{{$item->tautan}}" target="_blank">
+                                                <i class="fa fa-share-square-o ms-3 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i></a>
+                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -226,7 +227,6 @@
                                         <td class="align-middle">
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Status"></i>
                                             <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
-                                            <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -292,6 +292,48 @@
     </div>
 </div>
   @endforeach
+
+    {{-- Modal Hapus Docs --}}
+    @foreach ($dokumens as $item)
+    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content rounded-0">
+          <div class="modal-body bg-3">
+          <div class="px-3 to-front">
+              <div class="row align-items-center">
+              <div class="col text-right">
+                  <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><span class="icon-close2"></span></span>
+                  </a>
+              </div>
+              </div>
+          </div>
+          <div class="p-4 to-front">
+              <div class="text-center">
+              <div class="logo">
+                  <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+              </div>
+              <h4>Hapus Dokumen</h4>
+              <p class="mb-3 text-sm">Tindakan ini akan menghapus dokumen <b> "{{$item->judul}}"</b> secara permanen.</p>
+              <form action="/hapusDocs/{{$item->id}}" class="mb-4" method="POST">
+                  @csrf
+                  <div class="row">
+                  <div class="col-6 mt-4">
+                      <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                  </div>
+                  <div class="col-6 mt-4">
+                      <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                  </div>
+                  </div>
+              </form>
+              <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+              </div>
+          </div>
+          </div>
+      </div>
+      </div>
+  </div>
+    @endforeach
 
 
 @include('layouts.footer-admin')

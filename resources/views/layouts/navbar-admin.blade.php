@@ -524,6 +524,17 @@
                 </a>
                 @endauth
 
+                @auth('web')
+                <form id="admin-logout-form" method="POST" action="/user/logout" style="display: none;">
+                    @csrf
+                </form>
+
+                <a href="#" class="nav-link text-body font-weight-bold px-0" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
+                    <i class="fa fa-user me-sm-1"></i>
+                    <span class="d-sm-inline d-none">Logout</span>
+                </a>
+                @endauth
+
                 @auth('superadmin')
                 <form id="admin-logout-form" method="POST" action="/superadmin/logout" style="display: none;">
                     @csrf
