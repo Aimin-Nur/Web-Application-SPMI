@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('tautan')->unique();
             $table->string('status_pengisian');
+            $table->integer('deadline');
             $table->uuid('id_lembaga');
             $table->string('status_docs');
             $table->timestamps();

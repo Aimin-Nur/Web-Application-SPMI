@@ -23,12 +23,31 @@ class AdminController extends BaseController
     }
 
     public function dokumen (){
-        return view('admin.dokumen');
+        $dokumens = Dokumen::with(['lembaga.user'])->get();
+        return view('admin.dokumen', compact('dokumens'));
+    }
+
+    public function editStatusDocs(Request $request, $id){
+        try {
+            $request->validate([
+                'status' => 'required|string',
+            ]);
+
+            $dokumen = Dokumen::findOrFail($id);
+
+            $dokumen->status_docs = $request->input('status');
+            $dokumen->save();
+
+            return redirect('/dokumen')->with('status', 'success')->with('message', 'Status Dokumen Berhasil Diubah.');
+        } catch (\Exception $e) {
+            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Mengubah Status Dokumen: ' . $e->getMessage());
+        }
     }
 
     public function displayUser() {
         $getData = User::get();
-        return view('admin.displayUser', compact('getData'));
+        $cekData = User::count();
+        return view('admin.displayUser', compact('getData','cekData'));
     }
 
     public function formDokumen() {
@@ -57,9 +76,12 @@ class AdminController extends BaseController
     }
 
     public function addRTM(){
-        $getData = Lembaga::get();
-        return view('admin.addRTM', compact('getData'));
+        $getLembaga = Lembaga::whereHas('dokumen', function ($query) {
+            $query->where('status_docs', 1);
+        })->with('dokumen')->get();
+        return view('admin.addRTM', compact('getLembaga'));
     }
+
 
 
 }

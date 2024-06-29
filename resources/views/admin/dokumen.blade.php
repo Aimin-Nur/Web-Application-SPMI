@@ -59,27 +59,6 @@
                     <span class="ms-1">Validasi</span>
                   </a>
                 </li>
-                <li class="nav-item" role="presentation">
-                  <a class="nav-link mb-0 px-0 py-1 " data-tab="messages-tab" href="javascript:;" role="tab" aria-selected="false">
-                    <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                      <title>settings</title>
-                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                          <g transform="translate(1716.000000, 291.000000)">
-                            <g transform="translate(304.000000, 151.000000)">
-                              <polygon class="color-background" opacity="0.596981957" points="18.0883333 15.7316667 11.1783333 8.82166667 13.3333333 6.66666667 6.66666667 0 0 6.66666667 6.66666667 13.3333333 8.82166667 11.1783333 15.315 17.6716667">
-                              </polygon>
-                              <path class="color-background" d="M31.5666667,23.2333333 C31.0516667,23.2933333 30.53,23.3333333 30,23.3333333 C29.4916667,23.3333333 28.9866667,23.3033333 28.48,23.245 L22.4116667,30.7433333 L29.9416667,38.2733333 C32.2433333,40.575 35.9733333,40.575 38.275,38.2733333 L38.275,38.2733333 C40.5766667,35.9716667 40.5766667,32.2416667 38.275,29.94 L31.5666667,23.2333333 Z" opacity="0.596981957"></path>
-                              <path class="color-background" d="M33.785,11.285 L28.715,6.215 L34.0616667,0.868333333 C32.82,0.315 31.4483333,0 30,0 C24.4766667,0 20,4.47666667 20,10 C20,10.99 20.1483333,11.9433333 20.4166667,12.8466667 L2.435,27.3966667 C0.95,28.7083333 0.0633333333,30.595 0.00333333333,32.5733333 C-0.0583333333,34.5533333 0.71,36.4916667 2.11,37.89 C3.47,39.2516667 5.27833333,40 7.20166667,40 C9.26666667,40 11.2366667,39.1133333 12.6033333,37.565 L27.1533333,19.5833333 C28.0566667,19.8516667 29.01,20 30,20 C35.5233333,20 40,15.5233333 40,10 C40,8.55166667 39.685,7.18 39.1316667,5.93666667 L33.785,11.285 Z">
-                              </path>
-                            </g>
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                    <span class="ms-1">Minor</span>
-                  </a>
-                </li>
             </ul>
           </div>
         </div>
@@ -114,182 +93,45 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi Pengerjaan</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($dokumens as $item)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                                                    </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">John Michael</h6>
-                                                        <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
+                                                        <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
+                                                        <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                                <p class="text-xs text-secondary mb-0">Organization</p>
+                                            <td class="">
+                                                <span class="text-xs font-weight-bold mb-0">{{$item->judul}}</span>
+                                                <p class="text-xs text-secondary mb-0">{{$item->created_at}}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Online</span>
+                                                @if ($item->status_pengisian == 1)
+                                                    <span class="badge badge-sm bg-gradient-success">Selesai</span>
+                                                @else
+                                                    <span class="badge badge-sm bg-gradient-danger">Pending</span>
+                                                @endif
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}} Hari</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
+                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
+                                                <i class="fa fa-share-square-o ms-3 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
+                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                                                        <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                <p class="text-xs text-secondary mb-0">Developer</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-danger">Pending</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                                                        <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Executive</p>
-                                                <p class="text-xs text-secondary mb-0">Projects</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Michael Levi</h6>
-                                                        <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                <p class="text-xs text-secondary mb-0">Developer</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Online</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Richard Gran</h6>
-                                                        <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                                <p class="text-xs text-secondary mb-0">Executive</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                                                        <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                                                <p class="text-xs text-secondary mb-0">Developer</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -332,235 +174,124 @@
                 <div class="col-12">
                   <div class="card mb-4">
                     <div class="card-header pb-0">
-                      <h6>Dokumen User</h6>
+                      <h6>Staus Dokumen Lembaga</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                      <div class="table-responsive p-0">
-                        <table class="table align-items-center justify-content-center mb-0">
-                          <thead>
-                            <tr>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Completion</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Spotify</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">working</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">60%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Invision</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">done</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">100%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Jira</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">canceled</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">30%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Slack</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">canceled</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">0%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-webdev.svg" class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Webdev</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">working</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">80%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="d-flex px-2">
-                                  <div>
-                                    <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                                  </div>
-                                  <div class="my-auto">
-                                    <h6 class="mb-0 text-sm">Adobe XD</h6>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                              </td>
-                              <td>
-                                <span class="text-xs font-weight-bold">done</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center">
-                                  <span class="me-2 text-xs font-weight-bold">100%</span>
-                                  <div>
-                                    <div class="progress">
-                                      <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="align-middle">
-                                <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-ellipsis-v text-xs"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi Revisi</th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dokumens as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
+                                                    <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="">
+                                            <span class="text-xs font-weight-bold mb-0">{{$item->judul}}</span>
+                                            <p class="text-xs text-secondary mb-0">Diselesaikan oleh lembaga : {{$item->updated_at}}</p>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @if ($item->status_pengisian == 1)
+                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
+                                            @elseif($item->status_pengisian == 0)
+                                                <span class="badge badge-sm bg-gradient-success">Terlambat</span>
+                                            @else
+                                                <span class="badge badge-sm bg-gradient-danger">Pending</span>
+                                            @endif
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @if ($item->status_docs == 1)
+                                                <span class="badge badge-sm bg-gradient-primary">Minor</span>
+                                            @else
+                                                <span class="badge badge-sm bg-gradient-danger">Mayor</span>
+                                            @endif
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}} Hari</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Status"></i>
+                                            <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
+                                            <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
            </div>
+        </div>
     </div>
     </div>
 
-    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-        <!-- Content for the "Settings" tab -->
-    </div>
   </div>
 
+  {{-- Modal Edit Status --}}
+  @foreach ($dokumens as $item)
+  <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content rounded-0">
+        <div class="modal-body bg-3">
+        <div class="px-3 to-front">
+            <div class="row align-items-center">
+            <div class="col text-right">
+                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                </a>
+            </div>
+            </div>
+        </div>
+        <div class="p-4 to-front">
+            <div class="text-center">
+            <div class="logo">
+                <img src="{{asset('creative')}}/assets/img/logo-ct-dark.png" alt="img-fluid" class="img-fluid mb-4 w-60">
+            </div>
+            <h4>Edit Status Dokumen</h4>
+            <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelngkapan dokumen yang telah Anda berikan pada tanggal : {{$item->updated_at}}</p>
+            <form action="/editStatus/{{$item->id}}" class="mb-4" method="POST">
+                @csrf
+                <div class="form-group">
+                    <select class="form-select" name="status">
+                        <option>Pilih Status Dokumen</option>
+                            <option value="1">Minor</option>
+                            <option value="2">Mayor</option>
+                    </select>
+                </div>
+                <div class="row">
+                <div class="col-6 mt-4">
+                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                </div>
+                <div class="col-6 mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
+                </div>
+                </div>
+            </form>
+            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+  @endforeach
 
 
 @include('layouts.footer-admin')

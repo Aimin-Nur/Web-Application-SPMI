@@ -10,6 +10,9 @@ class Dokumen extends Model
 {
     use HasFactory;
     protected $table = "dokumen";
+    protected $primaryKey = 'id';
+    public $incrementing = false; 
+    protected $keyType = 'string';
 
     protected $fillable = [
         'judul',
@@ -19,6 +22,7 @@ class Dokumen extends Model
         'status_docs',
         'created_at',
         'updated_at',
+        'deadline',
     ];
 
     protected static function boot()

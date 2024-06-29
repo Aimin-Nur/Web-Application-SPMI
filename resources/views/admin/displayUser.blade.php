@@ -2,42 +2,63 @@
 @include('layouts.navbar-admin')
 
 <div class="container-fluid py-4">
+    @if ($cekData == 0)
     <div class="row">
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-lg-12 mb-lg-0 mb-4">
-            <div class="card mt-4">
-              <div class="card-header pb-0 p-3">
-                <div class="row">
-                  <div class="col-6 d-flex align-items-center">
-                    <h6 class="mb-0">Kelola User</h6>
-                  </div>
-                  <div class="col-6 text-end">
-                    <a href="/register" class="btn bg-gradient-dark mb-0"><i class="fas fa-plus"></i>&nbsp;&nbsp;Registrasi Akun User</a>
+        <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
+            <div class="empty">
+              <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="Data Kosong" width="400px">
+              </div>
+              <p class="empty-title text-bold">Belum Ada Data User Terdaftar</p>
+              <p class="empty-subtitle text-secondary">
+                Anda Dapat Melakukan Registrasi Akun User Sesuai Lembaga Yang Terdaftar.
+              </p>
+              <div class="empty-action">
+                <a href="/register" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>&nbsp;&nbsp;
+                  Tambahkan User
+                </a>
+              </div>
+            </div>
+          </div>
+    </div>
+    @else
+    <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12 mb-lg-0 mb-4">
+              <div class="card mt-4">
+                <div class="card-header pb-0 p-3">
+                  <div class="row">
+                    <div class="col-6 d-flex align-items-center">
+                      <h6 class="mb-0">Kelola User</h6>
+                    </div>
+                    <div class="col-6 text-end">
+                      <a href="/register" class="btn bg-gradient-dark mb-0"><i class="fas fa-plus"></i>&nbsp;&nbsp;Registrasi Akun User</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="card-body p-3">
-                <div class="row">
-                @foreach ($getData as $item)
-                    <div class="col-md-6 mb-md-0 mb-4 p-2">
-                        <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
-                            <h6 class="mb-0 text-sm">{{$item->name}}
-                                <br>
-                                <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                            </h6>
-                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
-                            <i class="far fa-trash-alt ms-4 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="card-body p-3">
+                  <div class="row">
+                  @foreach ($getData as $item)
+                      <div class="col-md-6 mb-md-0 mb-4 p-2">
+                          <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                              <h6 class="mb-0 text-sm">{{$item->name}}
+                                  <br>
+                                  <span class="text-xs">26 March 2020, at 13:45 PM</span>
+                              </h6>
+                              <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"></i>
+                              <i class="far fa-trash-alt ms-4 text-danger cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"></i>
+                          </div>
+                      </div>
+                  @endforeach
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    @endif
 </div>
 
 

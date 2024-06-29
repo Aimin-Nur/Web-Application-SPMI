@@ -43,7 +43,7 @@
                         <label for="jenisLembaga" class="form-label">Jenis Lembaga</label>
                         <select class="form-select" name="id_lembaga">
                             <option>Pilih Lembaga</option>
-                            @foreach ($getData as $item)
+                            @foreach ($getLembaga as $item)
                                 <option value="{{$item->id}}">{{$item->nama_lembaga}}</option>
                             @endforeach
                         </select>

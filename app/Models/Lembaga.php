@@ -13,7 +13,7 @@ class Lembaga extends Model
     use HasFactory;
     protected $table = 'lembaga';
     protected $primaryKey = 'id';
-    public $incrementing = false; // pastikan primary key tidak auto increment
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
