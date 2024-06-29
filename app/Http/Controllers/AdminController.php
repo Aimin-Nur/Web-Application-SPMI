@@ -24,7 +24,9 @@ class AdminController extends BaseController
 
     public function dokumen (){
         $dokumens = Dokumen::with(['lembaga.user'])->get();
-        return view('admin.dokumen', compact('dokumens'));
+        $validDocs = Dokumen::with(['lembaga.user'])->where('status_docs', 1)->orWhere('status_docs', 2)->get();
+        
+        return view('admin.dokumen', compact('dokumens', 'validDocs'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -57,19 +59,41 @@ class AdminController extends BaseController
 
     public function addDokumen(Request $request){
         try {
+            $request->validate([
+                'field_judul' => 'required|string|max:255',
+                'field_tautan' => 'required|string|max:255|url',
+                'id_lembaga' => 'required|string|exists:lembaga,id',
+            ]);
+            $existingDokumen = Dokumen::where('tautan', $request->input('field_tautan'))->first();
+            if ($existingDokumen) {
+                return redirect('/dokumen')->with('status', 'error')->with('message', 'Tautan dokumen sudah ada.');
+            }
+
             $send = new Dokumen;
             $send->judul = $request->input('field_judul');
             $send->tautan = $request->input('field_tautan');
             $send->id_lembaga = $request->input('id_lembaga');
             $send->status_pengisian = 0;
             $send->status_docs = 0;
+            $send->deadline = $request->input('field_durasi');
             $send->save();
 
             return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
         } catch (\Exception $e) {
-            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahakan Dokumen' . $e->getMessage());
+            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
         }
     }
+
+    public function hapusDokumen($id){
+            try {
+                $dokumen = Dokumen::findOrFail($id);
+                $dokumen->delete();
+                return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Dihapus.');
+            } catch (\Exception $e) {
+                return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menghapus Dokumen: ' . $e->getMessage());
+            }
+        }
+
 
     public function displayRTM(){
         return view('admin.rtm');

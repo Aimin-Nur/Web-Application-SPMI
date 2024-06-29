@@ -19,10 +19,9 @@
             <div class="mb-3 row">
               <label class="col-3 col-form-label required">Tautan Dokumen</label>
               <div class="col">
-                <input name="field_tautan" type="password" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/1cvO-luocDUgA9vBxjvKtd76ZSWY9WDeIvwAHj0CmQAA/edit?gid=0#gid=0">
+                <input name="field_tautan" type="text" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/1cvO-luocDUgA9vBxjvKtd76ZSWY9WDeIvwAHj0CmQAA/edit?gid=0#gid=0">
                 <small class="form-hint">
-                  Your password must be 8-20 characters long, contain letters and numbers, and must not contain
-                  spaces, special characters, or emoji.
+                  Masukkan Link Spredsheet Dokumen Anda. Pastikan Dokumen Dapat Diakses Oleh Orang Lain
                 </small>
               </div>
             </div>
@@ -40,6 +39,15 @@
                 </small>
               </div>
             </div>
+            <div class="mb-3 row">
+                <label class="col-3 col-form-label">Durasi Pengerjaan</label>
+                <div class="col">
+                  <input class="form-control" type="number" name="field_durasi" placeholder="3 Hari">
+                  <small class="form-hint">
+                      Tentukan Durasi Pengerjaan Dokumen Lembaga.
+                  </small>
+                </div>
+              </div>
 
           </div>
           <div class="card-footer text-end">

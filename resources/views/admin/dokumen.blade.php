@@ -191,7 +191,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dokumens as $item)
+                                    @foreach ($validDocs as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">

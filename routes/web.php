@@ -44,6 +44,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::post('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
+    Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
     Route::get('/RTM', [AdminController::class, 'displayRTM']);
     Route::get('/addRTM', [AdminController::class, 'addRTM']);
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
