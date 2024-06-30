@@ -31,7 +31,10 @@ Route::get('/', function () {
 
 // Auth User
 Route::middleware(['auth:web', 'verified'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index']);
+    Route::get('/dashboardUser', [UserController::class, 'index']);
+    Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
+    Route::get('/jadwalrtm', [UserController::class, 'jadwalRTM']);
+    Route::get('/profile', [UserController::class, 'profileUser']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
 });
 
