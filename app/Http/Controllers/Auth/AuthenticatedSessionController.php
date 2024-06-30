@@ -32,9 +32,6 @@ class AuthenticatedSessionController extends Controller
             if (Auth::guard($guard)->attempt($credentials)) {
                 $request->session()->regenerate();
 
-                $user = Auth::guard($guard)->user();
-                logger()->info('Logged in user:', ['guard' => $guard, 'user' => $user]);
-
                 // Redirect based on guard
                 if ($guard === 'admin') {
                     return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
