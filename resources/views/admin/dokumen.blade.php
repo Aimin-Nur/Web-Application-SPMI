@@ -96,7 +96,7 @@
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi Pengerjaan</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
@@ -123,7 +123,7 @@
                                                 @endif
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}} Hari</span>
+                                                <span class="text-secondary text-sm font-weight-bold">{{$item->deadline}}</span>
                                             </td>
                                             <td class="align-middle">
                                                 <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
@@ -186,7 +186,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi Revisi</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat</th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
@@ -207,9 +207,9 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_pengisian == 1)
+                                                <span class="badge badge-sm bg-gradient-secondary">Terlambat</span>
+                                            @elseif($item->status_pengisian == 2)
                                                 <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                            @elseif($item->status_pengisian == 0)
-                                                <span class="badge badge-sm bg-gradient-success">Terlambat</span>
                                             @else
                                                 <span class="badge badge-sm bg-gradient-danger">Pending</span>
                                             @endif
@@ -222,7 +222,7 @@
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}} Hari</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$item->deadline}}</span>
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Status"></i>
@@ -273,6 +273,7 @@
                         <option>Pilih Status Dokumen</option>
                             <option value="1">Minor</option>
                             <option value="2">Mayor</option>
+                            <option value="3">Selesai</option>
                     </select>
                 </div>
                 <div class="row">

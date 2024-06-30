@@ -50,6 +50,9 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
     Route::get('/RTM', [AdminController::class, 'displayRTM']);
     Route::get('/addRTM', [AdminController::class, 'addRTM']);
+    Route::post('/postRTM', [AdminController::class, 'postRTM']);
+    Route::DELETE('/hapusRTM/{id}', [AdminController::class, 'hapusRTM']);
+    Route::put('/editRTM/{id}', [AdminController::class, 'editRTM']);
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });
 

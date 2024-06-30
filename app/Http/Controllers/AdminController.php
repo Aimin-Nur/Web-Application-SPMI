@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Lembaga;
 use App\Models\Dokumen;
+use App\Models\RTM;
 use Illuminate\Http\Request;
 
 class AdminController extends BaseController
@@ -23,16 +24,16 @@ class AdminController extends BaseController
     }
 
     public function dokumen (){
-        $dokumens = Dokumen::with(['lembaga.user'])->get();
+        $dokumens = Dokumen::with(['lembaga.user'])->where('status_docs', 0)->get();
         $validDocs = Dokumen::with(['lembaga.user'])->where('status_docs', 1)->orWhere('status_docs', 2)->get();
-        
+
         return view('admin.dokumen', compact('dokumens', 'validDocs'));
     }
 
     public function editStatusDocs(Request $request, $id){
         try {
             $request->validate([
-                'status' => 'required|string',
+                'status' => 'required',
             ]);
 
             $dokumen = Dokumen::findOrFail($id);
@@ -96,15 +97,63 @@ class AdminController extends BaseController
 
 
     public function displayRTM(){
-        return view('admin.rtm');
+        $getData = RTM::with(['lembaga.user'])->get();
+
+        $count = RTM::count();
+        $getLembaga = Lembaga::whereHas('dokumen', function ($query) {
+            $query->where('status_docs', 2);
+        })->with('dokumen')->get();
+
+        return view('admin.rtm', compact('getData','count', 'getLembaga'));
     }
 
     public function addRTM(){
         $getLembaga = Lembaga::whereHas('dokumen', function ($query) {
-            $query->where('status_docs', 1);
+            $query->where('status_docs', 2);
         })->with('dokumen')->get();
         return view('admin.addRTM', compact('getLembaga'));
     }
+
+    public function postRTM(Request $request){
+        try {
+            $send = new RTM;
+            $send->tgl_rapat = $request->input('selectedDate');
+            $send->tempat = $request->input('tempatRapat');
+            $send->id_lembaga = $request->input('id_lembaga');
+            $send->status = 0;
+            $send->save();
+
+            return redirect('/addRTM')->with('status', 'success')->with('message', 'Jadwal RTM Berhasil Ditambakan.');
+        } catch (\Exception $e) {
+            return redirect('/addRTM')->with('status', 'error')->with('message', 'Gagal Menambahkan Jadwal RTM: ' . $e->getMessage());
+        }
+    }
+
+    public function hapusRTM($id){
+        try {
+            $rtm = RTM::findOrFail($id);
+            $rtm->delete();
+            return redirect('/RTM')->with('status', 'success')->with('message', 'Jadwal RTM Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/RTM')->with('status', 'error')->with('message', 'Gagal Menghapus Jadwal RTM: ' . $e->getMessage());
+        }
+    }
+
+    public function editRTM(Request $request, $id) {
+        try {
+            $rtm = RTM::findOrFail($id);
+
+            $rtm->id_lembaga = $request->input('lembaga');
+            $rtm->tgl_rapat = $request->input('tglRapat');
+            $rtm->tempat = $request->input('lokasiRapat');
+            $rtm->save();
+
+            return redirect('/RTM')->with('status', 'success')->with('message', 'Jadwal RTM Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/RTM')->with('status', 'error')->with('message', 'Gagal Mengedit Jadwal RTM: ' . $e->getMessage());
+        }
+    }
+
 
 
 

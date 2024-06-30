@@ -42,7 +42,7 @@
             <div class="mb-3 row">
                 <label class="col-3 col-form-label">Durasi Pengerjaan</label>
                 <div class="col">
-                  <input class="form-control" type="number" name="field_durasi" placeholder="3 Hari">
+                  <input class="form-control" type="date" name="field_durasi" placeholder="3 Hari">
                   <small class="form-hint">
                       Tentukan Durasi Pengerjaan Dokumen Lembaga.
                   </small>

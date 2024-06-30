@@ -37,7 +37,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="eventForm" method="post" action="/addRTM">
+                <form method="post" action="/postRTM">
+                    @csrf
                     <input type="hidden" id="selectedDate" name="selectedDate">
                     <div class="mb-3">
                         <label for="jenisLembaga" class="form-label">Jenis Lembaga</label>
@@ -57,17 +58,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="lokasiRapat" class="form-label" >Lokasi Rapat</label>
-                        <input type="text" class="form-control" id="lokasiRapat" placeholder="Ruang Rapat Lt.6" /required>
+                        <input type="text" class="form-control" name="tempatRapat" id="lokasiRapat" placeholder="Ruang Rapat Lt.6" /required>
                     </div>
                     <small class="align-items-center">
                         <i>Notifikasi Email secara otomatis terkirim kepada Lembaga yang terkait.</i>
                     </small>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveEvent">Save</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
