@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->attempt($credentials)) {
                 $request->session()->regenerate();
+                Auth::shouldUse($guard);  // Set the current guard
 
                 // Redirect based on guard
                 if ($guard === 'admin') {

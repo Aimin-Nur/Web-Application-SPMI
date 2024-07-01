@@ -93,7 +93,7 @@ class AdminController extends BaseController
             } catch (\Exception $e) {
                 return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menghapus Dokumen: ' . $e->getMessage());
             }
-        }
+    }
 
 
     public function displayRTM(){

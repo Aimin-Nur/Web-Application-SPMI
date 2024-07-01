@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class superAdminController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth:superadmin');
+    }
+
     public function index (){
         return view('superadmin/index');
     }
@@ -28,6 +32,33 @@ class superAdminController extends Controller
             return redirect('/lembaga')->with('status', 'success')->with('message', 'Data Lemabaga Berhasil Ditambakan.');
         } catch (\Exception $e) {
             return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menambahakan Data Lembaga' . $e->getMessage());
+        }
+    }
+
+    public function hapusLembaga($id){
+        try {
+            $dokumen = Lembaga::findOrFail($id);
+            $dokumen->delete();
+            return redirect('/lembaga')->with('status', 'success')->with('message', 'Lembaga Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menghapus Lembaga: ' . $e->getMessage());
+        }
+    }
+
+    public function editLembaga(Request $request, $id){
+        try {
+            $request->validate([
+                'nama_lembaga' => 'required',
+            ]);
+
+            $lembaga = Lembaga::findOrFail($id);
+
+            $lembaga->nama_lembaga = $request->input('nama_lembaga');
+            $lembaga->save();
+
+            return redirect('/lembaga')->with('status', 'success')->with('message', 'Data Lembaga Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Status Dokumen: ' . $e->getMessage());
         }
     }
 

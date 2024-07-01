@@ -41,7 +41,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
 
 // Auth Admin
 Route::middleware(['auth:admin', 'verified'])->group(function () {
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/admin/dashboard', [AdminController::class, 'index']);
     Route::get('/dokumen', [AdminController::class, 'dokumen']);
     Route::get('/manageUser', [AdminController::class, 'displayUser']);
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
@@ -58,10 +58,11 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
 
 // Auth SuperAdmin
 Route::middleware(['auth:superadmin', 'verified'])->group(function () {
-    Route::get('/superAdmin', [superAdminController::class, 'index']);
-    Route::get('/superAdmin', [superAdminController::class, 'index']);
+    Route::get('/dashboardSuperAdmin', [superAdminController::class, 'index']);
     Route::get('/lembaga', [superAdminController::class, 'lembaga']);
     Route::post('/addLembaga', [superAdminController::class, 'addLembaga']);
+    Route::DELETE('/hapusLembaga/{id}', [superAdminController::class, 'hapusLembaga']);
+    Route::put('/editLembaga/{id}', [superAdminController::class, 'editLembaga']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
 });
 
