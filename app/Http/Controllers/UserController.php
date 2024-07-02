@@ -18,7 +18,7 @@ class UserController extends Controller
         if (!$user) {
             return redirect('/login')->withErrors(['message' => 'User not authenticated']);
         }
-    
+
         logger()->info('User data on dashboard:', ['user' => $user]);
 
         $nama = $user->name;
@@ -29,10 +29,38 @@ class UserController extends Controller
         $user = Auth::user();
         $idLembaga = $user->id_lembaga;
 
-        $dokumens = Dokumen::where('id_lembaga', $idLembaga)->get();
-        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->where('status_pengisian', 1)->get();
+        $dokumens = Dokumen::where('id_lembaga', $idLembaga)
+                    ->where(function($query) {
+                        $query->where('status_pengisian', 0)
+                            ->orWhere('status_pengisian', 3);
+                    })
+                    ->where('deadline', '!=',0)
+                    ->get();
 
-        return view('user.dokumen', compact('dokumens', 'finishDocs'));
+
+        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->get();
+
+        $cekDokumens = Dokumen::where('id_lembaga', $idLembaga)->where(function($query) {
+            $query->where('status_pengisian', 0)
+                ->orWhere('status_pengisian', 3);
+        })
+        ->count();
+
+        return view('user.dokumen', compact('dokumens', 'finishDocs', 'cekDokumens'));
+    }
+
+    public function sendDocs($id){
+        try {
+            $docs = Dokumen::findOrFail($id);
+
+            $docs->status_pengisian = 3;
+            $docs->deadline = 0;
+            $docs->save();
+
+            return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
+        } catch (\Exception $e) {
+            return redirect('/dokumenUser')->with('status', 'error')->with('message', 'Gagal Mengedit Jadwal RTM: ' . $e->getMessage());
+        }
     }
 
     public function jadwalRTM() {

@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('RTK', function (Blueprint $table) {
+        Schema::create('evaluasi', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('id_lembaga');
-            $table->uuid('id_dokumen');
-            $table->string('jadwal');
+            $table->uuid('id_docs');
+            $table->string('temuan');
+            $table->string('rtk');
+            $table->string('tautan_rtk')->unique();
+            $table->string('tautan_temuan')->unique();
+            $table->string('status');
+            $table->integer('score');
             $table->timestamps();
-
-            $table->foreign('id_lembaga')->references('id')->on('lembaga')->onDelete('cascade');
-            $table->foreign('id_dokumen')->references('id')->on('dokumen')->onDelete('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('RTK');
+        Schema::dropIfExists('evaluasi');
     }
 };

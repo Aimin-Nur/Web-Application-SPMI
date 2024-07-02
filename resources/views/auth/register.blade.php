@@ -20,19 +20,18 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Lembaga')" />
 
-            <select id="password" name="password" class="block mt-1 w-full" required>
+            <select id="id_lembaga" name="id_lembaga" class="block mt-1 w-full" required>
                 <option value="">Pilih Lembaga</option>
                 @foreach ($getData as $item)
-                    <option value="password1">{{$item->nama_lembaga}}</option>
+                    <option value="{{$item->id}}">{{$item->nama_lembaga}}</option>
                 @endforeach
             </select>
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error :messages="$errors->get('id_lembaga')" class="mt-2" />
         </div>
 
          <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password awal pengguna secara default disetel sama dengan alamat email yang terdaftar.')" style="text-align:center; font-size: smaller;" />
+            <x-input-label for="password" :value="__('Kata sandi pengguna pada saat pendaftaran akun sesuai dengan alamat email yang terdaftar.')" style="text-align:center; font-size: smaller;" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                         type="hidden"

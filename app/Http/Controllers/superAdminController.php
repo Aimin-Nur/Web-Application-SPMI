@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Lembaga;
+use App\Models\User;
+use App\Models\Dokumen;
+use App\Models\RTM;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -60,6 +67,11 @@ class superAdminController extends Controller
         } catch (\Exception $e) {
             return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Status Dokumen: ' . $e->getMessage());
         }
+    }
+
+    public function displayUser(){
+        $getData = User::with('lembaga')->get();
+        return view('superadmin.user', compact('getData'));
     }
 
 

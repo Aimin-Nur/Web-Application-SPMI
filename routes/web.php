@@ -35,6 +35,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
     Route::get('/jadwalrtm', [UserController::class, 'jadwalRTM']);
     Route::get('/profile', [UserController::class, 'profileUser']);
+    Route::put('/sendDocs/{id}', [UserController::class, 'sendDocs']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
 });
 
@@ -46,8 +47,12 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/manageUser', [AdminController::class, 'displayUser']);
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
-    Route::post('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
+    Route::put('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
     Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
+
+    Route::get('/temuanAudit', [AdminController::class, 'temuanAudit']);
+    Route::get('/addTemuan', [AdminController::class, 'formTemuan']);
+
     Route::get('/RTM', [AdminController::class, 'displayRTM']);
     Route::get('/addRTM', [AdminController::class, 'addRTM']);
     Route::post('/postRTM', [AdminController::class, 'postRTM']);
@@ -63,6 +68,7 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::post('/addLembaga', [superAdminController::class, 'addLembaga']);
     Route::DELETE('/hapusLembaga/{id}', [superAdminController::class, 'hapusLembaga']);
     Route::put('/editLembaga/{id}', [superAdminController::class, 'editLembaga']);
+    Route::get('/user', [superAdminController::class, 'displayUser']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
 });
 

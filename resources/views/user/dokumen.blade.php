@@ -11,7 +11,7 @@
         <div class="col-auto my-auto">
           <div class="h-100">
             <h5 class="mb-1">
-              Pengajuan Dokumen
+              Daftar Dokumen
             </h5>
             <p class="mb-0 font-weight-bold text-xs">
               SPMI Kalla Institute
@@ -56,7 +56,7 @@
                         </g>
                       </g>
                     </svg>
-                    <span class="ms-1">Validasi</span>
+                    <span class="ms-1">Status Dokumen</span>
                   </a>
                 </li>
             </ul>
@@ -68,7 +68,25 @@
 
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-        <!-- Content for the "App" tab -->
+        @if ($cekDokumens == 0)
+        <div class="container-fluid py-4">
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
+                        <div class="empty">
+                          <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
+                          </div>
+                          <p class="empty-title text-bold">Belum Ada Dokumen yang menunggu untuk dilengkapi</p>
+                          <p class="empty-subtitle text-secondary">
+                            Cek Secara Berkala Alamat Email Anda Untuk Melihat Notifikasi Pengiriman Dokumen Oleh Admin SPMI.
+                          </p>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+        </div>
+        @else
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
@@ -104,7 +122,13 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-
+                                                        @if ($item->status_docs == 1)
+                                                            <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-primary">Minor</span></small>
+                                                        @elseif ($item->status_docs == 2)
+                                                            <p class="text-xs text-secondary mb-0">Status Dokumen : <span class="badge badge-xs bg-gradient-danger">Major</span></p>
+                                                        @else
+                                                            <p class="text-xs text-secondary mb-0">Status Dokumen : - </p>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>
@@ -118,10 +142,10 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}} Hari</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <a class="btn text-xs btn-sm bg-gradient-primary mt-3" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Send Docs</a>
+                                                <a class="btn text-xs btn-sm bg-gradient-primary mt-3" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}">Send Docs</a>
 
                                                 {{-- @if ($item->status_pengisian == 1)
                                                     <span class="badge badge-sm bg-gradient-success">Selesai</span>
@@ -139,6 +163,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -181,8 +206,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proses</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Docs</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diperbaharui</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Docs</th>
                                     </tr>
                                 </thead>
@@ -198,19 +224,24 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_pengisian == 1)
-                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                            @elseif($item->status_pengisian == 0)
-                                                <span class="badge badge-sm bg-gradient-success">Terlambat</span>
+                                                <span class="badge badge-sm bg-gradient-danger">Terlambat</span>
+                                            @elseif($item->status_pengisian == 3)
+                                                <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                             @else
-                                                <span class="badge badge-sm bg-gradient-danger">Pending</span>
+                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_docs == 1)
                                                 <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                            @else
+                                            @elseif ($item->status_docs == 2)
                                                 <span class="badge badge-sm bg-gradient-danger">Mayor</span>
+                                            @else
+                                                <span class="badge badge-sm bg-gradient-success">ACC</span>
                                             @endif
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <p class="text-xs text-secondary mb-0">{{$item->updated_at}}</p>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
@@ -280,7 +311,7 @@
 </div>
   @endforeach
 
-    {{-- Modal Hapus Docs --}}
+    {{-- Modal Send Docs --}}
     @foreach ($dokumens as $item)
     <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -298,18 +329,19 @@
           <div class="p-4 to-front">
               <div class="text-center">
               <div class="logo">
-                  <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                  <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
               </div>
-              <h4>Hapus Dokumen</h4>
-              <p class="mb-3 text-sm">Tindakan ini akan menghapus dokumen <b> "{{$item->judul}}"</b> secara permanen.</p>
-              <form action="/hapusDocs/{{$item->id}}" class="mb-4" method="POST">
+              <h4>Kirim Dokumen</h4>
+              <p class="mb-3 text-sm">Pastikan bahwa Anda telah mengisi dokumen dengan lengkap. Admin SPMI dapat secara langsung melihat kelengkapan dokumen Anda saat ini.</p>
+              <form action="/sendDocs/{{$item->id}}" class="mb-4" method="POST">
                   @csrf
+                  @method('PUT')
                   <div class="row">
                   <div class="col-6 mt-4">
                       <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                   </div>
                   <div class="col-6 mt-4">
-                      <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                      <button type="submit" class="btn btn-primary btn-block">Kirim Dokumen</button>
                   </div>
                   </div>
               </form>

@@ -36,18 +36,28 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'id_lembaga' => ['required', 'string', 'max:255', 'unique:users,id_lembaga'],
+        ], [
+            'id_lembaga.unique' => 'Sudah Ada User Terdaftar Sebagai Lembaga Tersebut',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'id_lembaga' => $request->id_lembaga,
             'password' => Hash::make($request->email),
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
+
+        if (Auth::guard('superadmin')->check()) {
+            return redirect('/user')->with('status', 'success')->with('message', 'User Berhasil Ditambahkan');
+        } elseif (Auth::guard('admin')->check()) {
+            return redirect('/manageUser')->with('status', 'success')->with('message', 'User Berhasil Ditambahkan');
+        }
     }
 }

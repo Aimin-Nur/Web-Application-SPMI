@@ -11,7 +11,7 @@
         <div class="col-auto my-auto">
           <div class="h-100">
             <h5 class="mb-1">
-              Pengajuan Dokumen
+              Temuan Audit Lembaga
             </h5>
             <p class="mb-0 font-weight-bold text-xs">
               SPMI Kalla Institute
@@ -37,7 +37,7 @@
                         </g>
                       </g>
                     </svg>
-                    <span class="ms-1">Dokumen</span>
+                    <span class="ms-1">Temuan</span>
                   </a>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -68,7 +68,7 @@
 
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-       @if ($countDokumens == 0)
+       @if ($countEvaluasi == 0)
        <div class="container-fluid py-4">
         <div class="page-body">
             <div class="row">
@@ -78,9 +78,9 @@
                       </div>
                       <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
                       <div class="empty-action">
-                        <a href="/addDokumen" class="btn btn-primary">
+                        <a href="/addTemuan" class="btn btn-primary">
                             <i class="fas fa-plus"></i>&nbsp;&nbsp;
-                          Tambah Dokumen
+                          Tambah Temuan Audit
                         </a>
                       </div>
                     </div>
@@ -115,7 +115,8 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
@@ -123,7 +124,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dokumens as $item)
+                                    @foreach ($evaluasi as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
@@ -136,14 +137,16 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                    @if ($item->status_docs == 1)
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-primary">Minor</span></small>
-                                                    @elseif ($item->status_docs == 2)
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-danger">Mayor</span></small>
-                                                    @else
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : - </small>
-                                                    @endif
+                                                    <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
+                                                        <small class="text-xs text-secondary mt-2">Link Tautan : </small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{$item->rtk}}</h6>
+                                                        <small class="text-xs text-secondary mt-2">Link Tautan : </small>
                                                 </div>
                                             </div>
                                         </td>
@@ -191,6 +194,26 @@
     </div>
 
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        @if ($countEvaluasi == 0)
+        <div class="container-fluid py-4">
+         <div class="page-body">
+             <div class="row">
+                 <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
+                     <div class="empty">
+                       <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
+                       </div>
+                       <p class="empty-title text-bold">Belum Terdapat Riwayat Temuan Audit</p>
+                       <div class="empty-action">
+                         <a href="/addTemuan" class="btn btn-primary">
+                             <i class="fas fa-plus"></i>&nbsp;&nbsp;
+                           Tambah Temuan Audit
+                         </a>
+                       </div>
+                     </div>
+                   </div>
+             </div>
+         </div>
+         @else
         <div class="container-fluid py-4">
             <div class="row">
               <div class="col-lg-12 col-sm-6 mb-xl-0 mb-4">
@@ -237,7 +260,7 @@
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
                                     @foreach ($validDocs as $item)
                                     <tr>
                                         <td>
@@ -282,7 +305,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -291,13 +314,14 @@
               </div>
            </div>
         </div>
+        @endif
     </div>
     </div>
 
   </div>
 
    {{-- Modal Edit Status --}}
-   @foreach ($dokumens as $item)
+   @foreach ($evaluasi as $item)
    <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
        <div class="modal-dialog modal-dialog-centered" role="document">
            <div class="modal-content rounded-0">
@@ -382,7 +406,7 @@
 
 
     {{-- Modal Hapus Docs --}}
-    @foreach ($dokumens as $item)
+    @foreach ($evaluasi as $item)
     <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content rounded-0">

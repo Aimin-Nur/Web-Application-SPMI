@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id_lembaga',
     ];
 
     /**
@@ -49,8 +50,6 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-
-        // Generate UUID for primary key
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();
