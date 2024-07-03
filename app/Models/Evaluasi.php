@@ -27,6 +27,7 @@ class Evaluasi extends Model
         'created_at',
         'updated_at',
         'deadline',
+        'tgl_pengumpulan',
     ];
 
     protected static function boot()

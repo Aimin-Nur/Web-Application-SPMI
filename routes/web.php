@@ -43,8 +43,10 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
 // Auth Admin
 Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
-    Route::get('/dokumen', [AdminController::class, 'dokumen']);
     Route::get('/manageUser', [AdminController::class, 'displayUser']);
+    Route::put('/editUser/{id}', [AdminController::class, 'editUser']);
+
+    Route::get('/dokumen', [AdminController::class, 'dokumen']);
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::put('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
@@ -52,12 +54,21 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
 
     Route::get('/temuanAudit', [AdminController::class, 'temuanAudit']);
     Route::get('/addTemuan', [AdminController::class, 'formTemuan']);
+    Route::post('/sendTemuan', [AdminController::class, 'addTemuan']);
+    Route::delete('/hapusTemuan/{id}', [AdminController::class, 'hapusTemuan']);
+    Route::put('/editTemuan/{id}', [AdminController::class, 'editTemuan']);
 
     Route::get('/RTM', [AdminController::class, 'displayRTM']);
     Route::get('/addRTM', [AdminController::class, 'addRTM']);
     Route::post('/postRTM', [AdminController::class, 'postRTM']);
     Route::DELETE('/hapusRTM/{id}', [AdminController::class, 'hapusRTM']);
     Route::put('/editRTM/{id}', [AdminController::class, 'editRTM']);
+
+    Route::get('/laporan', [AdminController::class, 'laporanAudit']);
+    Route::post('/addLaporan', [AdminController::class, 'addLaporan']);
+    Route::DELETE('/hapusLaporan/{id}', [AdminController::class, 'hapusLaporan']);
+    Route::put('/editLaporan/{id}', [AdminController::class, 'editLaporan']);
+
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });
 

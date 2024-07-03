@@ -38,8 +38,8 @@
                       <span class="text-xs">Created At : <span class="text-dark ms-sm-2 font-weight-bold">{{$item->created_at}}</span></span>
                     </div>
                     <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                        <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
+                        <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
                     </div>
                 </li>
                 @endforeach
@@ -49,6 +49,102 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Edit --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-body bg-3">
+                <div class="px-3 to-front">
+                    <div class="row align-items-center">
+                        <div class="col text-right">
+                            <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 to-front">
+                    <div class="text-center">
+                        <div class="logo">
+                            <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                        </div>
+                        <h4>Edit Laporan Audit</h4>
+                        <p class="mb-3 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam commodi cum similique.</p>
+                        <form action="/editLaporan/{{$item->id}}" class="mb-4" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <label>Judul Laporan</label>
+                                <input type="text" class="form-control" name="laporan" placeholder="{{$item->judul}}">
+                            </div>
+                             <div class="deadline-form">
+                                 <div class="form-group">
+                                     <label for="score">Tautan Laporan</label>
+                                     <input type="text" class="form-control" name="tautan" placeholder="{{$item->tautan}}">
+                                 </div>
+                             </div>
+                            <div class="row">
+                                <div class="col-6 mt-4">
+                                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                                </div>
+                                <div class="col-6 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Simpan Laporam</button>
+                                </div>
+                            </div>
+                        </form>
+                        <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+{{-- Modal Hapus --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content rounded-0">
+        <div class="modal-body bg-3">
+        <div class="px-3 to-front">
+            <div class="row align-items-center">
+            <div class="col text-right">
+                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                </a>
+            </div>
+            </div>
+        </div>
+        <div class="p-4 to-front">
+            <div class="text-center">
+            <div class="logo">
+                <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+            </div>
+            <h4>Hapus Laporan Audit</h4>
+            <p class="mb-3 text-sm">Tindakan ini akan menghapus Laporan Audit <b> "{{$item->judul}}"</b> secara permanen.</p>
+            <form action="/hapusLaporan/{{$item->id}}" class="mb-4" method="POST">
+                @csrf
+                @method('DeLETe')
+                <div class="row">
+                <div class="col-6 mt-4">
+                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                </div>
+                <div class="col-6 mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                </div>
+                </div>
+            </form>
+            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+@endforeach
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

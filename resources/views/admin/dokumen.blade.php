@@ -68,27 +68,27 @@
 
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-       @if ($countDokumens == 0)
+       @if ($dokumens->isEmpty())
        <div class="container-fluid py-4">
-        <div class="page-body">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
-                    <div class="empty">
-                      <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
-                      </div>
-                      <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
-                      <div class="empty-action">
-                        <a href="/addDokumen" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;
-                          Tambah Dokumen
-                        </a>
-                      </div>
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
+                        <div class="empty">
+                        <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
+                        </div>
+                        <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
+                        <div class="empty-action">
+                            <a href="/addDokumen" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>&nbsp;&nbsp;
+                            Tambah Dokumen
+                            </a>
+                        </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
+                </div>
             </div>
         </div>
-
-    </div>
        @else
        <div class="container-fluid py-4">
         <div class="row">
@@ -137,18 +137,16 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                    @if ($item->status_docs == 1)
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-primary">Minor</span></small>
-                                                    @elseif ($item->status_docs == 2)
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-danger">Mayor</span></small>
+                                                    @if ($item->status_pengisian == 2)
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
                                                     @else
-                                                        <small class="text-xs text-secondary mt-2">Status Dokumen : - </small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
                                                     @endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            @if ($item->status_pengisian == 3)
+                                            @if ($item->status_pengisian == 2)
                                                 <small class="badge badge-sm bg-gradient-success">Selesai</small>
                                             @else
                                                 <small class="badge badge-sm bg-gradient-danger">Pending</small>
@@ -166,15 +164,6 @@
                                         </td>
                                         <td class="align-middle">
                                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
-                                            @if ($item->status_pengisian == 3)
-                                            <a href="{{$item->tautan}}" target="_blank">
-                                                <i class="fa fa-share-square-o ms-3 text-success cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
-                                            </a>
-                                            @else
-                                            <a href="{{$item->tautan}}" target="_blank">
-                                                <i class="fa fa-share-square-o ms-3 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
-                                            </a>
-                                            @endif
                                             <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
                                         </td>
                                     </tr>
@@ -187,10 +176,33 @@
             </div>
         </div>
     </div>
-       @endif
+
     </div>
+    @endif
 
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        @if ($riwayatDocs->isEmpty())
+        <div class="container-fluid py-4">
+            <div class="page-body">
+                <div class="row">
+                    <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
+                        <div class="empty">
+                        <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
+                        </div>
+                        <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
+                        <div class="empty-action">
+                            <a href="/addDokumen" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>&nbsp;&nbsp;
+                            Tambah Dokumen
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="container-fluid py-4">
             <div class="row">
               <div class="col-lg-12 col-sm-6 mb-xl-0 mb-4">
@@ -233,12 +245,12 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat</th>
-                                        <th class="text-secondary opacity-7"></th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($validDocs as $item)
+                                    @foreach ($riwayatDocs as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
@@ -266,18 +278,14 @@
                                                 <span class="badge badge-sm bg-gradient-primary">Minor</span>
                                             @elseif ($item->status_docs == 2)
                                                 <span class="badge badge-sm bg-gradient-danger">Major</span>
-                                            @else
-                                                <span class="badge badge-sm bg-gradient-success">ACC</span>
+                                            @elseif ($item->status_docs == 3)
+                                                <span class="badge badge-sm bg-gradient-success">Close</span>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">
-                                            @if ($item->deadline == 0)
-                                                <small class="text-secondary text-sm font-weight-bold">-</small>
-                                            @else
-                                                <span class="text-secondary text-sm font-weight-bold">{{$item->deadline}}</span>
-                                            @endif
+                                                <span class="text-secondary text-sm font-weight-bold">{{$item->score}}</span>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle text-center">
                                             <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
                                         </td>
                                     </tr>
@@ -291,6 +299,8 @@
               </div>
            </div>
         </div>
+        @endif
+
     </div>
     </div>
 
@@ -321,25 +331,26 @@
                            <form action="/editStatus/{{$item->id}}" class="mb-4" method="POST">
                                @csrf
                                @method('PUT')
-                               <div class="form-group">
-                                   <select class="form-select status-select" name="status" id="statusSelect{{$item->id}}">
-                                       <option>Pilih Status Dokumen</option>
-                                       <option value="1">Minor</option>
-                                       <option value="2">Mayor</option>
-                                       <option value="3">ACC</option>
-                                   </select>
-                               </div>
-                               <div class="deadline-form" id="deadline-form{{$item->id}}" style="display: none;">
-                                   <div class="form-group">
-                                       <label for="deadline">Deadline</label>
-                                       <input type="date" class="form-control" id="deadline" name="deadline">
-                                   </div>
-                               </div>
+                                <div class="form-group">
+                                    <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
+                                        <option value="">Pilih Status Dokumen</option>
+                                        <option value="1">Minor</option>
+                                        <option value="2">Mayor</option>
+                                        <option value="3">Close</option>
+                                    </select>
+                                </div>
+                                <div class="deadline-form" id="Score-form{{ $item->id }}" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="score">Score</label>
+                                        <input type="number" class="form-control" id="score{{ $item->id }}" name="score">
+                                    </div>
+                                </div>
                                <div class="row">
                                    <div class="col-6 mt-4">
                                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                                    </div>
                                    <div class="col-6 mt-4">
+                                        <input type="hidden" name="hidden_score" value="4" id="hiddenScore{{ $item->id }}">
                                        <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
                                    </div>
                                </div>
@@ -351,34 +362,45 @@
            </div>
        </div>
    </div>
-@endforeach
+    @endforeach
 
-<script>
-   document.addEventListener('DOMContentLoaded', function() {
-       const statusSelects = document.querySelectorAll('.status-select'); // Get all status selects
-       const deadlineForms = document.querySelectorAll('.deadline-form'); // Get all deadline forms
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusSelects = document.querySelectorAll('.status-select');
+            const deadlineForms = document.querySelectorAll('.deadline-form');
 
-       // Loop through all status selects and deadline forms
-       for (let i = 0; i < statusSelects.length; i++) {
-           const statusSelect = statusSelects[i];
-           const deadlineForm = deadlineForms[i];
+            statusSelects.forEach((statusSelect, index) => {
+                const deadlineForm = deadlineForms[index];
+                const hiddenScore = document.getElementById('hiddenScore' + statusSelect.id.replace('statusSelect', ''));
+                const scoreInput = document.getElementById('score' + statusSelect.id.replace('statusSelect', ''));
 
-           statusSelect.addEventListener('change', function() {
-               const selectedValue = this.value;
-               if (selectedValue === '1' || selectedValue === '2') {
-                   deadlineForm.style.display = 'block';
-               } else {
-                   deadlineForm.style.display = 'none';
-               }
-           });
-       }
-   });
-</script>
+                statusSelect.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    if (selectedValue === '1' || selectedValue === '2') {
+                        deadlineForm.style.display = 'block';
+                        hiddenScore.name = ''; // Disable hidden score input
+                        scoreInput.name = 'score'; // Enable visible score input
+                    } else {
+                        deadlineForm.style.display = 'none';
+                        hiddenScore.name = 'score'; // Enable hidden score input
+                        scoreInput.name = ''; // Disable visible score input
+                        hiddenScore.value = '4'; // Default value for hidden score
+                        scoreInput.value = ''; // Clear visible score input
+                    }
+                });
 
-
-
-
-
+                if (statusSelect.value === '1' || statusSelect.value === '2') {
+                    deadlineForm.style.display = 'block';
+                    hiddenScore.name = ''; // Disable hidden score input
+                    scoreInput.name = 'score'; // Enable visible score input
+                } else {
+                    deadlineForm.style.display = 'none';
+                    hiddenScore.name = 'score'; // Enable hidden score input
+                    scoreInput.name = ''; // Disable visible score input
+                }
+            });
+        });
+    </script>
 
 
     {{-- Modal Hapus Docs --}}

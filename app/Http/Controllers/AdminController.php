@@ -12,7 +12,9 @@ use App\Models\Lembaga;
 use App\Models\Dokumen;
 use App\Models\Evaluasi;
 use App\Models\RTM;
+use App\Models\LaporanAudit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends BaseController
 {
@@ -27,12 +29,13 @@ class AdminController extends BaseController
     public function dokumen (){
         $dokumens = Dokumen::with(['lembaga.user'])
                     ->where(function($query) {
-                        $query->where('status_pengisian', 0)
-                            ->orWhere('status_pengisian', 3);
+                        $query->where('status_pengisian', 2)
+                        ->orwhere('status_pengisian', 0);
                     })
+                    ->where('score', NULL)
                     ->get();
 
-        $validDocs = Dokumen::with(['lembaga.user'])->get();
+        $riwayatDocs = Dokumen::with(['lembaga.user'])->where('status_pengisian', 2)->get();
 
         $countDokumens = Dokumen::with(['lembaga.user'])
         ->where(function($query) {
@@ -40,7 +43,7 @@ class AdminController extends BaseController
                 ->orWhere('status_pengisian', 3);
         })
         ->count();
-        return view('admin.dokumen', compact('dokumens', 'validDocs', 'countDokumens'));
+        return view('admin.dokumen', compact('dokumens', 'riwayatDocs', 'countDokumens'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -51,15 +54,12 @@ class AdminController extends BaseController
 
             $dokumen = Dokumen::findOrFail($id);
             $dokumen->status_docs = $request->input('status');
-            $dokumen->status_pengisian = ($request->input('status') == 3) ? 2 : 0;
+            $dokumen->status_pengisian = 2;
+            // $dokumen->status_pengisian = ($request->input('status') == 3) ? 2 : 0;
 
-            if ($request->has('deadline')) {
-                $dokumen->deadline = $request->input('deadline');
-            } else {
-                if (!in_array($request->input('status'), [1, 2])) {
-                    $dokumen->deadline = 0;
-                }
-            }
+            $score = $request->input('score', 4);
+            $dokumen->score = $score;
+
             $dokumen->save();
 
             return redirect('/dokumen')->with('status', 'success')->with('message', 'Status Dokumen Berhasil Diubah.');
@@ -72,6 +72,25 @@ class AdminController extends BaseController
         $getData = User::get();
         $cekData = User::count();
         return view('admin.displayUser', compact('getData','cekData'));
+    }
+
+    public function editUser(Request $request, $id){
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users,email,' . time(),
+            ]);
+
+            $user = User::findOrFail($id);
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+
+            $user->save();
+
+            return redirect('/manageUser')->with('status', 'success')->with('message', 'Data Akun User Berhasil Diubah.');
+        } catch (\Exception $e) {
+            return redirect('/manageUser')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . $e->getMessage());
+        }
     }
 
     public function formDokumen() {
@@ -118,50 +137,125 @@ class AdminController extends BaseController
 
 
     public function temuanAudit() {
-        $evaluasi = Evaluasi::with(['lembaga.user'])->get();
-        $countEvaluasi = Evaluasi::with(['lembaga.user'])
-        ->where(function($query) {
+        $evaluasi = Evaluasi::with(['lembaga.user'])->where(function($query) {
             $query->where('status_pengisian', 0)
-                ->orWhere('status_pengisian', 3);
+                ->orWhere('status_pengisian', 2)
+                ->where('score', NULL);
         })
-        ->count();
-        return view('admin.evaluasi', compact('evaluasi','countEvaluasi'));
+        ->get();
+
+        $riwayat = Evaluasi::with(['lembaga.user'])->where(function($query) {
+            $query->where('status_pengisian', 1)
+                ->orWhere('status_pengisian', 2)
+                ->where('score', '!=', NULL);
+        })
+        ->get();
+
+        $score = Evaluasi::with(['lembaga.user'])
+        ->where(function($query) {
+            $query->where('status_pengisian', 1)
+                ->orWhere('status_pengisian', 2)
+                ->where('score', '!=', NULL);
+        })
+        ->get();
+
+        // Hitung total skor dan jumlah temuan per lembaga
+        $skorPerLembaga = Evaluasi::select(
+                'id_lembaga',
+                DB::raw('SUM(score) as total_score'),
+                DB::raw('COUNT(id) as total_temuan')
+            )
+            ->groupBy('id_lembaga')
+            ->with('lembaga.user')
+            ->where('score', '!=', NULL)
+            ->orderBy('total_score', 'desc')
+            ->get();
+
+        // Hitung total semua skor dan jumlah temuan
+        $totalSkor = $score->sum('score');
+        $totalTemuan = $evaluasi->count();
+
+        return view('admin.evaluasi', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan'));
     }
 
     public function formTemuan() {
-            $getData = Lembaga::get();
-            return view('admin.formDokumen', compact('getData'));
+            $getData = Lembaga::whereHas('dokumen', function ($query) {
+                $query->whereIn('status_docs', [1, 2]);
+            })->with(['dokumen' => function ($query) {
+                $query->whereIn('status_docs', [1, 2]);
+            }])->get();
+
+            return view('admin.formTemuan', compact('getData'));
     }
 
     public function addTemuan(Request $request){
         try {
             $request->validate([
-                'field_judul' => 'required|string|max:255',
-                'field_tautan' => 'required|string|max:255|url',
+                'temuan' => 'required|string|max:255',
+                'tautan_temuan' => 'required|string|max:255|url',
+                'rtk' => 'required|string|max:255',
+                'tautan_rtk' => 'required|string|max:255|url',
                 'id_lembaga' => 'required|string|exists:lembaga,id',
+                'id_docs' => 'required|string|exists:dokumen,id',
             ]);
-            $existingDokumen = Dokumen::where('tautan', $request->input('field_tautan'))->first();
-            if ($existingDokumen) {
-                return redirect('/dokumen')->with('status', 'error')->with('message', 'Tautan dokumen sudah ada.');
+            $existingTautanRTK = Evaluasi::where('tautan_temuan', $request->input('tautan_rtk'))->first();
+            $existingTautanTemuan = Evaluasi::where('tautan_rtk', $request->input('existingTautanTemuan'))->first();
+
+            if ($existingTautanRTK) {
+                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen RTK sudah ada.');
+            } elseif ($existingTautanTemuan) {
+                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen Temuan sudah ada.');
             }
 
-            $send = new Dokumen;
-            $send->judul = $request->input('field_judul');
-            $send->tautan = $request->input('field_tautan');
+            $send = new Evaluasi;
+            $send->temuan = $request->input('temuan');
+            $send->rtk = $request->input('rtk');
             $send->id_lembaga = $request->input('id_lembaga');
+            $send->id_docs = $request->input('id_docs');
             $send->status_pengisian = 0;
             $send->status_docs = 0;
-            $send->deadline = $request->input('field_durasi');
+            $send->tautan_rtk = $request->input('tautan_rtk');
+            $send->tautan_temuan = $request->input('tautan_temuan');
+            $send->deadline = $request->input('deadline');
             $send->save();
 
-            return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
-        } catch (\Exception $e) {
-            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
+            return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Temuan Audit Berhasil Ditambakan.');
+            } catch (\Exception $e) {
+                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Gagal Menambahkan Temuan Audit: ' . $e->getMessage());
         }
     }
 
+    public function editTemuan(Request $request, $id){
+        try {
+            $request->validate([
+                'status' => 'required|in:1,2,3',
+            ]);
 
+            $temuan = Evaluasi::findOrFail($id);
+            $temuan->status_docs = $request->input('status');
+            $temuan->status_pengisian = 2;
 
+            $score = $request->input('score', 4);
+            $temuan->score = $score;
+
+            $temuan->save();
+
+            return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Status Temuan Berhasil Diubah.');
+        } catch (\Exception $e) {
+            return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Gagal Mengubah Status Tautan: ' . $e->getMessage());
+        }
+    }
+
+    public function hapusTemuan($id){
+        try {
+            $temuan = Evaluasi::findOrFail($id);
+            $temuan->delete();
+
+            return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Temuan Audit Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Gagal Menghapus Temuan Audit: ' . $e->getMessage());
+        }
+    }
 
     public function displayRTM(){
         $getData = RTM::with(['lembaga.user'])->get();
@@ -222,8 +316,51 @@ class AdminController extends BaseController
     }
 
 
+    public function laporanAudit(){
+        $getData = LaporanAudit::get();
+        return view('admin.laporanAudit', compact('getData'));
+    }
 
+    public function addLaporan(Request $request){
+        try {
+            $send = new LaporanAudit;
+            $send->judul = $request->input('judul');
+            $send->tautan = $request->input('tautan');
+            $send->save();
 
+            return redirect('/laporan')->with('status', 'success')->with('message', 'Laporan Audit Berhasil Ditambakan.');
+        } catch (\Exception $e) {
+            return redirect('/laporan')->with('status', 'error')->with('message', 'Gagal Menambahkan Jadwal Laporan Audit: ' . $e->getMessage());
+        }
+    }
 
+    public function hapusLaporan($id) {
+        try {
+            $laporan = laporanAudit::findOrFail($id);
+            $laporan->delete();
+            return redirect('/laporan')->with('status', 'success')->with('message', 'Laporan Audit Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/laporan')->with('status', 'error')->with('message', 'Gagal Menghapus Laporan Audit: ' . $e->getMessage());
+        }
+    }
+
+    public function editLaporan(Request $request, $id){
+        try {
+            $request->validate([
+                'laporan' => 'required|',
+                'tautan' => 'required|',
+            ]);
+
+            $laporan = laporanAudit::findOrFail($id);
+            $laporan->judul = $request->input('laporan');
+            $laporan->tautan = $request->input('tautan');
+
+            $laporan->save();
+
+            return redirect('/laporan')->with('status', 'success')->with('message', 'Laporan Audit Berhasil Diubah.');
+        } catch (\Exception $e) {
+            return redirect('/laporan')->with('status', 'error')->with('message', 'Gagal Mengubah Laporan Audit: ' . $e->getMessage());
+        }
+    }
 
 }

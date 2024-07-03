@@ -38,7 +38,7 @@ class UserController extends Controller
                     ->get();
 
 
-        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->get();
+        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->where('status_pengisian', 2)->get();
 
         $cekDokumens = Dokumen::where('id_lembaga', $idLembaga)->where(function($query) {
             $query->where('status_pengisian', 0)
@@ -53,8 +53,7 @@ class UserController extends Controller
         try {
             $docs = Dokumen::findOrFail($id);
 
-            $docs->status_pengisian = 3;
-            $docs->deadline = 0;
+            $docs->status_pengisian = 2;
             $docs->save();
 
             return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');

@@ -109,7 +109,6 @@
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal Dibuat</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Docs</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi Pengerjaan</th>
                                             <th class="text-secondary opacity-7"></th>
@@ -122,19 +121,9 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                        @if ($item->status_docs == 1)
-                                                            <small class="text-xs text-secondary mt-2">Status Dokumen : <span class="badge badge-xs bg-gradient-primary">Minor</span></small>
-                                                        @elseif ($item->status_docs == 2)
-                                                            <p class="text-xs text-secondary mb-0">Status Dokumen : <span class="badge badge-xs bg-gradient-danger">Major</span></p>
-                                                        @else
-                                                            <p class="text-xs text-secondary mb-0">Status Dokumen : - </p>
-                                                        @endif
+                                                        <small class="text-xs text-secondary mt-2">Created : {{$item->created_at}}</small>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <td class="">
-                                                <span class="text-xs font-weight-bold mb-0">{{$item->created_at}}</span>
-                                                <p class="text-xs text-secondary mb-0">{{$item->created_at}}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <a href="{{$item->tautan}}" target="_blank">
@@ -146,12 +135,6 @@
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <a class="btn text-xs btn-sm bg-gradient-primary mt-3" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}">Send Docs</a>
-
-                                                {{-- @if ($item->status_pengisian == 1)
-                                                    <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                                @else
-                                                    <span class="badge badge-sm bg-gradient-danger">Pending</span>
-                                                @endif --}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -169,16 +152,60 @@
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         <div class="container-fluid py-4">
             <div class="row">
-              <div class="col-lg-12 col-sm-6 mb-xl-0 mb-4">
+              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
                   <div class="card-body p-3">
                     <div class="row">
                       <div class="col-8">
                         <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Pengisian Dokumen User</p>
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
                           <h5 class="font-weight-bolder mb-0">
                             $53,000
-                            <span class="text-success text-sm font-weight-bolder">+55%</span>
+                            <span class="text-warning text-sm font-weight-bolder">Minor</span>
+                          </h5>
+                        </div>
+                      </div>
+                      <div class="col-4 text-end">
+                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="numbers">
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
+                          <h5 class="font-weight-bolder mb-0">
+                            $53,000
+                            <span class="text-danger text-sm font-weight-bolder">Mayor</span>
+                          </h5>
+                        </div>
+                      </div>
+                      <div class="col-4 text-end">
+                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="numbers">
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
+                          <h5 class="font-weight-bolder mb-0">
+                            $53,000
+                            <span class="text-success text-sm font-weight-bolder">Close</span>
                           </h5>
                         </div>
                       </div>
@@ -208,7 +235,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proses</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Docs</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Diperbaharui</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Docs</th>
                                     </tr>
                                 </thead>
@@ -225,10 +252,10 @@
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_pengisian == 1)
                                                 <span class="badge badge-sm bg-gradient-danger">Terlambat</span>
-                                            @elseif($item->status_pengisian == 3)
-                                                <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
-                                            @else
+                                            @elseif($item->status_pengisian == 2 && $item->score != NULL)
                                                 <span class="badge badge-sm bg-gradient-success">Selesai</span>
+                                            @else
+                                                <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center text-sm">
@@ -236,12 +263,18 @@
                                                 <span class="badge badge-sm bg-gradient-primary">Minor</span>
                                             @elseif ($item->status_docs == 2)
                                                 <span class="badge badge-sm bg-gradient-danger">Mayor</span>
+                                            @elseif ($item->status_docs == 3)
+                                                <span class="badge badge-sm bg-gradient-success">Close</span>
                                             @else
-                                                <span class="badge badge-sm bg-gradient-success">ACC</span>
+                                                <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <p class="text-xs text-secondary mb-0">{{$item->updated_at}}</p>
+                                            @if (!$item->score)
+                                                <p class="text-xs text-secondary mb-0">-</p>
+                                            @else
+                                                <p class="text-xs text-secondary mb-0">{{$item->score}}</p>
+                                            @endif
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
@@ -262,54 +295,6 @@
 
   </div>
 
-  {{-- Modal Edit Status --}}
-  @foreach ($dokumens as $item)
-  <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content rounded-0">
-        <div class="modal-body bg-3">
-        <div class="px-3 to-front">
-            <div class="row align-items-center">
-            <div class="col text-right">
-                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><span class="icon-close2"></span></span>
-                </a>
-            </div>
-            </div>
-        </div>
-        <div class="p-4 to-front">
-            <div class="text-center">
-            <div class="logo">
-                <img src="{{asset('creative')}}/assets/img/logo-ct-dark.png" alt="img-fluid" class="img-fluid mb-4 w-60">
-            </div>
-            <h4>Edit Status Dokumen</h4>
-            <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelngkapan dokumen yang telah Anda berikan pada tanggal : {{$item->updated_at}}</p>
-            <form action="/editStatus/{{$item->id}}" class="mb-4" method="POST">
-                @csrf
-                <div class="form-group">
-                    <select class="form-select" name="status">
-                        <option>Pilih Status Dokumen</option>
-                            <option value="1">Minor</option>
-                            <option value="2">Mayor</option>
-                    </select>
-                </div>
-                <div class="row">
-                <div class="col-6 mt-4">
-                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                </div>
-                <div class="col-6 mt-4">
-                    <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
-                </div>
-                </div>
-            </form>
-            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-  @endforeach
 
     {{-- Modal Send Docs --}}
     @foreach ($dokumens as $item)
