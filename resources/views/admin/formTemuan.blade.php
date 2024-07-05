@@ -88,7 +88,21 @@
     document.addEventListener('DOMContentLoaded', function() {
         const lembagaSelect = document.getElementById('lembagaSelect');
         const dokumenSelect = document.getElementById('dokumenSelect');
-        const lembagaData = JSON.parse('{!! $getData !!}'); // Parse JSON data
+        const lembagaData = @json($getData);
+
+        // Function to convert status_docs to readable text
+        function getStatusText(status) {
+            switch(parseInt(status)) {
+                case 1:
+                    return 'Minor';
+                case 2:
+                    return 'Major';
+                case 3:
+                    return 'Close';
+                default:
+                    return 'Unknown';
+            }
+        }
 
         lembagaSelect.addEventListener('change', function() {
             const selectedLembagaId = this.value;
@@ -101,7 +115,7 @@
                     selectedLembaga.dokumen.forEach(dokumen => {
                         const option = document.createElement('option');
                         option.value = dokumen.id;
-                        option.textContent = dokumen.judul; // Assuming the dokumen model has a 'judul' attribute
+                        option.textContent = `${dokumen.judul} (${getStatusText(dokumen.status_docs)})`; // Include status_docs as text
                         dokumenSelect.appendChild(option);
                     });
                 }
@@ -109,7 +123,6 @@
         });
     });
 </script>
-
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

@@ -31,7 +31,7 @@
                 <select class="form-select" name="id_lembaga">
                     <option>Pilih Lembaga</option>
                     @foreach ($getData as $item)
-                        <option value="{{$item->id}}">{{$item->nama_lembaga}}</option>
+                        <option value="{{$item->id}}">{{$item->nama_lembaga}} - {{$item->user->name}}</option>
                     @endforeach
                 </select>
                 <small class="form-hint">

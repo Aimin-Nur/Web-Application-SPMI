@@ -45,4 +45,9 @@ class Lembaga extends Model
         return $this->hasMany(Dokumen::class, 'id_lembaga', 'id');
     }
 
+    public function evaluasi()
+    {
+        return $this->hasMany(Evaluasi::class, 'id_lembaga');
+    }
+
 }

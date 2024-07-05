@@ -9,7 +9,7 @@
  <script src="{{asset('creative')}}/assets/js/popper.min.js"></script>
  <script src="{{asset('creative')}}/assets/js/bootstrap.min.js"></script>
  <script src="{{asset('creative')}}/assets/js/main.js"></script>
- <script>
+ {{-- <script>
    var ctx = document.getElementById("chart-bars").getContext("2d");
 
    new Chart(ctx, {
@@ -83,13 +83,13 @@
 
    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-   gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+   gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
 
    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
 
    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-   gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+   gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)');
 
    new Chart(ctx2, {
      type: "line",
@@ -178,7 +178,9 @@
        },
      },
    });
- </script>
+ </script> --}}
+
+
  <script>
    var win = navigator.platform.indexOf('Win') > -1;
    if (win && document.querySelector('#sidenav-scrollbar')) {

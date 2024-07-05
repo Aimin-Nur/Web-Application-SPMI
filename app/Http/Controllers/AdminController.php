@@ -15,6 +15,9 @@ use App\Models\RTM;
 use App\Models\LaporanAudit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends BaseController
 {
@@ -22,8 +25,51 @@ class AdminController extends BaseController
 
     public function index()
     {
+        $today = Carbon::today();
         $admin = Auth::guard('admin')->user();
-        return view('admin.index', compact('admin'));
+        $lembagaScores = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
+            return [
+                'nama_lembaga' => $lembaga->nama_lembaga,
+                'total_score' => $lembaga->evaluasi->sum('score')
+            ];
+        })->sortByDesc('total_score')->values();
+        $maxScore = $lembagaScores->max('total_score');
+
+       $riwayat = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
+            return [
+                'nama_lembaga' => $lembaga->nama_lembaga,
+                'total_score' => $lembaga->evaluasi->sum('score'),
+                'updated_at' => $lembaga->evaluasi->max('updated_at'),
+            ];
+        });
+
+        $previousScores = Cache::get('previousScores', []);
+        $currentScores = [];
+
+        // Bandingkan skor saat ini dengan skor sebelumnya dan tentukan 'is_increased'
+        $riwayat = $riwayat->map(function ($lembaga) use ($previousScores, &$currentScores) {
+            $previousScore = $previousScores[$lembaga['nama_lembaga']] ?? 0;
+            $currentScores[$lembaga['nama_lembaga']] = $lembaga['total_score'];
+            return array_merge($lembaga, [
+                'previous_score' => $previousScore,
+                'is_increased' => $lembaga['total_score'] > $previousScore,
+            ]);
+        })->sortByDesc('total_score')->values();
+
+        Session::put('previousScores', $currentScores);
+
+
+        // Radar Dashboard
+        $radar = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
+            return [
+                'nama_lembaga' => $lembaga->nama_lembaga,
+                'major' => $lembaga->evaluasi->where('status_docs', 2)->count(),
+                'minor' => $lembaga->evaluasi->where('status_docs', 1)->count(),
+                'close' => $lembaga->evaluasi->where('status_docs', 3)->count()
+            ];
+        })->values();
+
+        return view('admin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar'));
     }
 
     public function dokumen (){
@@ -94,7 +140,7 @@ class AdminController extends BaseController
     }
 
     public function formDokumen() {
-        $getData = Lembaga::get();
+        $getData = Lembaga::has('user')->with('user')->get();
         return view('admin.formDokumen', compact('getData'));
     }
 
