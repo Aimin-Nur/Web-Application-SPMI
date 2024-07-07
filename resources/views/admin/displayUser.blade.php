@@ -106,7 +106,7 @@
         </div>
     </div>
 
-    {{-- Modal Edit --}}
+{{-- Modal Edit --}}
 @foreach ($getData as $item)
 <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

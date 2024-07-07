@@ -90,7 +90,6 @@
         const dokumenSelect = document.getElementById('dokumenSelect');
         const lembagaData = @json($getData);
 
-        // Function to convert status_docs to readable text
         function getStatusText(status) {
             switch(parseInt(status)) {
                 case 1:

@@ -73,6 +73,10 @@ class AdminController extends BaseController
     }
 
     public function dokumen (){
+        $minor = Dokumen::where('status_docs', 1)->count();
+        $major = Dokumen::where('status_docs', 2)->count();
+        $close = Dokumen::where('status_docs', 3)->count();
+
         $dokumens = Dokumen::with(['lembaga.user'])
                     ->where(function($query) {
                         $query->where('status_pengisian', 2)
@@ -89,7 +93,7 @@ class AdminController extends BaseController
                 ->orWhere('status_pengisian', 3);
         })
         ->count();
-        return view('admin.dokumen', compact('dokumens', 'riwayatDocs', 'countDokumens'));
+        return view('admin.dokumen', compact('close','major','minor','dokumens', 'riwayatDocs', 'countDokumens'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -205,7 +209,7 @@ class AdminController extends BaseController
         })
         ->get();
 
-        // Hitung total skor dan jumlah temuan per lembaga
+        // total skor dan jumlah temuan per lembaga
         $skorPerLembaga = Evaluasi::select(
                 'id_lembaga',
                 DB::raw('SUM(score) as total_score'),
@@ -217,11 +221,15 @@ class AdminController extends BaseController
             ->orderBy('total_score', 'desc')
             ->get();
 
-        // Hitung total semua skor dan jumlah temuan
+        // total semua skor dan jumlah temuan
         $totalSkor = $score->sum('score');
         $totalTemuan = $evaluasi->count();
 
-        return view('admin.evaluasi', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan'));
+        $minor = Evaluasi::where('status_docs', 1)->count();
+        $major = Evaluasi::where('status_docs', 2)->count();
+        $close = Evaluasi::where('status_docs', 3)->count();
+
+        return view('admin.evaluasi', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
     }
 
     public function formTemuan() {

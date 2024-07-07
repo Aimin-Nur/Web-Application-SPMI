@@ -155,7 +155,7 @@
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
                                                         @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
                                                         @else
                                                             <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
                                                         @endif
@@ -175,7 +175,7 @@
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                @if ($item->status_pengisian == 3)
+                                                @if ($item->status_pengisian == 2)
                                                     <small class="badge badge-sm bg-gradient-success">Selesai</small>
                                                 @else
                                                     <small class="badge badge-sm bg-gradient-danger">Pending</small>
@@ -230,10 +230,88 @@
         @else
         <div class="container-fluid py-4">
             <div class="row">
+              <div class="col-lg-12 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$minor}}
+                                        <span class="text-warning text-sm font-weight-bolder">Minor</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-hourglass-half text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$major}}
+                                        <span class="text-danger text-sm font-weight-bolder">Mayor</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-gavel text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$close}}
+                                        <span class="text-success text-sm font-weight-bolder">Close</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-check-circle-o text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="container-fluid py-4">
+            <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Riwayat Dokumen Lembaga</h6>
+                            <h6>Riwayat Temuan Audit Lembaga</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -244,8 +322,7 @@
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor</th>
                                         </tr>
                                     </thead>
@@ -264,11 +341,7 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
-                                                        @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @else
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @endif
+                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan_temuan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -285,24 +358,27 @@
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                @if ($item->status_pengisian == 3)
+                                                @if ($item->status_pengisian == 2)
                                                     <small class="badge badge-sm bg-gradient-success">Selesai</small>
                                                 @else
                                                     <small class="badge badge-sm bg-gradient-danger">Pending</small>
                                                 @endif
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <small class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</small>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                @if ($item->deadline != 0)
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
-                                                @else
-                                                    <span class="text-secondary text-xs font-weight-bold">-</span>
+                                            <td class="align-middle text-center text-sm">
+                                                @if ($item->status_docs == 1)
+                                                    <span class="badge badge-sm bg-gradient-primary">Minor</span>
+                                                @elseif ($item->status_docs == 2)
+                                                    <span class="badge badge-sm bg-gradient-danger">Major</span>
+                                                @elseif ($item->status_docs == 3)
+                                                    <span class="badge badge-sm bg-gradient-success">Close</span>
                                                 @endif
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer me-2" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}" title="Hapus Data"></i>
+                                                <i class="fa fa-info-circle text-secondary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal{{$item->id}}" title="Detail Riwayat"></i>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -490,7 +566,7 @@
         });
     </script>
 
-    {{-- Modal Hapus Docs --}}
+    {{-- Modal Hapus Audit --}}
     @foreach ($evaluasi as $item)
     <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -532,6 +608,100 @@
       </div>
     </div>
     @endforeach
+
+    {{-- Modal Hapus Riwayat --}}
+    @foreach ($riwayat as $item)
+    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-body bg-3">
+            <div class="px-3 to-front">
+                <div class="row align-items-center">
+                <div class="col text-right">
+                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><span class="icon-close2"></span></span>
+                    </a>
+                </div>
+                </div>
+            </div>
+            <div class="p-4 to-front">
+                <div class="text-center">
+                <div class="logo">
+                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                </div>
+                <h4>Hapus Temuan Audit</h4>
+                <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
+                <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="row">
+                    <div class="col-6 mt-4">
+                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                    </div>
+                    <div class="col-6 mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                    </div>
+                    </div>
+                </form>
+                <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+
+
+{{-- Modal Detail --}}
+@foreach ($riwayat as $item)
+<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+              <ul>
+                <h6 class="text-sm py-3">
+                <li>Dibuat : {{$item->created_at}}</li> <br>
+                <li>Temuan Audit : {{$item->temuan}}</li> <br>
+                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
+                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
+                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
+                <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{$item->updated_at}}</li> <br>
+                <li>Status Pengisian :
+                    @if ($item->status_pengisian == 2)
+                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                    @else
+                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                    @endif
+                </li> <br>
+                <li> Status Dokumen :
+                    @if ($item->status_docs == 1)
+                        <span class="badge badge-xxs bg-gradient-primary">Minor</span>
+                    @elseif ($item->status_docs == 2)
+                        <span class="badge badge-sm bg-gradient-danger">Major</span>
+                    @elseif ($item->status_docs == 3)
+                        <span class="badge badge-sm bg-gradient-success">Close</span>
+                    @endif
+                </li><br>
+                <li>Skor Dokumen : {{$item->score}}</li>
+                </h6>
+              </ul>
+            </li>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
 
 
 @include('layouts.footer-admin')

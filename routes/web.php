@@ -33,9 +33,10 @@ Route::get('/', function () {
 Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboardUser', [UserController::class, 'index']);
     Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
-    Route::get('/jadwalrtm', [UserController::class, 'jadwalRTM']);
+    Route::get('/temuan', [UserController::class, 'temuanAudit']);
     Route::get('/profile', [UserController::class, 'profileUser']);
     Route::put('/sendDocs/{id}', [UserController::class, 'sendDocs']);
+    Route::put('/sendTemuan/{id}', [UserController::class, 'sendTemuan']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
 });
 
@@ -50,7 +51,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::put('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
-    Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
+    Route::delete('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
 
     Route::get('/temuanAudit', [AdminController::class, 'temuanAudit']);
     Route::get('/addTemuan', [AdminController::class, 'formTemuan']);
