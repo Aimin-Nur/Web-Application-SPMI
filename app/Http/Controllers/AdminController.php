@@ -252,8 +252,9 @@ class AdminController extends BaseController
                 'id_lembaga' => 'required|string|exists:lembaga,id',
                 'id_docs' => 'required|string|exists:dokumen,id',
             ]);
-            $existingTautanRTK = Evaluasi::where('tautan_temuan', $request->input('tautan_rtk'))->first();
-            $existingTautanTemuan = Evaluasi::where('tautan_rtk', $request->input('existingTautanTemuan'))->first();
+
+            $existingTautanRTK = Evaluasi::where('tautan_rtk', $request->input('tautan_rtk'))->first();
+            $existingTautanTemuan = Evaluasi::where('tautan_temuan', $request->input('tautan_temuan'))->first();
 
             if ($existingTautanRTK) {
                 return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen RTK sudah ada.');

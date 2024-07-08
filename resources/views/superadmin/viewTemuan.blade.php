@@ -136,7 +136,7 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
-                                            <th class="text-secondary opacity-7"></th>
+                                    
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -191,10 +191,6 @@
                                                     <span class="text-secondary text-xs font-weight-bold">-</span>
                                                 @endif
                                             </td>
-                                            <td class="align-middle">
-                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
-                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -217,11 +213,6 @@
                         <div class="empty">
                             <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px"></div>
                             <p class="empty-title text-bold">Belum Terdapat Riwayat Temuan Audit</p>
-                            <div class="empty-action">
-                                <a href="/addTemuan" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -230,10 +221,88 @@
         @else
         <div class="container-fluid py-4">
             <div class="row">
+              <div class="col-lg-12 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                  <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$minor}}
+                                        <span class="text-warning text-sm font-weight-bolder">Minor</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-hourglass-half text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$major}}
+                                        <span class="text-danger text-sm font-weight-bolder">Mayor</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-gavel text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <div class="row">
+                                  <div class="col-8">
+                                    <div class="numbers">
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
+                                      <h5 class="font-weight-bolder mb-0">
+                                        {{$close}}
+                                        <span class="text-success text-sm font-weight-bolder">Close</span>
+                                      </h5>
+                                    </div>
+                                  </div>
+                                  <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                      <i class="fa fa-check-circle-o text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="container-fluid py-4">
+            <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Riwayat Temuan Lembaga</h6>
+                            <h6>Riwayat Temuan Audit Lembaga</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -298,10 +367,6 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer me-2" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}" title="Hapus Data"></i>
-                                                <i class="fa fa-info-circle text-secondary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal{{$item->id}}" title="Detail Riwayat"></i>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -324,11 +389,6 @@
                         <div class="empty">
                             <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="Tidak Ada Skor" width="300px"></div>
                             <p class="empty-title text-bold">Belum Terdapat Skor untuk Lembaga.</p>
-                            <div class="empty-action">
-                                <a href="/addTemuan" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -390,240 +450,6 @@
 </div>
 </div>
 
-
-
-    {{-- Modal Edit Status --}}
-   @foreach ($evaluasi as $item)
-   <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-       <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content rounded-0">
-               <div class="modal-body bg-3">
-                   <div class="px-3 to-front">
-                       <div class="row align-items-center">
-                           <div class="col text-right">
-                               <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true"><span class="icon-close2"></span></span>
-                               </a>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="p-4 to-front">
-                       <div class="text-center">
-                           <div class="logo">
-                               <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                           </div>
-                           <h4>Edit Status Dokumen</h4>
-                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : {{$item->updated_at}}</p>
-                           <form action="/editTemuan/{{$item->id}}" class="mb-4" method="POST">
-                               @csrf
-                               @method('PUT')
-                                <div class="form-group">
-                                    <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
-                                        <option value="">Pilih Status Dokumen</option>
-                                        <option value="1">Minor</option>
-                                        <option value="2">Mayor</option>
-                                        <option value="3">Close</option>
-                                    </select>
-                                </div>
-                                <div class="deadline-form" id="Score-form{{ $item->id }}" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="score">Score</label>
-                                        <input type="number" class="form-control" id="score{{ $item->id }}" name="score">
-                                    </div>
-                                </div>
-                               <div class="row">
-                                   <div class="col-6 mt-4">
-                                       <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                                   </div>
-                                   <div class="col-6 mt-4">
-                                        <input type="hidden" name="hidden_score" value="4" id="hiddenScore{{ $item->id }}">
-                                       <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
-                                   </div>
-                               </div>
-                           </form>
-                           <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
-    @endforeach
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const statusSelects = document.querySelectorAll('.status-select');
-            const deadlineForms = document.querySelectorAll('.deadline-form');
-
-            statusSelects.forEach((statusSelect, index) => {
-                const deadlineForm = deadlineForms[index];
-                const hiddenScore = document.getElementById('hiddenScore' + statusSelect.id.replace('statusSelect', ''));
-                const scoreInput = document.getElementById('score' + statusSelect.id.replace('statusSelect', ''));
-
-                statusSelect.addEventListener('change', function() {
-                    const selectedValue = this.value;
-                    if (selectedValue === '1' || selectedValue === '2') {
-                        deadlineForm.style.display = 'block';
-                        hiddenScore.name = ''; // Disable hidden score input
-                        scoreInput.name = 'score'; // Enable visible score input
-                    } else {
-                        deadlineForm.style.display = 'none';
-                        hiddenScore.name = 'score'; // Enable hidden score input
-                        scoreInput.name = ''; // Disable visible score input
-                        hiddenScore.value = '4'; // Default value for hidden score
-                        scoreInput.value = ''; // Clear visible score input
-                    }
-                });
-
-                if (statusSelect.value === '1' || statusSelect.value === '2') {
-                    deadlineForm.style.display = 'block';
-                    hiddenScore.name = ''; // Disable hidden score input
-                    scoreInput.name = 'score'; // Enable visible score input
-                } else {
-                    deadlineForm.style.display = 'none';
-                    hiddenScore.name = 'score'; // Enable hidden score input
-                    scoreInput.name = ''; // Disable visible score input
-                }
-            });
-        });
-    </script>
-
-    {{-- Modal Hapus Audit --}}
-    @foreach ($evaluasi as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-0">
-            <div class="modal-body bg-3">
-            <div class="px-3 to-front">
-                <div class="row align-items-center">
-                <div class="col text-right">
-                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><span class="icon-close2"></span></span>
-                    </a>
-                </div>
-                </div>
-            </div>
-            <div class="p-4 to-front">
-                <div class="text-center">
-                <div class="logo">
-                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                </div>
-                <h4>Hapus Temuan Audit</h4>
-                <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
-                <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="row">
-                    <div class="col-6 mt-4">
-                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                    </div>
-                    <div class="col-6 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
-                    </div>
-                    </div>
-                </form>
-                <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
-    </div>
-    @endforeach
-
-    {{-- Modal Hapus Riwayat --}}
-    @foreach ($riwayat as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-0">
-            <div class="modal-body bg-3">
-            <div class="px-3 to-front">
-                <div class="row align-items-center">
-                <div class="col text-right">
-                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><span class="icon-close2"></span></span>
-                    </a>
-                </div>
-                </div>
-            </div>
-            <div class="p-4 to-front">
-                <div class="text-center">
-                <div class="logo">
-                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                </div>
-                <h4>Hapus Temuan Audit</h4>
-                <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
-                <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="row">
-                    <div class="col-6 mt-4">
-                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                    </div>
-                    <div class="col-6 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
-                    </div>
-                    </div>
-                </form>
-                <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
-    </div>
-    @endforeach
-
-
-{{-- Modal Detail --}}
-@foreach ($riwayat as $item)
-<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-unstyled">
-              <ul>
-                <h6 class="text-sm py-3">
-                <li>Dibuat : {{$item->created_at}}</li> <br>
-                <li>Temuan Audit : {{$item->temuan}}</li> <br>
-                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
-                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
-                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{$item->updated_at}}</li> <br>
-                <li>Status Pengisian :
-                    @if ($item->status_pengisian == 2)
-                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                    @else
-                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                    @endif
-                </li> <br>
-                <li> Status Dokumen :
-                    @if ($item->status_docs == 1)
-                        <span class="badge badge-xxs bg-gradient-primary">Minor</span>
-                    @elseif ($item->status_docs == 2)
-                        <span class="badge badge-sm bg-gradient-danger">Major</span>
-                    @elseif ($item->status_docs == 3)
-                        <span class="badge badge-sm bg-gradient-success">Close</span>
-                    @endif
-                </li><br>
-                <li>Skor Dokumen : {{$item->score}}</li>
-                </h6>
-              </ul>
-            </li>
-          </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-@endforeach
 
 
 @include('layouts.footer-admin')

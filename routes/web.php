@@ -82,6 +82,8 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::put('/editLembaga/{id}', [superAdminController::class, 'editLembaga']);
     Route::get('/user', [superAdminController::class, 'displayUser']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
+    Route::get('/dokumen/superadmin', [superAdminController::class, 'dokumen']);
+    Route::get('/temuan/superadmin', [superAdminController::class, 'temuanAudit']);
 });
 
 Route::middleware('auth')->group(function () {
