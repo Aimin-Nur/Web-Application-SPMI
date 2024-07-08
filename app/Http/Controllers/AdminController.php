@@ -120,8 +120,7 @@ class AdminController extends BaseController
 
     public function displayUser() {
         $getData = User::get();
-        $cekData = User::count();
-        return view('admin.displayUser', compact('getData','cekData'));
+        return view('admin.displayUser', compact('getData'));
     }
 
     public function editUser(Request $request, $id){

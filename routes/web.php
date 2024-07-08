@@ -84,6 +84,8 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
     Route::get('/dokumen/superadmin', [superAdminController::class, 'dokumen']);
     Route::get('/temuan/superadmin', [superAdminController::class, 'temuanAudit']);
+    Route::DELETE('/hapususer/superadmin/{id}', [superAdminController::class, 'deleteUser']);
+    Route::DELETE('/hapususer/dokumen/superadmin/{id}', [superAdminController::class, 'deleteUserAndDocuments']);
 });
 
 Route::middleware('auth')->group(function () {

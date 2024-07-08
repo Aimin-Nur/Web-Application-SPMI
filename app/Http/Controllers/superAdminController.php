@@ -122,7 +122,43 @@ class superAdminController extends Controller
 
     public function displayUser(){
         $getData = User::with('lembaga')->get();
+
         return view('superadmin.user', compact('getData'));
+    }
+
+    public function deleteUser($id){
+        try{
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return redirect('/user')->with('status', 'success')->with('message', 'User Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/user')->with('status', 'error')->with('message', 'Gagal Menghapus Akun User: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteUserAndDocuments($id){
+        try{
+            $user = User::findOrFail($id);
+            $idLembaga = $user->id_lembaga;
+
+            $cekDocUser = Dokumen::where('id_lembaga', $idLembaga)->count();
+            $cekEvalUser = Evaluasi::where('id_lembaga', $idLembaga)->count();
+
+            if ($cekDocUser > 0) {
+                Dokumen::where('id_lembaga', $idLembaga)->delete();
+            }
+
+            if ($cekEvalUser > 0) {
+                Evaluasi::where('id_lembaga', $idLembaga)->delete();
+            }
+            
+            $user->delete();
+
+             return redirect('/user')->with('status', 'success')->with('message', 'User Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/user')->with('status', 'error')->with('message', 'Gagal Menghapus Akun User: ' . $e->getMessage());
+        }
     }
 
     public function dokumen (){

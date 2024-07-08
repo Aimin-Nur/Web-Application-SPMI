@@ -39,7 +39,16 @@
                     </div>
                     <div class="ms-auto text-end">
                         <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
-                        <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
+                        @php
+                                $idLembaga = $item->id_lembaga;
+                                $cekDocUser = \App\Models\Dokumen::where('id_lembaga', $idLembaga)->count();
+                        @endphp
+
+                            @if ($cekDocUser > 0)
+                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalValidation{{ $item->id }}" title="Hapus Data"></i>
+                            @else
+                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{ $item->id }}" title="Hapus Data"></i>
+                        @endif
                     </div>
                 </li>
                 @endforeach
@@ -123,9 +132,9 @@
             <div class="logo">
                 <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
             </div>
-            <h4>Hapus Laporan Audit</h4>
-            <p class="mb-3 text-sm">Tindakan ini akan menghapus Laporan Audit <b> "{{$item->judul}}"</b> secara permanen.</p>
-            <form action="/hapusLaporan/{{$item->id}}" class="mb-4" method="POST">
+            <h4>Hapus Akun User</h4>
+            <p class="mb-3 text-sm">Tindakan ini akan menghapus Akun User <b> "{{$item->name}}"</b> secara permanen.</p>
+            <form action="/hapusUser/{{$item->id}}" class="mb-4" method="POST">
                 @csrf
                 @method('DeLETe')
                 <div class="row">
@@ -134,6 +143,49 @@
                 </div>
                 <div class="col-6 mt-4">
                     <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                </div>
+                </div>
+            </form>
+            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+@endforeach
+
+{{-- Modal Hapus Jika Dokumen User sudah ada --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="hapusModalValidation{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content rounded-0">
+        <div class="modal-body bg-3">
+        <div class="px-3 to-front">
+            <div class="row align-items-center">
+            <div class="col text-right">
+                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                </a>
+            </div>
+            </div>
+        </div>
+        <div class="p-4 to-front">
+            <div class="text-center">
+            <div class="logo">
+                <img src="{{asset('creative')}}/assets/img/all-del.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+            </div>
+            <h4>Hapus Akun User</h4>
+            <p class="mb-3 text-sm">Akun User <b> "{{$item->name}}"</b> telah melakukan pengiriman dokumen kepada Admin SPMI. TIndakan ini akan menghapus Akun User beserta dengan dokumen-doumen yang dimiliki oleh users.</p>
+            <form action="/hapususer/dokumen/superadmin/{{$item->id}}" class="mb-4" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="row">
+                <div class="col-6 mt-4">
+                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                </div>
+                <div class="col-6 mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Hapus Akun</button>
                 </div>
                 </div>
             </form>
