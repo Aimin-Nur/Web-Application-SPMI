@@ -482,14 +482,10 @@
           </nav>
           <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-              <div class="input-group">
-                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Type here...">
-              </div>
             </div>
             <ul class="navbar-nav  justify-content-end">
               <li class="nav-item d-flex align-items-center">
-                <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
+                <a class="btn btn-outline-primary btn-sm mb-0 me-3" id="dateTimeButton"></a>
               </li>
               <li class="nav-item d-flex align-items-center">
 
@@ -616,3 +612,16 @@
         </div>
       </nav>
       <!-- End Navbar -->
+      <script>
+        const dateTimeButton = document.getElementById('dateTimeButton');
+
+        function updateDateTime() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        const formattedTime = now.toLocaleString('id-ID', options);
+
+        dateTimeButton.textContent = formattedTime;
+        }
+        setInterval(updateDateTime, 1000);
+
+     </script>

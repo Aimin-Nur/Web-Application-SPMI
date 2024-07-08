@@ -21,19 +21,16 @@
 <meta name="description" content="Santuan Penjaminan Mutu Kalla Institute">
 
 <meta name="twitter:card" content="Santuan Penjaminan Mutu Kalla Institute">
-<meta name="twitter:site" content="@creativetim">
+<meta name="twitter:site" content="@aiminnur">
 <meta name="twitter:title" content="Santuan Penjaminan Mutu Kalla Institute">
 <meta name="twitter:description" content="Santuan Penjaminan Mutu Kalla Institute">
-<meta name="twitter:creator" content="@creativetim">
-<meta name="twitter:image" content="https://s3.amazonaws.com/creativetim_bucket/products/450/original/opt_sd_free_thumbnail.png">
+<meta name="twitter:creator" content="@aiminnur">
 
 <meta property="fb:app_id" content="655968634437471">
-<meta property="og:title" content="Soft UI Dashboard by Creative Tim" />
+<meta property="og:title" content="Audit Mutu Internal Kalla Institute" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://demos.creative-tim.com/soft-ui-dashboard/examples/dashboard.html" />
-<meta property="og:image" content="https://s3.amazonaws.com/creativetim_bucket/products/450/original/opt_sd_free_thumbnail.png" />
 <meta property="og:description" content="SPMI Kalla Institute" />
-<meta property="og:site_name" content="Creative Tim" />
+<meta property="og:site_name" content=https://aimin-nur.github.io/Profile/" />
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 
@@ -121,9 +118,10 @@
 
 
 <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+@livewireStyles
 </head>
 <body class="g-sidenav-show  bg-gray-100">
-
+    @livewireScripts
 
 <style>
     .toast {
