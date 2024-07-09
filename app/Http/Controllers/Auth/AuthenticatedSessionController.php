@@ -45,7 +45,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email atau Kata Sandi Anda Tidak Terdaftar.',
         ]);
     }
 

@@ -485,7 +485,7 @@
             </div>
             <ul class="navbar-nav  justify-content-end">
               <li class="nav-item d-flex align-items-center">
-                <a class="btn btn-outline-primary btn-sm mb-0 me-3" id="dateTimeButton"></a>
+                <a class="btn btn-outline-primary btn-sm mb-0 me-3">SPMI Kalla Institute</a>
               </li>
               <li class="nav-item d-flex align-items-center">
 
@@ -519,15 +519,6 @@
                 </a>
                 @endauth
 
-              </li>
-              <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                  <div class="sidenav-toggler-inner">
-                    <i class="sidenav-toggler-line"></i>
-                    <i class="sidenav-toggler-line"></i>
-                    <i class="sidenav-toggler-line"></i>
-                  </div>
-                </a>
               </li>
               <li class="nav-item px-3 d-flex align-items-center">
                 <a href="javascript:;" class="nav-link text-body p-0">

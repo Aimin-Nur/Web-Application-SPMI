@@ -46,6 +46,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
     Route::get('/manageUser', [AdminController::class, 'displayUser']);
     Route::put('/editUser/{id}', [AdminController::class, 'editUser']);
+    Route::delete('/hapusUser/{id}', [AdminController::class, 'hapusUser']);
 
     Route::get('/dokumen', [AdminController::class, 'dokumen']);
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
@@ -81,6 +82,7 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::DELETE('/hapusLembaga/{id}', [superAdminController::class, 'hapusLembaga']);
     Route::put('/editLembaga/{id}', [superAdminController::class, 'editLembaga']);
     Route::get('/user', [superAdminController::class, 'displayUser']);
+    Route::put('/editUser/{id}', [superAdminController::class, 'editUser']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
     Route::get('/dokumen/superadmin', [superAdminController::class, 'dokumen']);
     Route::get('/temuan/superadmin', [superAdminController::class, 'temuanAudit']);

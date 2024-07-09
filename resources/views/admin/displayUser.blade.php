@@ -189,7 +189,7 @@
             </div>
             <h4>Hapus Akun User</h4>
             <p class="mb-3 text-sm">Tindakan ini akan menghapus Akun Pengguna <b> "{{$item->name}}"</b> secara permanen.</p>
-            <form action="/hapususer/superadmin/{{$item->id}}" class="mb-4" method="POST">
+            <form action="/hapusUser/{{$item->id}}" class="mb-4" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="row">

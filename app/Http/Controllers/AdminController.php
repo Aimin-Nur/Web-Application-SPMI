@@ -142,6 +142,17 @@ class AdminController extends BaseController
         }
     }
 
+    public function hapusUser($id){
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return redirect('/manageUser')->with('status', 'success')->with('message', 'Akun User Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect('/manageUser')->with('status', 'error')->with('message', 'Gagal Menghapus Akun User: ' . $e->getMessage());
+        }
+    }
+
     public function formDokumen() {
         $getData = Lembaga::has('user')->with('user')->get();
         return view('admin.formDokumen', compact('getData'));

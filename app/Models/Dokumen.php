@@ -44,5 +44,4 @@ class Dokumen extends Model
     {
         return $this->belongsTo(Lembaga::class, 'id_lembaga', 'id');
     }
-
 }

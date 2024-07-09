@@ -42,7 +42,7 @@
 
 
     <!-- Modal Tambah Lembaga -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content rounded-0">
             <div class="modal-body bg-3">
@@ -85,9 +85,9 @@
         </div>
     </div>
 
-     {{-- Modal Hapus Docs --}}
-     @foreach ($getData as $item)
-     <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+{{-- Modal Hapus Lembaga --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
        <div class="modal-dialog modal-dialog-centered" role="document">
        <div class="modal-content rounded-0">
            <div class="modal-body bg-3">
@@ -106,7 +106,7 @@
                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
                </div>
                <h4>Hapus Lembaga</h4>
-               <p class="mb-3 text-sm">Tindakan ini akan menghapus dokumen <b> "{{$item->nama_lembaga}}"</b> secara permanen.</p>
+               <p class="mb-3 text-sm">Tindakan ini akan menghapus Lembaga <b> "{{$item->nama_lembaga}}"</b> secara permanen.</p>
                <form action="/hapusLembaga/{{$item->id}}" class="mb-4" method="POST">
                    @csrf
                    @method("DELETE")
@@ -125,12 +125,48 @@
            </div>
        </div>
        </div>
-    </div>
-     @endforeach
+</div>
+@endforeach
 
-     {{-- Modal Edit Docs --}}
-  @foreach ($getData as $item)
-  <div class="modal fade" id="editModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+{{-- Modal Hapus Lembaga Validation --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="hapusModalValidation{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content rounded-0">
+           <div class="modal-body bg-3">
+           <div class="px-3 to-front">
+               <div class="row align-items-center">
+               <div class="col text-right">
+                   <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true"><span class="icon-close2"></span></span>
+                   </a>
+               </div>
+               </div>
+           </div>
+           <div class="p-4 to-front">
+               <div class="text-center">
+               <div class="logo">
+                   <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+               </div>
+               <h4>Hapus Lembaga</h4>
+               <p class="mb-3 text-sm">Lembaga <b> "{{$item->nama_lembaga}}"</b> telah melakukan pengiriman dokumen-dokumen Audit, Silahkan Menghapus Akun User yang berkaitan dengan Lembaga tersebut.</p>
+                <div class="row">
+                   <div class="col-12 mt-4">
+                       <a href="/user"><button class="btn btn-primary btn-block">Hapus Akun User</button></a>
+                   </div>
+                </div>
+               <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+</div>
+@endforeach
+
+{{-- Modal Edit Docs --}}
+@foreach ($getData as $item)
+<div class="modal fade" id="editModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content rounded-0">
         <div class="modal-body bg-3">
@@ -174,7 +210,12 @@
     </div>
     </div>
 </div>
-  @endforeach
+@endforeach
+
+
+
+
+
 
 
 @include('layouts.footer-admin')

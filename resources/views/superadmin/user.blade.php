@@ -79,19 +79,19 @@
                         <div class="logo">
                             <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
                         </div>
-                        <h4>Edit Laporan Audit</h4>
+                        <h4>Edit Akun Pengguna</h4>
                         <p class="mb-3 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam commodi cum similique.</p>
-                        <form action="/editLaporan/{{$item->id}}" class="mb-4" method="POST">
+                        <form action="/editUser/{{$item->id}}" class="mb-4" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label>Judul Laporan</label>
-                                <input type="text" class="form-control" name="laporan" placeholder="{{$item->judul}}">
+                                <label>Nama User</label>
+                                <input type="text" class="form-control" name="name" placeholder="{{$item->name}}">
                             </div>
                              <div class="deadline-form">
                                  <div class="form-group">
-                                     <label for="score">Tautan Laporan</label>
-                                     <input type="text" class="form-control" name="tautan" placeholder="{{$item->tautan}}">
+                                     <label for="score">Email User</label>
+                                     <input type="text" class="form-control" name="email" placeholder="{{$item->email}}">
                                  </div>
                              </div>
                             <div class="row">

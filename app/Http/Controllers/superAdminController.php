@@ -95,13 +95,16 @@ class superAdminController extends Controller
 
     public function hapusLembaga($id){
         try {
-            $dokumen = Lembaga::findOrFail($id);
-            $dokumen->delete();
+            $lembaga = Lembaga::findOrFail($id);
+            $lembaga->delete();
+
             return redirect('/lembaga')->with('status', 'success')->with('message', 'Lembaga Berhasil Dihapus.');
+
         } catch (\Exception $e) {
-            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menghapus Lembaga: ' . $e->getMessage());
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menghapus Lembaga: ' . 'Gagal Menghapus Lembaga Karena Terdapat Dokumen Audit yang Terdaftar Dalam Aplikasi');
         }
     }
+
 
     public function editLembaga(Request $request, $id){
         try {
@@ -137,6 +140,25 @@ class superAdminController extends Controller
         }
     }
 
+    public function editUser(Request $request, $id){
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|mail',
+            ]);
+
+            $user = User::findOrFail($id);
+
+            $user->name = $request->input('name');
+            $user->emal = $request->input('email');
+            $user->save();
+
+            return redirect('/lembaga')->with('status', 'success')->with('message', 'Akun User Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . $e->getMessage());
+        }
+    }
+
     public function deleteUserAndDocuments($id){
         try{
             $user = User::findOrFail($id);
@@ -152,7 +174,7 @@ class superAdminController extends Controller
             if ($cekEvalUser > 0) {
                 Evaluasi::where('id_lembaga', $idLembaga)->delete();
             }
-            
+
             $user->delete();
 
              return redirect('/user')->with('status', 'success')->with('message', 'User Berhasil Dihapus.');

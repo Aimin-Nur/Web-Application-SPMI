@@ -106,9 +106,6 @@
                     <div class="card mb-4">
                         <div class="card-header col-lg-12 pb-0">
                             <div class="row mb-3">
-                                <div class="col-8">
-                                    <a class="float-star btn-md btn bg-gradient-dark mb-0" href="/addTemuan"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit</a>
-                                </div>
                                 <div class="col-4">
                                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                                         <div class="input-group">
