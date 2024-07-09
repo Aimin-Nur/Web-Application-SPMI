@@ -41,7 +41,7 @@
 </div>
 
 
-    <!-- Modal Tambah Lembaga -->
+<!-- Modal Tambah Lembaga -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content rounded-0">
@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>
-    </div>
+</div>
 
 {{-- Modal Hapus Lembaga --}}
 @foreach ($getData as $item)

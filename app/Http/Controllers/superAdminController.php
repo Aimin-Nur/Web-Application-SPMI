@@ -14,10 +14,12 @@ use App\Models\Dokumen;
 use App\Models\Evaluasi;
 use App\Models\RTM;
 use App\Models\LaporanAudit;
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class superAdminController extends Controller
 {
@@ -144,18 +146,17 @@ class superAdminController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'email' => 'required|mail',
             ]);
 
             $user = User::findOrFail($id);
 
             $user->name = $request->input('name');
-            $user->emal = $request->input('email');
+            $user->email = $request->input('email');
             $user->save();
 
-            return redirect('/lembaga')->with('status', 'success')->with('message', 'Akun User Berhasil Diedit.');
+            return redirect('/user')->with('status', 'success')->with('message', 'Akun User Berhasil Diedit.');
         } catch (\Exception $e) {
-            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . $e->getMessage());
+            return redirect('/user')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . 'Data Email Harus Lengkap.');
         }
     }
 
@@ -250,6 +251,56 @@ class superAdminController extends Controller
         $close = Evaluasi::where('status_docs', 3)->count();
 
         return view('superadmin.viewTemuan', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
+    }
+
+    public function laporanAudit(){
+        $getData = LaporanAudit::get();
+        return view('superadmin.viewLaporan', compact('getData'));
+    }
+
+    public function displayAdmin(){
+        $getData = Admin::get();
+        return view('superadmin.manageAdmin', compact('getData'));
+    }
+
+    public function registrasiAdmin(Request $request){
+        try {
+            $admin = new Admin;
+            $admin->name = $request->input('name');
+            $admin->email = $request->input('email');
+            $admin->password = Hash::make($request->input('email'));
+            $admin->save();
+
+            return redirect('/manageAdmin/superadmin')->with('status', 'success')->with('message', 'Registrasi Admin Berhasil.');
+        } catch (\Exception $e) {
+            return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Registrasi Admin' . $e->getMessage());
+        }
+    }
+
+    public function editAdmin(Request $request, $id){
+        try {
+            $admin = Admin::findOrFail($id);
+
+            $admin->name = $request->input('name');
+            $admin->email = $request->input('email');
+            $admin->save();
+
+            return redirect('/manageAdmin/superadmin')->with('status', 'success')->with('message', 'Akun Admin Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun Admin: ' . $e->getMessage());
+        }
+    }
+
+    public function hapusAdmin($id){
+        try {
+            $admin = Admin::findOrFail($id);
+            $admin->delete();
+
+            return redirect('/manageAdmin/superadmin')->with('status', 'success')->with('message', 'Admin Berhasil Dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Menghapus Admin: ' . $e->getMessage());
+        }
     }
 
 
