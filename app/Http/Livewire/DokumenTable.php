@@ -33,7 +33,8 @@ class DokumenTable extends Component
         $dokumens = Dokumen::with(['lembaga.user'])
             ->where(function($query) {
                 $query->where('status_pengisian', 2)
-                    ->orWhere('status_pengisian', 0);
+                    ->orWhere('status_pengisian', 0)
+                    ->orWhere('status_pengisian', 1);
             })
             ->where('score', NULL)
             ->where(function($query) {

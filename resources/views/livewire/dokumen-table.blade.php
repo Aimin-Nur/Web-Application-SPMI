@@ -46,7 +46,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                    @if ($item->status_pengisian == 2)
+                                                    @if ($item->status_pengisian == 2 || $item->status_pengisian == 1)
                                                         <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
                                                     @else
                                                         <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
@@ -57,8 +57,10 @@
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_pengisian == 2)
                                                 <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                                            @elseif ($item->status_pengisian == 1)
+                                                <small class="badge badge-sm bg-gradient-danger">Terlambat</small>
                                             @else
-                                                <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                                                <small class="badge badge-sm bg-gradient-secondary">Pending</small>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">
@@ -72,7 +74,11 @@
                                             @endif
                                         </td>
                                         <td class="align-middle">
-                                            <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
+                                            @if($item->status_pengisian == 2 || $item->status_pengisian == 1)
+                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
+                                            @else
+                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#unsend{{$item->id}}" title="Edit Status"></i>
+                                            @endif
                                             <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
                                         </td>
                                     </tr>

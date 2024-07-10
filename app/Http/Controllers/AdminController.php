@@ -77,13 +77,7 @@ class AdminController extends BaseController
         $major = Dokumen::where('status_docs', 2)->count();
         $close = Dokumen::where('status_docs', 3)->count();
 
-        $dokumens = Dokumen::with(['lembaga.user'])
-                    ->where(function($query) {
-                        $query->where('status_pengisian', 2)
-                        ->orwhere('status_pengisian', 0);
-                    })
-                    ->where('score', NULL)
-                    ->get();
+        $dokumens = Dokumen::get();
 
         $riwayatDocs = Dokumen::with(['lembaga.user'])->where('status_pengisian', 2)->get();
 
@@ -119,7 +113,7 @@ class AdminController extends BaseController
     }
 
     public function displayUser() {
-        $getData = User::get();
+        $getData = User::with('lembaga')->get();
         return view('admin.displayUser', compact('getData'));
     }
 

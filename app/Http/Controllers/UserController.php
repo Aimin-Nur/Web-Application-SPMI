@@ -83,8 +83,17 @@ class UserController extends Controller
     public function sendDocs($id){
         try {
             $docs = Dokumen::findOrFail($id);
+            $deadline = $docs->deadline;
 
-            $docs->status_pengisian = 2;
+            $getDay = \Carbon\Carbon::now();
+
+            if ($getDay > $deadline) {
+                $docs->status_pengisian = 1;
+            } else {
+                $docs->status_pengisian = 2;
+            }
+
+            $docs->tgl_pengumpulan = $getDay;
             $docs->save();
 
             return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
@@ -147,9 +156,11 @@ class UserController extends Controller
 
     public function sendTemuan ($id){
         try {
+            $getDay = date('Y-m-d H:i:s', strtotime('now'));
             $docs = Evaluasi::findOrFail($id);
 
             $docs->status_pengisian = 2;
+            $docs->tgl_pengumpulan = $getDay;
             $docs->save();
 
             return redirect('/temuan')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');

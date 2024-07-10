@@ -376,6 +376,40 @@
 </div>
 @endforeach
 
+{{-- Modal Validasi Edit Status --}}
+@foreach ($dokumens as $item)
+<div class="modal fade" id="unsend{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content rounded-0">
+               <div class="modal-body bg-3">
+                   <div class="px-3 to-front">
+                       <div class="row align-items-center">
+                           <div class="col text-right">
+                               <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true"><span class="icon-close2"></span></span>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="p-4 to-front">
+                       <div class="text-center">
+                           <div class="logo">
+                               <img src="{{asset('creative')}}/assets/img/unsend.png" alt="img-fluid" class="img-fluid mb-4 w-60">
+                           </div>
+                           <h4>Lembaga Belum Menyelesaikan Dokumen</h4>
+                           <p class="mb-3 text-sm">Lembaga Belum Menyelesaikan Dokumen yang Anda Kirimkan. Hubungi Admin Lembaga Untuk Informasi Lebih Lanjut.</p>
+                            <div class="col-12 mt-4">
+                                <button type="button" aria-label="Close" class="btn btn-primary btn-block">Oke, Saya Mengerti</button>
+                            </div>
+                            <small class="mb-0 cancel text-center"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                        </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+    </div>
+</div>
+@endforeach
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -416,8 +450,8 @@
     </script>
 
 
-    {{-- Modal Hapus Docs --}}
-    @foreach ($dokumens as $item)
+{{-- Modal Hapus Docs --}}
+@foreach ($dokumens as $item)
     <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content rounded-0">
@@ -456,9 +490,9 @@
       </div>
       </div>
   </div>
-    @endforeach
+@endforeach
 
-    {{-- Detail Riwayat --}}
+{{-- Detail Riwayat --}}
 @foreach ($riwayatDocs as $item)
 <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
