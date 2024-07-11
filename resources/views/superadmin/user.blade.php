@@ -81,7 +81,7 @@
                         </div>
                         <h4>Edit Akun Pengguna</h4>
                         <p class="mb-3 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam commodi cum similique.</p>
-                        <form action="/editUser/{{$item->id}}" class="mb-4" method="POST">
+                        <form action="/editUser/superadmin/{{$item->id}}" class="mb-4" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">

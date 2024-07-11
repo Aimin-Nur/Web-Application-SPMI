@@ -65,7 +65,7 @@ class Evaluasi extends Model
 
     public function dokumen()
     {
-        return $this->hasOne(Dokumen::class, 'id_docs', 'id');
+        return $this->belongsTo(Dokumen::class, 'id_docs', 'id');
     }
 
 }

@@ -589,6 +589,7 @@
               <ul>
                 <h6 class="text-sm py-3">
                 <li>Dibuat : {{$item->created_at}}</li> <br>
+                <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
                 <li>Temuan Audit : {{$item->temuan}}</li> <br>
                 <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>

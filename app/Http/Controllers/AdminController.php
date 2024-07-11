@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\SendDokumenEmail;
+use App\Jobs\SendTemuanEmail;
 
 class AdminController extends BaseController
 {
@@ -175,6 +177,12 @@ class AdminController extends BaseController
             $send->deadline = $request->input('field_durasi');
             $send->save();
 
+            $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
+            foreach ($users as $user) {
+                // Kirim email ke setiap pengguna
+                SendDokumenEmail::dispatch($user->email);
+            }
+
             return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
         } catch (\Exception $e) {
             return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
@@ -200,12 +208,12 @@ class AdminController extends BaseController
         })
         ->get();
 
-        $riwayat = Evaluasi::with(['lembaga.user'])->where(function($query) {
+        $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])->where(function($query) {
             $query->where('status_pengisian', 1)
-                ->orWhere('status_pengisian', 2)
-                ->where('score', '!=', NULL);
-        })
-        ->get();
+                  ->orWhere('status_pengisian', 2)
+                  ->where('score', '!=', NULL);
+        })->get();
+
 
         $score = Evaluasi::with(['lembaga.user'])
         ->where(function($query) {
@@ -279,6 +287,12 @@ class AdminController extends BaseController
             $send->tautan_temuan = $request->input('tautan_temuan');
             $send->deadline = $request->input('deadline');
             $send->save();
+
+            $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
+            foreach ($users as $user) {
+                // Kirim email ke setiap pengguna
+                SendTemuanEmail::dispatch($user->email);
+            }
 
             return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Temuan Audit Berhasil Ditambakan.');
             } catch (\Exception $e) {
