@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class Lembaga extends Model
 {
@@ -21,6 +22,20 @@ class Lembaga extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected function formatTimestamp($timestamp){
+        Carbon::setLocale('id');
+
+        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
 
     protected static function boot()
     {

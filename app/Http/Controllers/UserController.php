@@ -69,7 +69,7 @@ class UserController extends Controller
                     ->get();
 
 
-        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->where('status_pengisian', 2)->get();
+        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->where('status_pengisian', 2)->orwhere('status_pengisian', 1)->get();
 
         $cekDokumens = Dokumen::where('id_lembaga', $idLembaga)->where(function($query) {
             $query->where('status_pengisian', 0)
@@ -85,15 +85,16 @@ class UserController extends Controller
             $docs = Dokumen::findOrFail($id);
             $deadline = $docs->deadline;
 
-            $getDay = \Carbon\Carbon::now();
+            $now = Carbon::now('Asia/Makassar')->locale('id_ID');
+            $formattedDate = $now->isoFormat('dddd, DD MMMM YYYY');
 
-            if ($getDay > $deadline) {
+            if ($formattedDate < $deadline) {
                 $docs->status_pengisian = 1;
             } else {
                 $docs->status_pengisian = 2;
             }
 
-            $docs->tgl_pengumpulan = $getDay;
+            $docs->tgl_pengumpulan = $now;
             $docs->save();
 
             return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');

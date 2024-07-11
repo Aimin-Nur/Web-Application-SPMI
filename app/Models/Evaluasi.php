@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Evaluasi extends Model
 {
@@ -29,6 +30,20 @@ class Evaluasi extends Model
         'deadline',
         'tgl_pengumpulan',
     ];
+
+    protected function formatTimestamp($timestamp){
+        Carbon::setLocale('id');
+
+        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
 
     protected static function boot()
     {

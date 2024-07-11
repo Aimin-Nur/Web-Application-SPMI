@@ -203,7 +203,7 @@
                             </span>
                             <div class="timeline-content">
                                 <h6 class="text-dark text-sm font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}: {{ $lembaga['total_score'] }}</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ $lembaga['updated_at'] ? \Carbon\Carbon::parse($lembaga['updated_at'])->format('d M Y h:i A') : 'No update' }}</p>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ $lembaga['updated_at'] ? $lembaga['updated_at'] : '-' }}</p>
                             </div>
                         </div>
                     @endforeach

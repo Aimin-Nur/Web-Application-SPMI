@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -47,6 +48,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected function formatTimestamp($timestamp){
+        Carbon::setLocale('id');
+
+        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+    
     protected static function boot()
     {
         parent::boot();
@@ -61,4 +76,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Lembaga::class, 'id_lembaga', 'id');
     }
+
+
 }

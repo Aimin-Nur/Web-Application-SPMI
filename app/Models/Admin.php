@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Admin extends Authenticatable
 {
@@ -36,6 +37,20 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected function formatTimestamp($timestamp){
+        Carbon::setLocale('id');
+
+        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
 
     protected static function boot()
     {

@@ -79,7 +79,10 @@ class AdminController extends BaseController
 
         $dokumens = Dokumen::get();
 
-        $riwayatDocs = Dokumen::with(['lembaga.user'])->where('status_pengisian', 2)->get();
+        $riwayatDocs = Dokumen::with(['lembaga.user'])
+                        ->where('status_pengisian', 2)
+                        ->orwhere('status_pengisian', 1)
+                        ->get();
 
         $countDokumens = Dokumen::with(['lembaga.user'])
         ->where(function($query) {
@@ -98,8 +101,7 @@ class AdminController extends BaseController
 
             $dokumen = Dokumen::findOrFail($id);
             $dokumen->status_docs = $request->input('status');
-            $dokumen->status_pengisian = 2;
-            // $dokumen->status_pengisian = ($request->input('status') == 3) ? 2 : 0;
+            $dokumen->status_pengisian = $request->input('status_pengisian');
 
             $score = $request->input('score', 4);
             $dokumen->score = $score;

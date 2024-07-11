@@ -90,7 +90,7 @@
             </div>
         </div>
        @else
-       @livewire('dokumen-table')
+       @livewire('admin.dokumen-table')
     </div>
     @endif
 
@@ -195,77 +195,7 @@
               </div>
             </div>
         </div>
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                  <div class="card mb-4">
-                    <div class="card-header pb-0">
-                      <h6>Riwayat Dokumen Lembaga</h6>
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($riwayatDocs as $item)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
-                                                    <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            @if ($item->status_pengisian == 1)
-                                                <span class="badge badge-sm bg-gradient-danger">Terlambat</span>
-                                            @elseif($item->status_pengisian == 2)
-                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                            @else
-                                                <span class="badge badge-sm bg-gradient-secondary">Revisi</span>
-                                            @endif
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            @if ($item->status_docs == 1)
-                                                <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                            @elseif ($item->status_docs == 2)
-                                                <span class="badge badge-sm bg-gradient-danger">Major</span>
-                                            @elseif ($item->status_docs == 3)
-                                                <span class="badge badge-sm bg-gradient-success">Close</span>
-                                            @endif
-                                        </td>
-                                        <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">{{$item->score}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
-                                            <i class="fa fa-info-circle text-secondary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal{{$item->id}}" title="Detail Riwayat"></i>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-           </div>
-        </div>
+        @livewire('admin.riwayat-dokumen-table')
         @endif
     </div>
 
@@ -343,6 +273,7 @@
                            <form action="/editStatus/{{$item->id}}" class="mb-4" method="POST">
                                @csrf
                                @method('PUT')
+                               <input type="hidden" value="{{$item->status_pengisian}}" name="status_pengisian">
                                 <div class="form-group">
                                     <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
                                         <option value="">Pilih Status Dokumen</option>
@@ -511,7 +442,7 @@
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
                 <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
                 <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{$item->updated_at}}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{$item->tgl_pengumpulan}}</li> <br>
                 <li>Status Pengisian :
                     @if ($item->status_pengisian == 2)
                         <small class="badge badge-sm bg-gradient-success">Selesai</small>

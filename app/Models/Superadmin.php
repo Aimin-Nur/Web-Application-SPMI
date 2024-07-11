@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
 class Superadmin extends Authenticatable
 {
@@ -42,4 +43,19 @@ class Superadmin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function formatTimestamp($timestamp){
+        Carbon::setLocale('id');
+
+        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    }
+
+    public function getCreatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
 }
