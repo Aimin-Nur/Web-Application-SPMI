@@ -14,6 +14,7 @@ use App\Models\Dokumen;
 use App\Models\Evaluasi;
 use App\Models\RTM;
 use App\Models\LaporanAudit;
+use App\Models\Auditor;
 use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -300,6 +301,73 @@ class superAdminController extends Controller
 
         } catch (\Exception $e) {
             return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Menghapus Admin: ' . $e->getMessage());
+        }
+    }
+
+    public function auditor(){
+        $getData = Auditor::get();
+        return view('superadmin.auditor', compact('getData'));
+    }
+
+    public function addAuditor(Request $request){
+        try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'foto' => 'required|image|mimes:jpeg,png,jpg|max:4096', // 4MB
+            ]);
+
+            $auditor = new Auditor;
+            $auditor->nama = $request->input('nama');
+
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('auditors'), $filename);
+                $auditor->foto = $filename;
+            }
+
+            $auditor->save();
+
+            return redirect('/auditor/superadmin')->with('status', 'success')->with('message', 'Berhasil Menambahkan Data Auditor.');
+        } catch (\Exception $e) {
+            return redirect('/auditor/superadmin')->with('status', 'error')->with('message', 'Gagal Menghapus Data Auditor: ' . $e->getMessage());
+        }
+    }
+
+    public function hapusAuditor($id){
+        try {
+            $auditor = Auditor::findOrFail($id);
+            $auditor->delete();
+
+            return redirect('/auditor/superadmin')->with('status', 'success')->with('message', 'Auditor Berhasil Dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect('/auditor/superadmin')->with('status', 'error')->with('message', 'Gagal Menghapus Auditor: ' . $e->getMessage());
+        }
+    }
+
+    public function editAuditor(Request $request, $id){
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:4096', // 4MB
+        ]);
+
+        try {
+            $auditor = Auditor::findOrFail($id);
+            $auditor->nama = $request->input('nama');
+
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('auditors'), $filename);
+                $auditor->foto = $filename;
+            }
+
+            $auditor->save();
+
+            return redirect('/auditor/superadmin')->with('status', 'success')->with('message', 'Auditor Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/auditor/superadmin')->with('status', 'error')->with('message', 'Auditor Gagal Diedit.' . $e->getMessage());
         }
     }
 
