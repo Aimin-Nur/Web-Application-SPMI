@@ -13,7 +13,7 @@ use App\Models\Superadmin;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
-class DokumenTable extends Component
+class TemuanTable extends Component
 {
     use WithPagination;
 
@@ -29,24 +29,24 @@ class DokumenTable extends Component
     }
 
     public function render()
-    {
+{
+    $user = Auth::user();
+    $idLembaga = $user->id_lembaga;
 
-        $user = Auth::user();
-        $idLembaga = $user->id_lembaga;
-
-        $dokumens = Dokumen::where('id_lembaga', $idLembaga)
-                    ->where(function($query) {
+    $evaluasi = Evaluasi::with(['lembaga.user'])
+                    ->where(function($query) use ($idLembaga) {
                         $query->where('status_pengisian', 0)
-                            ->orWhere('status_pengisian', 3);
+                            ->whereNull('score')
+                            ->where('id_lembaga', $idLembaga);
                     })
                     ->where(function($query) {
-                        $query->where('judul', 'like', '%' . $this->search . '%');
+                        $query->where('temuan', 'like', '%' . $this->search . '%');
                     })
                     ->paginate(10);
 
-        return view('livewire.user.dokumen-table', [
-            'dokumens' => $dokumens
-        ]);
-    }
+    return view('livewire.user.temuan-table', [
+        'evaluasi' => $evaluasi
+    ]);
+}
 }
 

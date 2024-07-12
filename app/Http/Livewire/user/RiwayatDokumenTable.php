@@ -13,7 +13,7 @@ use App\Models\Superadmin;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
-class DokumenTable extends Component
+class RiwayatDokumenTable extends Component
 {
     use WithPagination;
 
@@ -30,23 +30,22 @@ class DokumenTable extends Component
 
     public function render()
     {
-
         $user = Auth::user();
         $idLembaga = $user->id_lembaga;
 
-        $dokumens = Dokumen::where('id_lembaga', $idLembaga)
+        $finishDocs = Dokumen::where('id_lembaga', $idLembaga)
                     ->where(function($query) {
-                        $query->where('status_pengisian', 0)
-                            ->orWhere('status_pengisian', 3);
+                        $query->where('status_pengisian', 2)
+                            ->orWhere('status_pengisian', 1);
                     })
                     ->where(function($query) {
                         $query->where('judul', 'like', '%' . $this->search . '%');
                     })
                     ->paginate(10);
 
-        return view('livewire.user.dokumen-table', [
-            'dokumens' => $dokumens
+        return view('livewire.user.riwayat-dokumen-table', [
+            'finishDocs' => $finishDocs
         ]);
     }
-}
+    }
 
