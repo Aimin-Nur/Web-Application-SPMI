@@ -106,105 +106,7 @@
             </div>
         </div>
         @else
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header col-lg-12 pb-0">
-                            <div class="row mb-3">
-                                <div class="col-8">
-                                    <a class="float-star btn-md btn bg-gradient-dark mb-0" href="/addTemuan"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit</a>
-                                </div>
-                                <div class="col-4">
-                                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                                        <div class="input-group">
-                                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                                            <input type="text" class="form-control" placeholder="Type here...">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($evaluasi as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
-                                                        @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
-                                                        @else
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->rtk}}</h6>
-                                                            @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @else
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                @if ($item->status_pengisian == 2)
-                                                    <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                                                @else
-                                                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <small class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</small>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                @if ($item->deadline != 0)
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
-                                                @else
-                                                    <span class="text-secondary text-xs font-weight-bold">-</span>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle">
-                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
-                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @livewire('admin.temuan-table')
         @endif
     </div>
 
@@ -228,90 +130,7 @@
             </div>
         </div>
         @else
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Riwayat Temuan Lembaga</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($riwayat as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan_temuan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->rtk}}</h6>
-                                                        @if ($item->status_pengisian == 2)
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                    @else
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                    @endif
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                @if ($item->status_pengisian == 2)
-                                                    <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                                                @else
-                                                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                @if ($item->status_docs == 1)
-                                                    <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                                @elseif ($item->status_docs == 2)
-                                                    <span class="badge badge-sm bg-gradient-danger">Major</span>
-                                                @elseif ($item->status_docs == 3)
-                                                    <span class="badge badge-sm bg-gradient-success">Close</span>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <i class="far fa-trash-alt ms-2 text-danger cursor-pointer me-2" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}" title="Hapus Data"></i>
-                                                <i class="fa fa-info-circle text-secondary cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal{{$item->id}}" title="Detail Riwayat"></i>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @livewire('admin.riwayat-temuan')
         @endif
     </div>
 
@@ -413,7 +232,7 @@
                                <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
                            </div>
                            <h4>Edit Status Dokumen</h4>
-                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : {{$item->updated_at}}</p>
+                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : <b>{{$item->updated_at}}</b></p>
                            <form action="/editTemuan/{{$item->id}}" class="mb-4" method="POST">
                                @csrf
                                @method('PUT')
@@ -623,6 +442,41 @@
       </div>
     </div>
   </div>
+</div>
+@endforeach
+
+{{-- Modal Validasi Edit Status --}}
+@foreach ($evaluasi as $item)
+<div class="modal fade" id="unsend{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content rounded-0">
+               <div class="modal-body bg-3">
+                   <div class="px-3 to-front">
+                       <div class="row align-items-center">
+                           <div class="col text-right">
+                               <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true"><span class="icon-close2"></span></span>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="p-4 to-front">
+                       <div class="text-center">
+                           <div class="logo">
+                               <img src="{{asset('creative')}}/assets/img/unsend.png" alt="img-fluid" class="img-fluid mb-4 w-60">
+                           </div>
+                           <h4>Lembaga Belum Menyelesaikan Dokumen</h4>
+                           <p class="mb-3 text-sm">Lembaga Belum Menyelesaikan Dokumen yang Anda Kirimkan. Hubungi Admin Lembaga Untuk Informasi Lebih Lanjut.</p>
+                            <div class="col-12 mt-4">
+                                <button type="button" aria-label="Close" data-dismiss="modal" class="btn btn-primary btn-block">Oke, Saya Mengerti</button>
+                            </div>
+                            <small class="mb-0 cancel text-center"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                        </div>
+                        </div>
+                   </div>
+               </div>
+           </div>
+    </div>
 </div>
 @endforeach
 

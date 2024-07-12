@@ -157,11 +157,19 @@ class UserController extends Controller
 
     public function sendTemuan ($id){
         try {
-            $getDay = date('Y-m-d H:i:s', strtotime('now'));
             $docs = Evaluasi::findOrFail($id);
+            $deadline = $docs->deadline;
 
-            $docs->status_pengisian = 2;
-            $docs->tgl_pengumpulan = $getDay;
+            $now = Carbon::now('Asia/Makassar')->locale('id_ID');
+            $formattedDate = $now->isoFormat('dddd, DD MMMM YYYY');
+
+            if ($formattedDate < $deadline) {
+                $docs->status_pengisian = 1;
+            } else {
+                $docs->status_pengisian = 2;
+            }
+
+            $docs->tgl_pengumpulan = $now;
             $docs->save();
 
             return redirect('/temuan')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');

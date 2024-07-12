@@ -87,13 +87,7 @@ class AdminController extends BaseController
                         ->orwhere('status_pengisian', 1)
                         ->get();
 
-        $countDokumens = Dokumen::with(['lembaga.user'])
-        ->where(function($query) {
-            $query->where('status_pengisian', 0)
-                ->orWhere('status_pengisian', 3);
-        })
-        ->count();
-        return view('admin.dokumen', compact('close','major','minor','dokumens', 'riwayatDocs', 'countDokumens'));
+        return view('admin.dokumen', compact('close','major','minor','dokumens', 'riwayatDocs'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -202,12 +196,7 @@ class AdminController extends BaseController
 
 
     public function temuanAudit() {
-        $evaluasi = Evaluasi::with(['lembaga.user'])->where(function($query) {
-            $query->where('status_pengisian', 0)
-                ->orWhere('status_pengisian', 2)
-                ->where('score', NULL);
-        })
-        ->get();
+        $evaluasi = Evaluasi::get();
 
         $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])->where(function($query) {
             $query->where('status_pengisian', 1)

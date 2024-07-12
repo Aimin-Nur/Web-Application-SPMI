@@ -43,7 +43,7 @@ class RiwayatDokumenTable extends Component
             })
             ->paginate(5);
 
-        return view('livewire.riwayat-dokumen-table', [
+        return view('livewire.admin.riwayat-dokumen-table', [
             'riwayatDocs' => $riwayatDocs
         ]);
     }

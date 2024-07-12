@@ -45,6 +45,10 @@ class Evaluasi extends Model
         return $this->formatTimestamp($value);
     }
 
+    public function getDeadlineAttribute($value){
+        return $this->formatTimestamp($value);
+    }
+
     protected static function boot()
     {
         parent::boot();

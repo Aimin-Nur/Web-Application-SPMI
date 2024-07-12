@@ -135,11 +135,7 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
-                                                        @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @else
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @endif
+                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}" target="_blank"><i class="fa fa-external-link text-success" aria-hidden="true" href=""></i></a></small>
                                                     </div>
                                                 </div>
                                             </td>
