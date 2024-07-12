@@ -270,7 +270,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ request()->is('RTM', 'addRTM') ? 'active' : '' }}"  href="/RTM">
+            <a class="nav-link {{ request()->is('auditor/admin') ? 'active' : '' }}" href="/auditor/admin">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>box-3d-50</title>
@@ -287,7 +287,7 @@
                   </g>
                 </svg>
               </div>
-              <span class="nav-link-text ms-1">RTM</span>
+              <span class="nav-link-text ms-1">Auditor</span>
             </a>
           </li>
           <li class="nav-item">

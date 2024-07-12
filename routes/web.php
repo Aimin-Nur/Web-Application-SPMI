@@ -52,7 +52,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::put('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
-    Route::delete('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
+    Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
 
     Route::get('/temuanAudit', [AdminController::class, 'temuanAudit']);
     Route::get('/addTemuan', [AdminController::class, 'formTemuan']);
@@ -70,6 +70,9 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::post('/addLaporan', [AdminController::class, 'addLaporan']);
     Route::DELETE('/hapusLaporan/{id}', [AdminController::class, 'hapusLaporan']);
     Route::put('/editLaporan/{id}', [AdminController::class, 'editLaporan']);
+
+    Route::get('/auditor/admin', [AdminController::class, 'auditor']);
+    Route::post('/addAuditor', [AdminController::class, 'addAuditor']);
 
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });

@@ -228,10 +228,9 @@
             <p class="mb-3 text-sm">Tindakan ini akan menghapus Dokumen <b> "{{$item->judul}}"</b> secara permanen.</p>
             <form action="/hapusDocs/{{$item->id}}" class="mb-4" method="POST">
                 @csrf
-                @method('DeLETe')
                 <div class="row">
                 <div class="col-6 mt-4">
-                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                    <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                 </div>
                 <div class="col-6 mt-4">
                     <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
@@ -402,7 +401,7 @@
                   <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
               </div>
               <h4>Hapus Dokumen</h4>
-              <p class="mb-3 text-sm">Tindakan ini akan menghapus dokumen <b> "{{$item->judul}}"</b> secara permanen.</p>
+              <p class="mb-3 text-sm">Tindakan ini akan menghapus dokumen <b> "{{$item->judul}}"</b> beserta dengan Temuan-temuan Audit yang berkaitan secara permanen.</p>
               <form action="/hapusDocs/{{$item->id}}" class="mb-4" method="POST">
                   @csrf
                   <div class="row">

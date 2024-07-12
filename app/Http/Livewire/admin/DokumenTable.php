@@ -43,7 +43,7 @@ class DokumenTable extends Component
                           $query->where('nama_lembaga', 'like', '%' . $this->search . '%');
                       });
             })
-            ->paginate(5);
+            ->paginate(10);
 
         return view('livewire.dokumen-table', [
             'dokumens' => $dokumens

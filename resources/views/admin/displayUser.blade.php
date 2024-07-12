@@ -46,7 +46,7 @@
                                 <br>
                                 <span class="text-xs">{{$item->lembaga->nama_lembaga}}</span>
                                 <br>
-                                <span class="text-xxs">26 March 2020, at 13:45 PM</span>
+                                <span class="text-xxs">Dibuat : {{$item->created_at}}</span>
                             </h6>
                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" title="Edit Status"></i>
                             @php

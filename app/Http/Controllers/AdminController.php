@@ -12,6 +12,7 @@ use App\Models\Lembaga;
 use App\Models\Dokumen;
 use App\Models\Evaluasi;
 use App\Models\RTM;
+use App\Models\Auditor;
 use App\Models\LaporanAudit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -188,6 +189,7 @@ class AdminController extends BaseController
             return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
         }
     }
+
 
     public function hapusDokumen($id){
         try {
@@ -436,6 +438,11 @@ class AdminController extends BaseController
         } catch (\Exception $e) {
             return redirect('/laporan')->with('status', 'error')->with('message', 'Gagal Mengubah Laporan Audit: ' . $e->getMessage());
         }
+    }
+
+    public function auditor(){
+        $getData = Auditor::get();
+        return view('superadmin.auditor', compact('getData'));
     }
 
 }

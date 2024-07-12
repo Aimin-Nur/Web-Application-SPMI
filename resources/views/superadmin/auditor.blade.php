@@ -20,20 +20,20 @@
               <div class="card-body p-3">
                 <div class="row">
                       <div class="col-md-12">
-                        <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                        <div class="card card-body text-center border card-plain border-radius-lg d-flex align-items-center flex-row">
                           <img class="w-3 me-3 mb-0" src="{{ asset('creative')}}/assets/img/no.png" alt="logo">
-                          <h6 class="mb-0 text-sm">Ukuran Foto Tidak Boleh Melebihi 4 MB</h6> |
-                          <h6 class="mb-0 text-sm">Format Foto PNG & JPG</h6>
+                          <h6 class="mb-0 text-sm">Ukuran Foto Tidak Boleh Melebihi 4 MB.</h6> ||
+                          <h6 class="mb-0 text-sm">Format Foto Hanya Boleh Ekstensi PNG & JPG.</h6>
                         </div>
                       </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4 mt-5">
+          <div class="col-lg-12 mt-5">
             <div class="row">
-              <div class="col-md-6">
                 @foreach ($getData as $item)
+              <div class="col-lg-6 py-2">
                     <div class="card">
                         <div class="card-header mx-4 p-3 text-center">
                         <div class="avatar avatar-xl position-relative">
@@ -48,8 +48,8 @@
                         <a class="btn btn-link text-dark px-3 mb-0" data-toggle="modal" data-target="#editModalCenter{{$item->id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                         </div>
                     </div>
-                @endforeach
               </div>
+              @endforeach
             </div>
           </div>
         </div>

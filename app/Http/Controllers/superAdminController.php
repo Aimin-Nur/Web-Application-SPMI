@@ -313,7 +313,7 @@ class superAdminController extends Controller
         try {
             $request->validate([
                 'nama' => 'required|string|max:255',
-                'foto' => 'required|image|mimes:jpeg,png,jpg|max:4096', // 4MB
+                'foto' => 'required|image|mimes:jpeg,png,PNG,jpg|max:10096', // 4MB
             ]);
 
             $auditor = new Auditor;
@@ -330,7 +330,7 @@ class superAdminController extends Controller
 
             return redirect('/auditor/superadmin')->with('status', 'success')->with('message', 'Berhasil Menambahkan Data Auditor.');
         } catch (\Exception $e) {
-            return redirect('/auditor/superadmin')->with('status', 'error')->with('message', 'Gagal Menghapus Data Auditor: ' . $e->getMessage());
+            return redirect('/auditor/superadmin')->with('status', 'error')->with('message', 'Gagal Menambahkan Data Auditor: ' . $e->getMessage());
         }
     }
 
