@@ -180,8 +180,7 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                // Kirim email ke setiap pengguna
-                SendDokumenEmail::dispatch($user->email);
+                SendDokumenEmail::dispatch($user->email, $send->judul, $send->deadline);
             }
 
             return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
@@ -292,8 +291,7 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                // Kirim email ke setiap pengguna
-                SendTemuanEmail::dispatch($user->email);
+                SendTemuanEmail::dispatch($user->email, $send->temuan, $send->rtk, $send->deadline);
             }
 
             return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Temuan Audit Berhasil Ditambakan.');

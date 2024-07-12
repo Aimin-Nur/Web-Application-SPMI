@@ -210,7 +210,8 @@
 
                             <div style="line-height: 35px">
 
-                                JUDUL DOKUMEN <span style="color: #5caad2;">BARU</span>
+                                <span style="color: #5caad2; text-transform: uppercase;">{{ $judul ?? '-an view:clear
+                                ' }}</span>
 
                             </div>
                         </td>
@@ -243,7 +244,7 @@
 
                                         <div style="line-height: 24px">
 
-                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum TGL_DEADLINE
+                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ $deadline ?? '-' }}</b>
                                         </div>
                                     </td>
                                 </tr>
