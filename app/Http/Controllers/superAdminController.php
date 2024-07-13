@@ -75,8 +75,13 @@ class superAdminController extends Controller
 
         $countUser = User::count();
         $countLembaga = Lembaga::count();
+        $countDocs = Dokumen::count();
+        $countTemuan = Evaluasi::count();
+        $countLaporan = LaporanAudit::count();
+        $countAdmin = Admin::count();
+        $countAuditor = Auditor::count();
 
-        return view('superadmin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga'));
+        return view('superadmin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAdmin','countAuditor'));
     }
 
     public function lembaga (){

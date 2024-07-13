@@ -72,7 +72,14 @@ class AdminController extends BaseController
             ];
         })->values();
 
-        return view('admin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar'));
+        $countUser = User::count();
+        $countLembaga = Lembaga::count();
+        $countDocs = Dokumen::count();
+        $countTemuan = Evaluasi::count();
+        $countLaporan = LaporanAudit::count();
+        $countAuditor = Auditor::count();
+
+        return view('admin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
     }
 
     public function dokumen (){
