@@ -34,7 +34,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboardUser', [UserController::class, 'index']);
     Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
     Route::get('/temuan', [UserController::class, 'temuanAudit']);
-    Route::get('/profile', [UserController::class, 'profileUser']);
+    // Route::get('/profiled', [UserController::class, 'profileUser']);
     Route::put('/sendDocs/{id}', [UserController::class, 'sendDocs']);
     Route::put('/sendTemuan/{id}', [UserController::class, 'sendTemuan']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');

@@ -7,11 +7,6 @@
     </div>
     <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
       <div class="row gx-4">
-        <div class="col-auto">
-            <div class="avatar avatar-xl position-relative">
-              <img src="{{asset('creative')}}/assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-            </div>
-          </div>
         <div class="col-auto my-auto">
           <div class="h-100">
             <h5 class="mb-1">
@@ -93,9 +88,6 @@
             <div class="row">
                 <div class="col-12">
                   <div class="card">
-                    <div class="card-header pb-0">
-                      <h6>Ubah Kata Sandi</h6>
-                    </div>
                     <div class="card-body px-0 pt-0 pb-2">
                             @include('profile.partials.update-password-form')
                     </div>

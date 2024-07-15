@@ -53,7 +53,13 @@ class UserController extends Controller
             return $lembaga['id_lembaga'] === $getLembaga;
         }) + 1;
 
-        return view('user.index', compact('lembagaScores','radar','maxScore','totalTemuan','getLembaga','userRanking'));
+        $countDocs = Dokumen::where('id_lembaga', $getLembaga)->count();
+        $countDocsUnsend = Dokumen::where('id_lembaga', $getLembaga)->where('status_docs', 0)->count();
+
+        $countTemuan = Evaluasi::where('id_lembaga', $getLembaga)->count();
+        $countEvalUnsend = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 0)->count();
+
+        return view('user.index', compact('lembagaScores','radar','maxScore','totalTemuan','getLembaga','userRanking','countDocs','countDocsUnsend','countTemuan','countEvalUnsend'));
     }
 
     public function dokumenUser() {

@@ -542,47 +542,25 @@
 
               </li>
               <li class="nav-item px-3 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-body p-0">
-                  <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                </a>
               </li>
               <li class="nav-item dropdown pe-2 d-flex align-items-center">
                 <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-bell cursor-pointer"></i>
+                  <i class="fa fa-cog cursor-pointer"></i>
                 </a>
                 <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                  <li class="mb-2">
+                  <li>
                     <a class="dropdown-item border-radius-md" href="javascript:;">
                       <div class="d-flex py-1">
-                        <div class="my-auto">
-                          <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                        <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                            <svg class="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h4.5M7 11V7a3 3 0 0 1 6 0v1.5m2.5 5.5v1.5l1 1m3.5-1a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/>
+                              </svg>
+
                         </div>
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="text-sm font-weight-normal mb-1">
-                            <span class="font-weight-bold">New message</span> from Laur
+                           Ganti Kata Sandi
                           </h6>
-                          <p class="text-xs text-secondary mb-0 ">
-                            <i class="fa fa-clock me-1"></i>
-                            13 minutes ago
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-2">
-                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                      <div class="d-flex py-1">
-                        <div class="my-auto">
-                          <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="text-sm font-weight-normal mb-1">
-                            <span class="font-weight-bold">New album</span> by Travis Scott
-                          </h6>
-                          <p class="text-xs text-secondary mb-0 ">
-                            <i class="fa fa-clock me-1"></i>
-                            1 day
-                          </p>
                         </div>
                       </div>
                     </a>
@@ -590,9 +568,9 @@
                   <li>
                     <a class="dropdown-item border-radius-md" href="javascript:;">
                       <div class="d-flex py-1">
-                        <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                        <div class="avatar avatar-sm bg-gradient-primary  me-3  my-auto">
                           <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>credit-card</title>
+                            <title>Logout</title>
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                               <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
                                 <g transform="translate(1716.000000, 291.000000)">
@@ -607,12 +585,8 @@
                         </div>
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="text-sm font-weight-normal mb-1">
-                            Payment successfully completed
+                           Logout
                           </h6>
-                          <p class="text-xs text-secondary mb-0 ">
-                            <i class="fa fa-clock me-1"></i>
-                            2 days
-                          </p>
                         </div>
                       </div>
                     </a>

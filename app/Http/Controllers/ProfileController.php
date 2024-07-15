@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
         return view('profile.edit', [
             'user' => $user,
-            'lembaga' => $lembaga, 
+            'lembaga' => $lembaga,
         ]);
     }
 
@@ -30,15 +30,19 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        try{
+            $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            if ($request->user()->isDirty('email')) {
+                $request->user()->email_verified_at = null;
+            }
+
+            $request->user()->save();
+
+                return redirect('/profile')->with('status', 'success')->with('message', 'Profi Berhasil Diubah.');
+            } catch (\Exception $e) {
+                return redirect('/profile')->with('status', 'error')->with('message', 'Gagal Mengubah Profil: ' . $e->getMessage());
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

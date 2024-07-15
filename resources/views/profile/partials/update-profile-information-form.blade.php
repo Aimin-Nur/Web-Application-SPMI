@@ -68,13 +68,9 @@
         <form method="post" action="{{ route('profile.update') }}">
             @csrf
             @method('patch')
-
             <div class="mt-3">
                 <label for="name" class="form-label">{{ __('Name') }}</label>
                 <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
             </div>
 
             <div class="mb-3">
