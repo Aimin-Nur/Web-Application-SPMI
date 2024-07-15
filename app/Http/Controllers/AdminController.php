@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use App\Jobs\SendDokumenEmail;
 use App\Jobs\SendTemuanEmail;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends BaseController
 {
@@ -438,5 +440,36 @@ class AdminController extends BaseController
         $getData = Auditor::get();
         return view('superadmin.auditor', compact('getData'));
     }
+
+    public function profile(Request $request){
+        $admin = Auth::guard('admin')->user();
+        $name = $admin->name;
+        $email = $admin->email;
+
+        return view('admin.profile', [
+            'name' => $name,
+            'email' => $email,
+        ]);
+    }
+
+    public function updatePassword(Request $request): RedirectResponse
+    {
+        try{
+            $validated = $request->validateWithBag('updatePassword', [
+                'current_password' => ['required', 'current_password'],
+                'password' => ['required', Password::defaults(), 'confirmed'],
+            ]);
+
+            $request->admin()->update([
+                'password' => Hash::make($validated['password']),
+            ]);
+
+                return redirect('/profile')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
+            } catch (\Exception $e) {
+                return redirect('/profile')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());
+        }
+    }
+
+
 
 }

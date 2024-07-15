@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\superAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -22,6 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/livescore', [HomeController::class, 'index']);
 
 // Auth User
 // Route::get('/dashboard', function () {
@@ -34,7 +36,6 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboardUser', [UserController::class, 'index']);
     Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
     Route::get('/temuan', [UserController::class, 'temuanAudit']);
-    // Route::get('/profiled', [UserController::class, 'profileUser']);
     Route::put('/sendDocs/{id}', [UserController::class, 'sendDocs']);
     Route::put('/sendTemuan/{id}', [UserController::class, 'sendTemuan']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
@@ -73,6 +74,9 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
 
     Route::get('/auditor/admin', [AdminController::class, 'auditor']);
     Route::post('/addAuditor', [AdminController::class, 'addAuditor']);
+
+    Route::get('/profile/admin', [AdminController::class, 'profile']);
+    Route::put('/gantiPassword/{id}', [AdminController::class, 'updatePassword']);
 
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });

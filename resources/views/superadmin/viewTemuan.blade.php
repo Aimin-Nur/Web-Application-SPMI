@@ -95,11 +95,6 @@
                         <div class="empty">
                             <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px"></div>
                             <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
-                            <div class="empty-action">
-                                <a href="/addTemuan" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,9 +107,6 @@
                     <div class="card mb-4">
                         <div class="card-header col-lg-12 pb-0">
                             <div class="row mb-3">
-                                <div class="col-8">
-                                    <a class="float-star btn-md btn bg-gradient-dark mb-0" href="/addTemuan"><i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit</a>
-                                </div>
                                 <div class="col-4">
                                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                                         <div class="input-group">
@@ -136,7 +128,7 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
-                                    
+
                                         </tr>
                                     </thead>
                                     <tbody>

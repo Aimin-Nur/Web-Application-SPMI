@@ -33,7 +33,7 @@
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Lembaga</p>
                   <h5 class="font-weight-bolder mb-0">
                    {{$countLembaga}}
-                    <span class="text-success text-sm font-weight-bolder">Biro</span>
+                    <span class="text-primary text-sm font-weight-bolder">Biro</span>
                   </h5>
                 </div>
               </div>
@@ -77,7 +77,7 @@
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Dokumen Audit</p>
                   <h5 class="font-weight-bolder mb-0">
                    {{$countDocs}}
-                    <span class="text-success text-sm font-weight-bolder">Dokumen</span>
+                    <span class="text-warning text-sm font-weight-bolder">Dokumen</span>
                   </h5>
                 </div>
               </div>
@@ -99,7 +99,7 @@
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Temuan Audit</p>
                   <h5 class="font-weight-bolder mb-0">
                    {{$countTemuan}}
-                    <span class="text-success text-sm font-weight-bolder">Temuan</span>
+                    <span class="text-danger text-sm font-weight-bolder">Temuan</span>
                   </h5>
                 </div>
               </div>
@@ -121,7 +121,7 @@
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Auditor</p>
                   <h5 class="font-weight-bolder mb-0">
                    {{$countAuditor}}
-                    <span class="text-success text-sm font-weight-bolder">Auditor</span>
+                    <span class="text-primary text-sm font-weight-bolder">Auditor</span>
                   </h5>
                 </div>
               </div>
@@ -143,7 +143,7 @@
                   <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Laporan Audit</p>
                   <h5 class="font-weight-bolder mb-0">
                    {{$countLaporan}}
-                    <span class="text-success text-sm font-weight-bolder">Laporan Audit</span>
+                    <span class="text-secondary text-sm font-weight-bolder">Laporan Audit</span>
                   </h5>
                 </div>
               </div>
@@ -181,23 +181,13 @@
           <div class="card-header pb-0">
             <div class="row">
               <div class="col-lg-6 col-7">
-                <h6>Rangking Poit</h6>
+                <h6>Rangking Point</h6>
                 <p class="text-sm mb-0">
                   <i class="fa fa-check text-info" aria-hidden="true"></i>
-                  <span class="font-weight-bold ms-1">30 done</span> this month
+                  <span class="font-weight-bold ms-1">{{$countLembaga}} Lembaga</span> terdaftar
                 </p>
               </div>
               <div class="col-lg-6 col-5 my-auto text-end">
-                <div class="dropdown float-lg-end pe-4">
-                  <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-ellipsis-v text-secondary"></i>
-                  </a>
-                  <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
