@@ -26,6 +26,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor</th>
@@ -63,6 +64,17 @@
                                                 <small class="badge badge-sm bg-gradient-success">Selesai</small>
                                             @elseif ($item->status_pengisian == 1)
                                                 <small class="badge badge-sm bg-gradient-danger">Terlambat</small>
+                                            @endif
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @if ($item->status_docs == 1)
+                                                <span class="badge badge-sm bg-gradient-primary">Minor</span>
+                                            @elseif ($item->status_docs == 2)
+                                                <span class="badge badge-sm bg-gradient-danger">Mayor</span>
+                                            @elseif ($item->status_docs == 3)
+                                                <span class="badge badge-sm bg-gradient-success">Close</span>
+                                            @else
+                                                <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">

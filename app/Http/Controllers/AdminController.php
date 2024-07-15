@@ -246,11 +246,16 @@ class AdminController extends BaseController
     }
 
     public function formTemuan() {
-            $getData = Lembaga::whereHas('dokumen', function ($query) {
-                $query->whereIn('status_docs', [1, 2]);
-            })->with(['dokumen' => function ($query) {
-                $query->whereIn('status_docs', [1, 2]);
-            }])->get();
+        $evaluatedDokumenIds = Evaluasi::pluck('id_docs')->toArray();
+
+        $getData = Lembaga::whereHas('dokumen', function ($query) use ($evaluatedDokumenIds) {
+                    $query->whereIn('status_docs', [1, 2])
+                          ->whereNotIn('id', $evaluatedDokumenIds);
+                })->with(['dokumen' => function ($query) use ($evaluatedDokumenIds) {
+                    $query->whereIn('status_docs', [1, 2])
+                          ->whereNotIn('id', $evaluatedDokumenIds);
+                }])
+                ->get();
 
             return view('admin.formTemuan', compact('getData'));
     }

@@ -102,7 +102,7 @@
                         <div class="numbers">
                           <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
                           <h5 class="font-weight-bolder mb-0">
-                            $53,000
+                            {{$minor}}
                             <span class="text-warning text-sm font-weight-bolder">Minor</span>
                           </h5>
                         </div>
@@ -124,7 +124,7 @@
                         <div class="numbers">
                           <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
                           <h5 class="font-weight-bolder mb-0">
-                            $53,000
+                           {{$mayor}}
                             <span class="text-danger text-sm font-weight-bolder">Mayor</span>
                           </h5>
                         </div>
@@ -146,7 +146,7 @@
                         <div class="numbers">
                           <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
                           <h5 class="font-weight-bolder mb-0">
-                            $53,000
+                            {{$close}}
                             <span class="text-success text-sm font-weight-bolder">Close</span>
                           </h5>
                         </div>

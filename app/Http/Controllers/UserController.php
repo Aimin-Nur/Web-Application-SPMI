@@ -83,7 +83,11 @@ class UserController extends Controller
         })
         ->count();
 
-        return view('user.dokumen', compact('dokumens', 'finishDocs', 'cekDokumens'));
+        $minor = Dokumen::where('status_docs', 1)->where('id_lembaga', $idLembaga)->count();
+        $mayor = Dokumen::where('status_docs', 2)->where('id_lembaga', $idLembaga)->count();
+        $close = Dokumen::where('status_docs', 3)->where('id_lembaga', $idLembaga)->count();
+
+        return view('user.dokumen', compact('dokumens', 'finishDocs', 'cekDokumens','minor','mayor','close'));
     }
 
     public function sendDocs($id){

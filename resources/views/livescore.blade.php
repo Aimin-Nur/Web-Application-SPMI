@@ -258,7 +258,7 @@
 
 
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Temuan Minor</h6>
@@ -301,7 +301,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="card mb-4">
               <div class="card-header pb-0">
                 <h6>Temuan Mayor</h6>
