@@ -268,13 +268,13 @@
                                <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
                            </div>
                            <h4>Edit Status Dokumen</h4>
-                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : {{$item->updated_at}}</p>
+                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}                        </p>
                            <form action="/editStatus/{{$item->id}}" class="mb-4" method="POST">
                                @csrf
                                @method('PUT')
                                <input type="hidden" value="{{$item->status_pengisian}}" name="status_pengisian">
                                 <div class="form-group">
-                                    <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
+                                    <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}" /required>
                                         <option value="">Pilih Status Dokumen</option>
                                         <option value="1">Minor</option>
                                         <option value="2">Mayor</option>
@@ -284,7 +284,7 @@
                                 <div class="deadline-form" id="Score-form{{ $item->id }}" style="display: none;">
                                     <div class="form-group">
                                         <label for="score">Score</label>
-                                        <input type="number" class="form-control" id="score{{ $item->id }}" name="score">
+                                        <input type="number" class="form-control" id="score{{ $item->id }}" name="score" /required>
                                     </div>
                                 </div>
                                <div class="row">
@@ -435,13 +435,16 @@
         <ul class="list-unstyled">
               <ul>
                 <h6 class="text-sm py-3">
-                <li>Dibuat : {{$item->created_at}}</li> <br>
-                <li>Temuan Audit : {{$item->temuan}}</li> <br>
-                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
+                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
+                <li>Temuan Audit : {{$item->temuan ?? '-'}}</li> <br>
+                <li>Rapat Tinjauan Kinerja : {{$item->rtk ?? '-'}}</li> <br>
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
                 <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{$item->tgl_pengumpulan}}</li> <br>
+                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
+                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
                 <li>Status Pengisian :
                     @if ($item->status_pengisian == 2)
                         <small class="badge badge-sm bg-gradient-success">Selesai</small>

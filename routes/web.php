@@ -72,11 +72,13 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::DELETE('/hapusLaporan/{id}', [AdminController::class, 'hapusLaporan']);
     Route::put('/editLaporan/{id}', [AdminController::class, 'editLaporan']);
 
-    Route::get('/auditor/admin', [AdminController::class, 'auditor']);
-    Route::post('/addAuditor', [AdminController::class, 'addAuditor']);
+    Route::get('/auditor', [AdminController::class, 'auditor']);
+    Route::post('/addAuditor/admin', [AdminController::class, 'addAuditor']);
+    Route::DELETE('/hapusAuditor/{id}', [AdminController::class, 'hapusAuditor']);
+    Route::put('/editAuditor/{id}', [AdminController::class, 'editAuditor']);
 
     Route::get('/profile/admin', [AdminController::class, 'profile']);
-    Route::put('/gantiPassword/{id}', [AdminController::class, 'updatePassword']);
+    Route::put('/gantiPassword/{id}', [AdminController::class, 'updatePassword'])->name('password.update.admin');
 
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });

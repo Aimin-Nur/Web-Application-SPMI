@@ -162,7 +162,7 @@ class superAdminController extends Controller
 
             return redirect('/user')->with('status', 'success')->with('message', 'Akun User Berhasil Diedit.');
         } catch (\Exception $e) {
-            return redirect('/user')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . 'Data Email Harus Lengkap.');
+            return redirect('/user')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . 'Alamat Email User Sudah Terdaftar');
         }
     }
 

@@ -46,7 +46,7 @@ class HomeController extends Controller
                 'previous_score' => $previousScore,
                 'is_increased' => $lembaga['total_score'] > $previousScore,
             ]);
-        })->sortByDesc('total_score')->values()->take(5);
+        })->sortByDesc('total_score')->values()->take(7);
 
         Session::put('previousScores', $currentScores);
 

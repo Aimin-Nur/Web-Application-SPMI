@@ -23,6 +23,8 @@ use App\Jobs\SendDokumenEmail;
 use App\Jobs\SendTemuanEmail;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AdminController extends BaseController
 {
@@ -30,6 +32,7 @@ class AdminController extends BaseController
 
     public function index()
     {
+        $pageTitle = "Dashboard";
         $today = Carbon::today();
         $admin = Auth::guard('admin')->user();
         $lembagaScores = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
@@ -81,10 +84,11 @@ class AdminController extends BaseController
         $countLaporan = LaporanAudit::count();
         $countAuditor = Auditor::count();
 
-        return view('admin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
+        return view('admin.index', compact('pageTitle','admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
     }
 
     public function dokumen (){
+        $pageTitle = "Dokumen Audit";
         $minor = Dokumen::where('status_docs', 1)->count();
         $major = Dokumen::where('status_docs', 2)->count();
         $close = Dokumen::where('status_docs', 3)->count();
@@ -96,7 +100,7 @@ class AdminController extends BaseController
                         ->orwhere('status_pengisian', 1)
                         ->get();
 
-        return view('admin.dokumen', compact('close','major','minor','dokumens', 'riwayatDocs'));
+        return view('admin.dokumen', compact('pageTitle','close','major','minor','dokumens', 'riwayatDocs'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -121,8 +125,9 @@ class AdminController extends BaseController
     }
 
     public function displayUser() {
+        $pageTitle = "Manage User";
         $getData = User::with('lembaga')->get();
-        return view('admin.displayUser', compact('getData'));
+        return view('admin.displayUser', compact('pageTitle','getData'));
     }
 
     public function editUser(Request $request, $id){
@@ -156,8 +161,9 @@ class AdminController extends BaseController
     }
 
     public function formDokumen() {
+        $pageTitle = "Form Dokumen";
         $getData = Lembaga::has('user')->with('user')->get();
-        return view('admin.formDokumen', compact('getData'));
+        return view('admin.formDokumen', compact('pageTitle','getData'));
     }
 
     public function addDokumen(Request $request){
@@ -205,6 +211,7 @@ class AdminController extends BaseController
 
 
     public function temuanAudit() {
+        $pageTitle = "Temuan Audit";
         $evaluasi = Evaluasi::get();
 
         $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])->where(function($query) {
@@ -242,10 +249,11 @@ class AdminController extends BaseController
         $major = Evaluasi::where('status_docs', 2)->count();
         $close = Evaluasi::where('status_docs', 3)->count();
 
-        return view('admin.evaluasi', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
+        return view('admin.evaluasi', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
     }
 
     public function formTemuan() {
+        $pageTitle = "Form Temuan Audit";
         $evaluatedDokumenIds = Evaluasi::pluck('id_docs')->toArray();
 
         $getData = Lembaga::whereHas('dokumen', function ($query) use ($evaluatedDokumenIds) {
@@ -257,7 +265,7 @@ class AdminController extends BaseController
                 }])
                 ->get();
 
-            return view('admin.formTemuan', compact('getData'));
+            return view('admin.formTemuan', compact('pageTitle','getData'));
     }
 
     public function addTemuan(Request $request){
@@ -395,8 +403,9 @@ class AdminController extends BaseController
 
 
     public function laporanAudit(){
+        $pageTitle = "Laporan";
         $getData = LaporanAudit::get();
-        return view('admin.laporanAudit', compact('getData'));
+        return view('admin.laporanAudit', compact('pageTitle','getData'));
     }
 
     public function addLaporan(Request $request){
@@ -442,38 +451,115 @@ class AdminController extends BaseController
     }
 
     public function auditor(){
+        $pageTitle = "Auditor";
         $getData = Auditor::get();
-        return view('superadmin.auditor', compact('getData'));
+        return view('admin.auditor', compact('pageTitle','getData'));
+    }
+
+    public function addAuditor(Request $request){
+        try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'foto' => 'required|image|mimes:jpeg,png,PNG,jpg|max:8096',
+            ]);
+
+            $auditor = new Auditor;
+            $auditor->nama = $request->input('nama');
+
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('auditors'), $filename);
+                $auditor->foto = $filename;
+            }
+
+            $auditor->save();
+
+            return redirect('/auditor')->with('status', 'success')->with('message', 'Berhasil Menambahkan Data Auditor.');
+        } catch (\Exception $e) {
+            return redirect('/auditor')->with('status', 'error')->with('message', 'Gagal Menambahkan Data Auditor: ' . 'Ukuran File Melebihi 2 MB');
+        }
+    }
+
+    public function hapusAuditor($id){
+        try {
+            $auditor = Auditor::findOrFail($id);
+            $auditor->delete();
+
+            return redirect('/auditor')->with('status', 'success')->with('message', 'Auditor Berhasil Dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect('/auditor')->with('status', 'error')->with('message', 'Gagal Menghapus Auditor: ' . $e->getMessage());
+        }
+    }
+
+    public function editAuditor(Request $request, $id){
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,PNG,jpg|max:8096',
+        ]);
+
+        try {
+            $auditor = Auditor::findOrFail($id);
+            $auditor->nama = $request->input('nama');
+
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('auditors'), $filename);
+                $auditor->foto = $filename;
+            }
+
+            $auditor->save();
+
+            return redirect('/auditor')->with('status', 'success')->with('message', 'Auditor Berhasil Diedit.');
+        } catch (\Exception $e) {
+            return redirect('/auditor')->with('status', 'error')->with('message', 'Auditor Gagal Diedit.' . $e->getMessage());
+        }
     }
 
     public function profile(Request $request){
         $admin = Auth::guard('admin')->user();
         $name = $admin->name;
         $email = $admin->email;
+        $id = $admin->id;
+        $pageTitle = "Profile";
 
         return view('admin.profile', [
             'name' => $name,
             'email' => $email,
+            'pageTitle' => $pageTitle,
+            'id' => $id,
         ]);
     }
 
     public function updatePassword(Request $request): RedirectResponse
     {
         try{
-            $validated = $request->validateWithBag('updatePassword', [
-                'current_password' => ['required', 'current_password'],
-                'password' => ['required', Password::defaults(), 'confirmed'],
+            $request->validate([
+                'current_password' => ['required', 'string'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
 
-            $request->admin()->update([
-                'password' => Hash::make($validated['password']),
-            ]);
+            $admin = auth()->guard('admin')->user();
 
-                return redirect('/profile')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
+            if (!Hash::check($request->current_password, $admin->password)) {
+                throw ValidationException::withMessages([
+                    'current_password' => __('The provided password does not match your current password.'),
+                ]);
+            }
+
+            $admin->forceFill([
+                'password' => Hash::make($request->password),
+            ])->save();
+            
+                return redirect('/profile/admin')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
             } catch (\Exception $e) {
-                return redirect('/profile')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());
+                return redirect('/profile/admin')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());
         }
     }
+
+
 
 
 

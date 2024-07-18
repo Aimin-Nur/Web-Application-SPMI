@@ -144,7 +144,7 @@
         <tr>
             <td>
                 <div style="overflow:hidden;display:none;font-size:1px;color:#ffffff;line-height:1px;font-family:Arial;maxheight:0px;max-width:0px;opacity:0;">
-                   Assalamu Alaikum Wr. Wb. - Nama Admin
+                   Assalamu Alaikum Wr. Wb.
                 </div>
             </td>
         </tr>
@@ -159,20 +159,6 @@
 
                     <tr>
                         <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td align="center">
-
-                            <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-
-                                <tr>
-                                    <td align="center" height="70" style="height:70px;">
-                                        <a style="display: block; border-style: none !important; border: 0 !important;"><img width="100" border="0" style="display: block; width: 100px;" src="https://siakad.kallabs.ac.id/public/img/logod.png" alt="" /></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
                     </tr>
 
                     <tr>
@@ -195,10 +181,6 @@
 
                         <td align="center" class="section-img">
                             <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="https://mdbootstrap.com/img/Mockups/Lightbox/Original/img (67).jpg" style="display: block; width: 590px;" width="590" border="0" alt="" /></a>
-
-
-
-
                         </td>
                     </tr>
                     <tr>
@@ -269,7 +251,7 @@
 
 
                                         <div style="line-height: 26px;">
-                                            <a href="" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a>
+                                            <button type="button"> <a href="https://ewako.kallabs.ac.id/" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a></button>
                                         </div>
                                     </td>
                                 </tr>

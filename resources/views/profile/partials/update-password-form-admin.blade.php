@@ -9,7 +9,7 @@
             </p>
         </div>
         <div class="card-body">
-            <form method="post" action="{{ route('password.update') }}">
+            <form method="post" action="{{ route('password.update.admin', ['id' => $id]) }}">
                 @csrf
                 @method('put')
 

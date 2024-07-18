@@ -103,7 +103,7 @@
               </p>
             </div>
             <div class="card-body p-3">
-              <div class="chart">
+              <div class="chart mb-4">
                 <canvas id="chart-line" height="250" width="350"></canvas>
               </div>
             </div>
@@ -149,7 +149,7 @@
                                     <td class="text-center">
                                         <div class="d-flex px-2 py-1 text-center">
                                             <div class="d-flex flex-column justify-content-center text-center">
-                                                <p class="mb-0 text-sm text-center {{ $raisedClass }}">{{ $index + 1 }}</p>
+                                                <p class="mb-0 text-sm ms-4 text-center {{ $raisedClass }}">{{ $index + 1 }}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -186,130 +186,57 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            var ctx2 = document.getElementById("chart-line").getContext("2d");
+        var ctx2 = document.getElementById("chart-line").getContext("2d");
 
-            // Data from server
-            var lembagaScores = <?php echo json_encode($radar)?>;
+        // Data from server
+        var lembagaScores = <?php echo json_encode($radar)?>;
 
-            // Extract labels and data for each status
-            var labels = ['Major', 'Minor', 'Close'];
-            var majorData = lembagaScores.major;
-            var minorData = lembagaScores.minor;
-            var closeData = lembagaScores.close;
+        // Extract labels and data for each status
+        var labels = ['Major', 'Minor', 'Close'];
+        var data = [lembagaScores.major, lembagaScores.minor, lembagaScores.close];
 
-            var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-            gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
-            gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-            gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)');
+        const pieData = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Scores',
+                    backgroundColor: [
+                        'rgba(203,12,159,0.2)',
+                        'rgba(20,23,39,0.2)',
+                        'rgba(19, 162, 164, 0.2)'
+                    ],
+                    borderColor: [
+                        '#cb0c9f',
+                        '#3A416F',
+                        '#19a2a4'
+                    ],
+                    data: data
+                }
+            ]
+        };
 
-            var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-            gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
-            gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-            gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)');
-
-            var gradientStroke3 = ctx2.createLinearGradient(0, 230, 0, 50);
-            gradientStroke3.addColorStop(1, 'rgba(19, 162, 164, 0.2)');
-            gradientStroke3.addColorStop(0.2, 'rgba(19, 162, 164, 0.0)');
-            gradientStroke3.addColorStop(0, 'rgba(19, 162, 164, 0)');
-
-            const lineData = {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Major',
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 0,
-                        borderColor: "#cb0c9f",
-                        backgroundColor: gradientStroke1,
-                        fill: true,
-                        data: [majorData, 0, 0] // Mengatur nilai 0 untuk menjaga panjang data konsisten
-                    },
-                    {
-                        label: 'Minor',
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 0,
-                        borderColor: "#3A416F",
-                        backgroundColor: gradientStroke2,
-                        fill: true,
-                        data: [0, minorData, 0] // Mengatur nilai 0 untuk menjaga panjang data konsisten
-                    },
-                    {
-                        label: 'Close',
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 0,
-                        borderColor: "#19a2a4",
-                        backgroundColor: gradientStroke3,
-                        fill: true,
-                        data: [0, 0, closeData] // Mengatur nilai 0 untuk menjaga panjang data konsisten
+        const config = {
+            type: 'pie',
+            data: pieData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                padding: {
+                    bottom: 10, // Adjust top padding to give space between the chart and the legend
                     }
-                ]
-            };
-
-            const config = {
-                type: 'line',
-                data: lineData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index',
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                drawBorder: false,
-                                display: true,
-                                drawOnChartArea: true,
-                                drawTicks: false,
-                                borderDash: [5, 5]
-                            },
-                            ticks: {
-                                display: true,
-                                padding: 10,
-                                color: '#b2b9bf',
-                                font: {
-                                    size: 11,
-                                    family: "Open Sans",
-                                    style: 'normal',
-                                    lineHeight: 2
-                                },
-                            }
-                        },
-                        x: {
-                            grid: {
-                                drawBorder: false,
-                                display: false,
-                                drawOnChartArea: false,
-                                drawTicks: false,
-                                borderDash: [5, 5]
-                            },
-                            ticks: {
-                                display: true,
-                                color: '#b2b9bf',
-                                padding: 20,
-                                font: {
-                                    size: 11,
-                                    family: "Open Sans",
-                                    style: 'normal',
-                                    lineHeight: 2
-                                },
-                            }
-                        },
-                    },
                 },
-            };
+                plugins: {
+                    legend: {
+                        display: true,
+                    }
+                },
+            },
+        };
 
-            new Chart(ctx2, config);
-        });
+        new Chart(ctx2, config);
+});
+
 </script>
 
 <style>

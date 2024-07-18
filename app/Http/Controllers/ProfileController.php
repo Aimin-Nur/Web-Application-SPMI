@@ -18,10 +18,12 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $lembaga = $user->lembaga;
+        $pageTitle = "Profile";
 
         return view('profile.edit', [
             'user' => $user,
             'lembaga' => $lembaga,
+            'pageTitle' => $pageTitle,
         ]);
     }
 

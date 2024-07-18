@@ -79,7 +79,7 @@
               </div>
               <h5>Tambah Data Auditor</h5>
               <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus eligendi deserunt placeat optio nesciunt.</p>
-              <form action="/addAuditor" class="mb-4" method="POST" enctype="multipart/form-data">
+              <form action="/addAuditor/admin" class="mb-4" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <input type="text" class="form-control w-100 mr-3" name="nama" placeholder="Fulan bin Fulan, S.T., M.Kom." required>
@@ -127,7 +127,7 @@
                </div>
                <h4>Hapus Auditor</h4>
                <p class="mb-3 text-sm">Tindakan ini akan menghapus Auditor <b> "{{$item->nama}}"</b> secara permanen.</p>
-               <form action="/hapusAuditor/superadmin/{{$item->id}}" class="mb-4" method="POST">
+               <form action="/hapusAuditor/{{$item->id}}" class="mb-4" method="POST">
                    @csrf
                    @method("DELETE")
                    <div class="row">
@@ -171,7 +171,7 @@
               </div>
               <h5>Edit Data Auditor</h5>
               <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus eligendi deserunt placeat optio nesciunt.</p>
-              <form action="/editAuditor/superadmin/{{$item->id}}" class="mb-4" method="POST" enctype="multipart/form-data">
+              <form action="/editAuditor/{{$item->id}}" class="mb-4" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

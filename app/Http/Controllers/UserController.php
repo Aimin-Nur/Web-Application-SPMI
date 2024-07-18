@@ -16,6 +16,7 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
     public function index (){
+        $pageTitle = "Dashboard";
         $today = Carbon::today();
 
         $user = Auth::user();
@@ -59,10 +60,11 @@ class UserController extends Controller
         $countTemuan = Evaluasi::where('id_lembaga', $getLembaga)->count();
         $countEvalUnsend = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 0)->count();
 
-        return view('user.index', compact('lembagaScores','radar','maxScore','totalTemuan','getLembaga','userRanking','countDocs','countDocsUnsend','countTemuan','countEvalUnsend'));
+        return view('user.index', compact('pageTitle','lembagaScores','radar','maxScore','totalTemuan','getLembaga','userRanking','countDocs','countDocsUnsend','countTemuan','countEvalUnsend'));
     }
 
     public function dokumenUser() {
+        $pageTitle = "Dokumen Audit";
         $user = Auth::user();
         $idLembaga = $user->id_lembaga;
 
@@ -87,34 +89,11 @@ class UserController extends Controller
         $mayor = Dokumen::where('status_docs', 2)->where('id_lembaga', $idLembaga)->count();
         $close = Dokumen::where('status_docs', 3)->where('id_lembaga', $idLembaga)->count();
 
-        return view('user.dokumen', compact('dokumens', 'finishDocs', 'cekDokumens','minor','mayor','close'));
-    }
-
-    public function sendDocs($id){
-        try {
-            $docs = Dokumen::findOrFail($id);
-            $deadline = $docs->deadline;
-
-            $now = Carbon::now('Asia/Makassar')->locale('id_ID');
-            $formattedDate = $now->isoFormat('dddd, DD MMMM YYYY');
-
-            if ($formattedDate < $deadline) {
-                $docs->status_pengisian = 1;
-            } else {
-                $docs->status_pengisian = 2;
-            }
-
-            $docs->tgl_pengumpulan = $now;
-            $docs->save();
-
-            return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
-        } catch (\Exception $e) {
-            return redirect('/dokumenUser')->with('status', 'error')->with('message', 'Gagal Mengedit Jadwal RTM: ' . $e->getMessage());
-        }
+        return view('user.dokumen', compact('pageTitle','dokumens', 'finishDocs', 'cekDokumens','minor','mayor','close'));
     }
 
     public function temuanAudit() {
-
+        $pageTitle = "Temuan Audit";
         $user = Auth::user();
         $getLembaga = $user->id_lembaga;
 
@@ -162,7 +141,29 @@ class UserController extends Controller
         $totalTemuanMinor = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 1)->count();
         $totalTemuanClose = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 3)->count();
 
-        return view('user.temuanAudit', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan','totalTemuanMayor','totalTemuanMinor','totalTemuanClose'));
+        return view('user.temuanAudit', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan','totalTemuanMayor','totalTemuanMinor','totalTemuanClose'));
+    }
+
+    public function sendDocs($id){
+        try {
+            $docs = Dokumen::findOrFail($id);
+            $deadline = $docs->deadline;
+
+            $now = Carbon::now('Asia/Makassar');
+
+            if ($now->lessThan($deadline)) {
+                $docs->status_pengisian = 2;
+            } else {
+                $docs->status_pengisian = 1;
+            }
+
+            $docs->tgl_pengumpulan = $now;
+            $docs->save();
+
+            return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
+        } catch (\Exception $e) {
+            return redirect('/dokumenUser')->with('status', 'error')->with('message', 'Gagal Menegirimkan Dokumen: ' . $e->getMessage());
+        }
     }
 
     public function sendTemuan ($id){
@@ -171,9 +172,8 @@ class UserController extends Controller
             $deadline = $docs->deadline;
 
             $now = Carbon::now('Asia/Makassar')->locale('id_ID');
-            $formattedDate = $now->isoFormat('dddd, DD MMMM YYYY');
 
-            if ($formattedDate < $deadline) {
+            if ($now < $deadline) {
                 $docs->status_pengisian = 1;
             } else {
                 $docs->status_pengisian = 2;
@@ -189,7 +189,8 @@ class UserController extends Controller
     }
 
     public function profileUser() {
-        return view('user.profileUser');
+        $pageTitle = 'Profile';
+        return view('user.profileUser', compact('pageTitle'));
     }
 
 

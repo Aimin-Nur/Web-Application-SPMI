@@ -32,7 +32,8 @@ class RiwayatDokumenTable extends Component
     {
         $riwayatDocs = Dokumen::with(['lembaga.user'])
             ->where(function($query) {
-                $query->where('status_pengisian', 2)
+                $query->where('score', '!=', NULL)
+                    ->where('status_pengisian', 2)
                       ->orWhere('status_pengisian', 1)
                       ->where(function($query) {
                           $query->where('judul', 'like', '%' . $this->search . '%')

@@ -28,27 +28,27 @@ class Dokumen extends Model
         'deadline',
     ];
 
-    protected function formatTimestamp($timestamp){
-        Carbon::setLocale('id');
+    // protected function formatTimestamp($timestamp){
+    //     Carbon::setLocale('id');
 
-        return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
-    }
+    //     return Carbon::parse($timestamp)->translatedFormat('l, d F Y');
+    // }
 
-    public function getCreatedAtAttribute($value){
-        return $this->formatTimestamp($value);
-    }
+    // public function getCreatedAtAttribute($value){
+    //     return $this->formatTimestamp($value);
+    // }
 
-    public function getUpdatedAtAttribute($value){
-        return $this->formatTimestamp($value);
-    }
+    // public function getUpdatedAtAttribute($value){
+    //     return $this->formatTimestamp($value);
+    // }
 
-    public function getTglPengumpulanAttribute($value){
-        return $this->formatTimestamp($value);
-    }
+    // public function getTglPengumpulanAttribute($value){
+    //     return $this->formatTimestamp($value);
+    // }
 
-    public function getDeadlineAttribute($value){
-        return $this->formatTimestamp($value);
-    }
+    // public function getDeadlineAttribute($value){
+    //     return $this->formatTimestamp($value);
+    // }
 
     protected static function boot()
     {

@@ -64,11 +64,13 @@
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">
-                                            <small class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</small>
+                                            <small class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                                            </small>
                                         </td>
                                         <td class="align-middle text-center">
                                             @if ($item->deadline != 0)
-                                                <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
+                                                </span>
                                             @else
                                                 <span class="text-secondary text-xs font-weight-bold">-</span>
                                             @endif

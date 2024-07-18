@@ -407,14 +407,14 @@
         <ul class="list-unstyled">
               <ul>
                 <h6 class="text-sm py-3">
-                <li>Dibuat : {{$item->created_at}}</li> <br>
+                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, DD MMMM YYYY') }} : {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</li> <br>
                 <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
                 <li>Temuan Audit : {{$item->temuan}}</li> <br>
                 <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
                 <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
                 <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{$item->updated_at}}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{$item->tgl_pengumpulan}}</li> <br>
                 <li>Status Pengisian :
                     @if ($item->status_pengisian == 2)
                         <small class="badge badge-sm bg-gradient-success">Selesai</small>

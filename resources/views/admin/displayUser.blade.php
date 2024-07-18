@@ -143,12 +143,12 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label class="">Nama Lengkap</label>
-                                <input type="text" class="form-control" name="name" placeholder="{{$item->name}}">
+                                <input type="text" class="form-control" name="name" value="{{$item->name}}" /required>
                             </div>
                              <div class="deadline-form">
                                  <div class="form-group">
                                      <label for="score">Email</label>
-                                     <input type="text" class="form-control" name="email" placeholder="{{$item->email}}">
+                                     <input type="text" class="form-control" name="email" value="{{$item->email}}" /required>
                                  </div>
                              </div>
                             <div class="row">
@@ -156,7 +156,7 @@
                                     <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                                 </div>
                                 <div class="col-6 mt-4">
-                                    <button type="submit" class="btn btn-primary btn-block">Simpan Laporam</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Edit Data</button>
                                 </div>
                             </div>
                         </form>

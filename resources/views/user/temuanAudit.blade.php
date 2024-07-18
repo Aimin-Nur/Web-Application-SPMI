@@ -92,7 +92,7 @@
                 <div class="row">
                     <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
                         <div class="empty">
-                            <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px"></div>
+                            <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="Temuan Kosong" width="300px"></div>
                             <p class="empty-title text-bold">Belum Anda Temuan Audit Bagi Lembaga Anda</p>
                         </div>
                     </div>
@@ -113,11 +113,6 @@
                         <div class="empty">
                             <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px"></div>
                             <p class="empty-title text-bold">Belum Terdapat Riwayat Temuan Audit</p>
-                            <div class="empty-action">
-                                <a href="/addTemuan" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,12 +131,7 @@
                     <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
                         <div class="empty">
                             <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="Tidak Ada Skor" width="300px"></div>
-                            <p class="empty-title text-bold">Belum Terdapat Skor untuk Lembaga.</p>
-                            <div class="empty-action">
-                                <a href="/addTemuan" class="btn btn-primary">
-                                    <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
-                                </a>
-                            </div>
+                            <p class="empty-title text-bold">Belum Ada Skor untuk Lembaga Anda.</p>
                         </div>
                     </div>
                 </div>
