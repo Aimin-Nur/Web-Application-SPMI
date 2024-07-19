@@ -232,7 +232,7 @@
                                <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
                            </div>
                            <h4>Edit Status Dokumen</h4>
-                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : <b>{{$item->updated_at}}</b></p>
+                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : <b>{{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</b></p>
                            <form action="/editTemuan/{{$item->id}}" class="mb-4" method="POST">
                                @csrf
                                @method('PUT')
@@ -413,8 +413,8 @@
                 <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
                 <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{$item->deadline}}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{$item->tgl_pengumpulan}}</li> <br>
+                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
                 <li>Status Pengisian :
                     @if ($item->status_pengisian == 2)
                         <small class="badge badge-sm bg-gradient-success">Selesai</small>

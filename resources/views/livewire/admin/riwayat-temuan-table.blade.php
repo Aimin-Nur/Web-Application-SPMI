@@ -66,7 +66,7 @@
                                             @if ($item->status_pengisian == 2)
                                                 <small class="badge badge-sm bg-gradient-success">Selesai</small>
                                             @else
-                                                <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                                                <small class="badge badge-sm bg-gradient-danger">Terlambat</small>
                                             @endif
                                         </td>
                                         <td class="align-middle text-center text-sm">

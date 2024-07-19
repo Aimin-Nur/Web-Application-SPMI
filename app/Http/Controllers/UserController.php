@@ -162,7 +162,7 @@ class UserController extends Controller
 
             return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
         } catch (\Exception $e) {
-            return redirect('/dokumenUser')->with('status', 'error')->with('message', 'Gagal Menegirimkan Dokumen: ' . $e->getMessage());
+            return redirect('/dokumenUser')->with('status', 'error')->with('message', 'Gagal Mengirim Dokumen: ' . $e->getMessage());
         }
     }
 
@@ -173,10 +173,10 @@ class UserController extends Controller
 
             $now = Carbon::now('Asia/Makassar')->locale('id_ID');
 
-            if ($now < $deadline) {
-                $docs->status_pengisian = 1;
-            } else {
+            if ($now->lessThan($deadline)) {
                 $docs->status_pengisian = 2;
+            } else {
+                $docs->status_pengisian = 1;
             }
 
             $docs->tgl_pengumpulan = $now;
@@ -184,7 +184,7 @@ class UserController extends Controller
 
             return redirect('/temuan')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');
         } catch (\Exception $e) {
-            return redirect('/temuan')->with('status', 'error')->with('message', 'Gagal Mengedit Dokumen: ' . $e->getMessage());
+            return redirect('/temuan')->with('status', 'error')->with('message', 'Gagal Mengirim Dokumen: ' . $e->getMessage());
         }
     }
 

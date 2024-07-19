@@ -33,7 +33,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                    <small class="text-xs text-secondary mt-2">Created : {{$item->created_at}}</small>
+                                                    <small class="text-xs text-secondary mt-2">Created : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -43,7 +43,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
+                                            <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <a class="btn text-xs btn-sm bg-gradient-primary mt-3" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}">Send Docs</a>

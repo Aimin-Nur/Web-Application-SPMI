@@ -84,7 +84,16 @@ class AdminController extends BaseController
         $countLaporan = LaporanAudit::count();
         $countAuditor = Auditor::count();
 
-        return view('admin.index', compact('pageTitle','admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
+        $lembagaScoresDocs = Lembaga::with('dokumen')->get()->map(function ($lembaga) {
+            return [
+                'nama_lembaga' => $lembaga->nama_lembaga,
+                'total_score' => $lembaga->dokumen->sum('score')
+            ];
+        })->sortByDesc('total_score')->values();
+        $maxScoreDocs = $lembagaScoresDocs->max('total_score');
+
+
+        return view('admin.index', compact('lembagaScoresDocs','pageTitle','admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
     }
 
     public function dokumen (){
@@ -319,7 +328,6 @@ class AdminController extends BaseController
 
             $temuan = Evaluasi::findOrFail($id);
             $temuan->status_docs = $request->input('status');
-            $temuan->status_pengisian = 2;
 
             $score = $request->input('score', 4);
             $temuan->score = $score;
@@ -552,7 +560,7 @@ class AdminController extends BaseController
             $admin->forceFill([
                 'password' => Hash::make($request->password),
             ])->save();
-            
+
                 return redirect('/profile/admin')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
             } catch (\Exception $e) {
                 return redirect('/profile/admin')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());

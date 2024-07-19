@@ -6,13 +6,13 @@
                     © <script>
                                 document.write(new Date().getFullYear())
                                 </script>,
-                            made with <i class="fa fa-heart"></i> by
-                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Creative Tim</a>
+                            made by
+                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Angkatan 2021 Sistem Informasi</a>
                             for a better web.
                 </div>
              </div>
         <div class="col-lg-6">
-            
+
     <ul class="nav nav-footer justify-content-center justify-content-lg-end">
     <li class="nav-item">
     <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>

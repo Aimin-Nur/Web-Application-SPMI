@@ -145,8 +145,8 @@
                 <div class="col-lg-6 col-7">
                   <h6>Rangking Point</h6>
                   <p class="text-sm mb-0">
-                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">30 done</span> this month
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <span class="font-weight-bold ms-1">Score Temuan</span> Audit
                   </p>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -154,11 +154,6 @@
                     <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="fa fa-ellipsis-v text-secondary"></i>
                     </a>
-                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
-                      <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
-                    </ul>
                   </div>
                 </div>
               </div>
@@ -213,31 +208,71 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="card h-100">
-            <div class="card-header pb-0">
-              <h6>Tracking Poin</h6>
-              <p class="text-sm">
-                <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                <span class="font-weight-bold">24%</span> this month
-              </p>
-            </div>
-            <div class="card-body p-3">
-                <div class="timeline timeline-one-side">
-                    @foreach($riwayat as $lembaga)
-                        <div class="timeline-block mb-3">
-                            <span class="timeline-step">
-                                <i class="fa fa-arrow-{{ $lembaga['is_increased'] ? 'up text-success' : 'down text-danger' }}"></i>
-                            </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}: {{ $lembaga['total_score'] }}</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ $lembaga['updated_at'] ? $lembaga['updated_at'] : '-' }}</p>
-                            </div>
-                        </div>
-                    @endforeach
+        <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+            <div class="card">
+              <div class="card-header pb-0">
+                <div class="row">
+                  <div class="col-lg-6 col-7">
+                    <h6>Ranking Point</h6>
+                    <p class="text-sm mb-0">
+                        <i class="fa fa-file text-info" aria-hidden="true"></i>
+                        <span class="font-weight-bold ms-1 text-xs">Score Dokumen</span> Audit
+                      </p>
+                  </div>
+                  <div class="col-lg-6 col-5 my-auto text-end">
+                    <div class="dropdown float-lg-end pe-4">
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="card-body px-0 pb-2">
+                  <div class="table-responsive">
+                      <table class="table align-items-center mb-0">
+                          <thead>
+                              <tr>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Nama Lembaga</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-xxs">Total Score</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @php
+                                  $colors = ['bg-gradient-info', 'bg-gradient-success', 'bg-gradient-danger', 'bg-gradient-warning', 'bg-gradient-primary'];
+                              @endphp
+                              @foreach($lembagaScoresDocs as $index => $lembaga)
+                                  <tr>
+                                      <td>
+                                          <div class="d-flex px-2 py-1">
+                                              <div class="d-flex flex-column justify-content-center">
+                                                  <h6 class="mb-0 text-xxs">{{ $lembaga['nama_lembaga'] }}</h6>
+                                              </div>
+                                          </div>
+                                      </td>
+                                      <td class="align-middle text-center text-sm">
+                                          <div class="progress-wrapper w-75 mx-auto">
+                                              <div class="progress-info">
+                                                  <div class="progress-percentage">
+                                                      <span class="text-xxs font-weight-bold">{{ $lembaga['total_score'] }}</span>
+                                                  </div>
+                                              </div>
+                                              <div class="progress" style="width: 70px">
+                                                  <div class="progress-bar {{ $colors[$index % count($colors)] }}" role="progressbar" style="width: {{ $maxScore ? ($lembaga['total_score'] / $maxScore * 100) : 0 }}%" aria-valuenow="{{ $lembaga['total_score'] }}" aria-valuemin="0" aria-valuemax="{{ $maxScore }}"></div>
+                                              </div>
+                                          </div>
+                                      </td>
+                                  </tr>
+                              @endforeach
+                              <td>
+                                <div class="d-flex px-2 py-1 text-center">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-xxs text-center"><i>Skor Dokumen Evaluasi Diri Setiap Lembaga</i></h6>
+                                    </div>
+                                </div>
+                            </td>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
             </div>
-          </div>
         </div>
       </div>
 
@@ -246,7 +281,7 @@
         <div class="col-lg-6">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Temuan Minor</h6>
+              <h6>Temuan Minor Terbanyak</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -289,7 +324,7 @@
         <div class="col-lg-6">
             <div class="card mb-4">
               <div class="card-header pb-0">
-                <h6>Temuan Mayor</h6>
+                <h6>Temuan Mayor Terbanyak</h6>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -330,7 +365,7 @@
           <div class="col-lg-12">
             <div class="card mb-4">
               <div class="card-header pb-0">
-                <h6>Temuan Close</h6>
+                <h6>Temuan Close Terbanyak</h6>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">

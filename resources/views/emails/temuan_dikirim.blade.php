@@ -245,7 +245,7 @@
 
                                         <div style="line-height: 24px">
 
-                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Temuan Auditgit Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ $deadline ?? '-' }}</b>
+                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Temuan Auditgit Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ \Carbon\Carbon::parse($deadline)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}</b>
                                         </div>
                                     </td>
                                 </tr>
@@ -270,7 +270,7 @@
 
 
                                         <div style="line-height: 26px;">
-                                            <a href="" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a>
+                                            <a href="https://career.kallagroup.co.id/auth/login" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a>
                                         </div>
                                     </td>
                                 </tr>

@@ -438,12 +438,12 @@
             </div>
             <div class="docs-info">
               <h6 class="text-white up mb-0">Need help?</h6>
-              <p class="text-xs font-weight-bold">Please check our docs</p>
-              <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">Documentation</a>
+              <p class="text-xs font-weight-bold">Call Superadmin ICT</p>
+              <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">SUperadmin</a>
             </div>
           </div>
         </div>
-        <a class="btn bg-gradient-primary mt-3 w-100" href="https://www.creative-tim.com/product/soft-ui-dashboard-pro?ref=sidebarfree">Upgrade to pro</a>
+        <a class="btn bg-gradient-primary mt-3 w-100" href="/livescore">Dashboard Score Audit</a>
       </div>
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">

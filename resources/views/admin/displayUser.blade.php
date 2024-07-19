@@ -199,7 +199,7 @@
                     <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                 </div>
                 <div class="col-6 mt-4">
-                    <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                    <button type="submit" class="btn btn-primary btn-block">Hapus Akun User</button>
                 </div>
                 </div>
             </form>

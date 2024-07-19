@@ -226,7 +226,7 @@
 
                                         <div style="line-height: 24px">
 
-                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ $deadline ?? '-' }}</b>
+                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ \Carbon\Carbon::parse($deadline)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}</b>
                                         </div>
                                     </td>
                                 </tr>

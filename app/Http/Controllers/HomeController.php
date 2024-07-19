@@ -28,6 +28,15 @@ class HomeController extends Controller
         })->sortByDesc('total_score')->values();
         $maxScore = $lembagaScores->max('total_score');
 
+        $lembagaScoresDocs = Lembaga::with('dokumen')->get()->map(function ($lembaga) {
+            return [
+                'nama_lembaga' => $lembaga->nama_lembaga,
+                'total_score' => $lembaga->dokumen->sum('score')
+            ];
+        })->sortByDesc('total_score')->values();
+        $maxScoreDocs = $lembagaScoresDocs->max('total_score');
+
+
        $riwayat = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
             return [
                 'nama_lembaga' => $lembaga->nama_lembaga,
@@ -139,6 +148,6 @@ class HomeController extends Controller
             ->take(3);
 
 
-        return view('livescore', compact('lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor','minorLembaga','mayorLembaga','closeLembaga'));
+        return view('livescore', compact('lembagaScoresDocs','lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor','minorLembaga','mayorLembaga','closeLembaga'));
     }
 }
