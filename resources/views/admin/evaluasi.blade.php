@@ -204,248 +204,153 @@
         </div>
         @endif
     </div>
-</div>
 
 </div>
+
+</div>
 </div>
 
-
-
-    {{-- Modal Edit Status --}}
-   @foreach ($evaluasi as $item)
-   <div class="modal fade" id="exampleModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-       <div class="modal-dialog modal-dialog-centered" role="document">
-           <div class="modal-content rounded-0">
-               <div class="modal-body bg-3">
-                   <div class="px-3 to-front">
-                       <div class="row align-items-center">
-                           <div class="col text-right">
-                               <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true"><span class="icon-close2"></span></span>
-                               </a>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="p-4 to-front">
-                       <div class="text-center">
-                           <div class="logo">
-                               <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                           </div>
-                           <h4>Edit Status Dokumen</h4>
-                           <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : <b>{{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</b></p>
-                           <form action="/editTemuan/{{$item->id}}" class="mb-4" method="POST">
-                               @csrf
-                               @method('PUT')
-                                <div class="form-group">
-                                    <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
-                                        <option value="">Pilih Status Dokumen</option>
-                                        <option value="1">Minor</option>
-                                        <option value="2">Mayor</option>
-                                        <option value="3">Close</option>
-                                    </select>
+{{-- Modal Edit Status --}}
+@foreach ($evaluasi as $item)
+<div class="modal fade" id="editModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-body bg-3">
+                <div class="px-3 to-front">
+                    <div class="row align-items-center">
+                        <div class="col text-right">
+                            <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 to-front">
+                    <div class="text-center">
+                        <div class="logo">
+                            <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                        </div>
+                        <h4>Edit Status Dokumen</h4>
+                        <p class="mb-3 text-sm">Lembaga telah melakukan pengisian kelengkapan dokumen yang telah Anda berikan pada tanggal : <b>{{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</b></p>
+                        <form action="/editTemuan/{{$item->id}}" class="mb-4" method="POST">
+                            @csrf
+                            @method('PUT')
+                             <div class="form-group">
+                                 <select class="form-select status-select" name="status" id="statusSelect{{ $item->id }}">
+                                     <option value="">Pilih Status Dokumen</option>
+                                     <option value="1">Poor</option>
+                                     <option value="2">Average</option>
+                                     <option value="3">Good</option>
+                                     <option value="4">Excellent</option>
+                                 </select>
+                             </div>
+                             <div class="deadline-form" id="Score-form{{ $item->id }}" style="display: none;">
+                                 <div class="form-group">
+                                     <label for="score">Score</label>
+                                     <input type="number" class="form-control" id="score{{ $item->id }}" name="score" placeholder="0 - 276">
+                                 </div>
+                             </div>
+                            <div class="row">
+                                <div class="col-6 mt-4">
+                                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                                 </div>
-                                <div class="deadline-form" id="Score-form{{ $item->id }}" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="score">Score</label>
-                                        <input type="number" class="form-control" id="score{{ $item->id }}" name="score">
-                                    </div>
+                                <div class="col-6 mt-4">
+                                     <input type="hidden" name="hidden_score" value="4" id="hiddenScore{{ $item->id }}">
+                                    <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
                                 </div>
-                               <div class="row">
-                                   <div class="col-6 mt-4">
-                                       <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                                   </div>
-                                   <div class="col-6 mt-4">
-                                        <input type="hidden" name="hidden_score" value="4" id="hiddenScore{{ $item->id }}">
-                                       <button type="submit" class="btn btn-primary btn-block">Simpan Status</button>
-                                   </div>
-                               </div>
-                           </form>
-                           <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
+                            </div>
+                        </form>
+                        <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ @endforeach
+
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         const statusSelects = document.querySelectorAll('.status-select');
+         const deadlineForms = document.querySelectorAll('.deadline-form');
+
+         statusSelects.forEach((statusSelect, index) => {
+             const deadlineForm = deadlineForms[index];
+             const hiddenScore = document.getElementById('hiddenScore' + statusSelect.id.replace('statusSelect', ''));
+             const scoreInput = document.getElementById('score' + statusSelect.id.replace('statusSelect', ''));
+
+             statusSelect.addEventListener('change', function() {
+                 const selectedValue = this.value;
+                 if (selectedValue === '1' || selectedValue === '2' || selectedValue === '3' || selectedValue === '4') {
+                     deadlineForm.style.display = 'block';
+                     hiddenScore.name = '';
+                     scoreInput.name = 'score';
+                 } else {
+                     deadlineForm.style.display = 'none';
+                     hiddenScore.name = 'score';
+                     scoreInput.name = '';
+                     hiddenScore.value = '4'; // kondisi close
+                     scoreInput.value = '';
+                 }
+             });
+
+             if (statusSelect.value === '1' || statusSelect.value === '2') {
+                 deadlineForm.style.display = 'block';
+                 hiddenScore.name = ''; // Disable hidden score input
+                 scoreInput.name = 'score'; // Enable visible score input
+             } else {
+                 deadlineForm.style.display = 'none';
+                 hiddenScore.name = 'score'; // Enable hidden score input
+                 scoreInput.name = ''; // Disable visible score input
+             }
+         });
+     });
+ </script>
+
+ {{-- Modal Hapus Audit --}}
+ @foreach ($evaluasi as $item)
+ <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content rounded-0">
+         <div class="modal-body bg-3">
+         <div class="px-3 to-front">
+             <div class="row align-items-center">
+             <div class="col text-right">
+                 <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true"><span class="icon-close2"></span></span>
+                 </a>
+             </div>
+             </div>
+         </div>
+         <div class="p-4 to-front">
+             <div class="text-center">
+             <div class="logo">
+                 <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+             </div>
+             <h4>Hapus Temuan Audit</h4>
+             <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
+             <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
+                 @csrf
+                 @method('DELETE')
+                 <div class="row">
+                 <div class="col-6 mt-4">
+                     <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                 </div>
+                 <div class="col-6 mt-4">
+                     <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                 </div>
+                 </div>
+             </form>
+             <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+             </div>
+         </div>
+         </div>
+     </div>
    </div>
-    @endforeach
+ </div>
+ @endforeach
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const statusSelects = document.querySelectorAll('.status-select');
-            const deadlineForms = document.querySelectorAll('.deadline-form');
-
-            statusSelects.forEach((statusSelect, index) => {
-                const deadlineForm = deadlineForms[index];
-                const hiddenScore = document.getElementById('hiddenScore' + statusSelect.id.replace('statusSelect', ''));
-                const scoreInput = document.getElementById('score' + statusSelect.id.replace('statusSelect', ''));
-
-                statusSelect.addEventListener('change', function() {
-                    const selectedValue = this.value;
-                    if (selectedValue === '1' || selectedValue === '2') {
-                        deadlineForm.style.display = 'block';
-                        hiddenScore.name = ''; // Disable hidden score input
-                        scoreInput.name = 'score'; // Enable visible score input
-                    } else {
-                        deadlineForm.style.display = 'none';
-                        hiddenScore.name = 'score'; // Enable hidden score input
-                        scoreInput.name = ''; // Disable visible score input
-                        hiddenScore.value = '4'; // Default value for hidden score
-                        scoreInput.value = ''; // Clear visible score input
-                    }
-                });
-
-                if (statusSelect.value === '1' || statusSelect.value === '2') {
-                    deadlineForm.style.display = 'block';
-                    hiddenScore.name = ''; // Disable hidden score input
-                    scoreInput.name = 'score'; // Enable visible score input
-                } else {
-                    deadlineForm.style.display = 'none';
-                    hiddenScore.name = 'score'; // Enable hidden score input
-                    scoreInput.name = ''; // Disable visible score input
-                }
-            });
-        });
-    </script>
-
-    {{-- Modal Hapus Audit --}}
-    @foreach ($evaluasi as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-0">
-            <div class="modal-body bg-3">
-            <div class="px-3 to-front">
-                <div class="row align-items-center">
-                <div class="col text-right">
-                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><span class="icon-close2"></span></span>
-                    </a>
-                </div>
-                </div>
-            </div>
-            <div class="p-4 to-front">
-                <div class="text-center">
-                <div class="logo">
-                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                </div>
-                <h4>Hapus Temuan Audit</h4>
-                <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
-                <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="row">
-                    <div class="col-6 mt-4">
-                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                    </div>
-                    <div class="col-6 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
-                    </div>
-                    </div>
-                </form>
-                <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
-    </div>
-    @endforeach
-
-    {{-- Modal Hapus Riwayat --}}
-    @foreach ($riwayat as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-0">
-            <div class="modal-body bg-3">
-            <div class="px-3 to-front">
-                <div class="row align-items-center">
-                <div class="col text-right">
-                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><span class="icon-close2"></span></span>
-                    </a>
-                </div>
-                </div>
-            </div>
-            <div class="p-4 to-front">
-                <div class="text-center">
-                <div class="logo">
-                    <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-                </div>
-                <h4>Hapus Temuan Audit</h4>
-                <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
-                <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <div class="row">
-                    <div class="col-6 mt-4">
-                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                    </div>
-                    <div class="col-6 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
-                    </div>
-                    </div>
-                </form>
-                <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-                </div>
-            </div>
-            </div>
-        </div>
-      </div>
-    </div>
-    @endforeach
-
-
-{{-- Modal Detail --}}
-@foreach ($riwayat as $item)
-<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-unstyled">
-              <ul>
-                <h6 class="text-sm py-3">
-                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, DD MMMM YYYY') }} : {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</li> <br>
-                <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
-                <li>Temuan Audit : {{$item->temuan}}</li> <br>
-                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
-                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
-                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
-                <li>Status Pengisian :
-                    @if ($item->status_pengisian == 2)
-                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                    @else
-                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                    @endif
-                </li> <br>
-                <li> Status Dokumen :
-                    @if ($item->status_docs == 1)
-                        <span class="badge badge-xxs bg-gradient-primary">Minor</span>
-                    @elseif ($item->status_docs == 2)
-                        <span class="badge badge-sm bg-gradient-danger">Major</span>
-                    @elseif ($item->status_docs == 3)
-                        <span class="badge badge-sm bg-gradient-success">Close</span>
-                    @endif
-                </li><br>
-                <li>Skor Dokumen : {{$item->score}}</li>
-                </h6>
-              </ul>
-            </li>
-          </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-@endforeach
-
-{{-- Modal Validasi Edit Status --}}
+ {{-- Modal Validasi Edit Status --}}
 @foreach ($evaluasi as $item)
 <div class="modal fade" id="unsend{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -479,7 +384,6 @@
     </div>
 </div>
 @endforeach
-
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

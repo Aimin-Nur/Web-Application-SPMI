@@ -33,7 +33,9 @@ class RiwayatTemuan extends Component
         $riwayat = Evaluasi::with(['lembaga.user'])
             ->where(function($query) {
                 $query->where('status_pengisian', 2)
-                      ->orWhere('status_pengisian', 1)
+                ->orwhere('status_pengisian', 1)
+                    ->where('score', '!=', NULL)
+                    ->where('tgl_pengumpulan', '!=', NULL)
                       ->where(function($query) {
                           $query->where('temuan', 'like', '%' . $this->search . '%')
                                 ->orWhereHas('lembaga', function($query) {
@@ -43,7 +45,7 @@ class RiwayatTemuan extends Component
             })
             ->paginate(10);
 
-        return view('livewire.admin.riwayat-temuan-table', [
+        return view('livewire.admin.riwayat-temuan', [
             'riwayat' => $riwayat
         ]);
     }

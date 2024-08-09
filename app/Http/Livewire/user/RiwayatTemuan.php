@@ -33,11 +33,11 @@ class RiwayatTemuan extends Component
         $user = Auth::user();
         $idLembaga = $user->id_lembaga;
 
-        $riwayat = Evaluasi::with(['lembaga.user'])
+        $riwayat = Evaluasi::where('id_lembaga', $idLembaga)
                     ->where(function($query) use ($idLembaga) {
                         $query->where('status_pengisian', 1)
                             ->orWhere('status_pengisian', 2)
-                            ->whereNotNull('score')
+                            // ->whereNotNull('score')
                             ->where('id_lembaga', $idLembaga);
                     })
                     ->where(function($query) {

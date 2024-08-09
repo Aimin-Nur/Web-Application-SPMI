@@ -123,16 +123,16 @@
                 <div class="card">
                   <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                        <div class="col-lg-6 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                               <div class="card-body p-3">
                                 <div class="row">
                                   <div class="col-8">
                                     <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Terlambat Menyelesaikan Dokumen</p>
                                       <h5 class="font-weight-bolder mb-0">
-                                        {{$minor}}
-                                        <span class="text-warning text-sm font-weight-bolder">Minor</span>
+                                        {{$terlambat}}
+                                        <span class="text-warning text-sm font-weight-bolder">Lembaga/Biro</span>
                                       </h5>
                                     </div>
                                   </div>
@@ -145,38 +145,16 @@
                               </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                        <div class="col-lg-6 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                               <div class="card-body p-3">
                                 <div class="row">
                                   <div class="col-8">
                                     <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Tepat Waktu Menyelesaikan Dokumen</p>
                                       <h5 class="font-weight-bolder mb-0">
-                                        {{$major}}
-                                        <span class="text-danger text-sm font-weight-bolder">Mayor</span>
-                                      </h5>
-                                    </div>
-                                  </div>
-                                  <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                      <i class="fa fa-gavel text-lg opacity-10" aria-hidden="true"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
-                            <div class="card">
-                              <div class="card-body p-3">
-                                <div class="row">
-                                  <div class="col-8">
-                                    <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
-                                      <h5 class="font-weight-bolder mb-0">
-                                        {{$close}}
-                                        <span class="text-success text-sm font-weight-bolder">Close</span>
+                                        {{$ontime}}
+                                        <span class="text-success text-sm font-weight-bolder">Lembaga/Biro</span>
                                       </h5>
                                     </div>
                                   </div>
@@ -437,8 +415,6 @@
                 <h6 class="text-sm py-3">
                 <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
                 </li> <br>
-                <li>Temuan Audit : {{$item->temuan ?? '-'}}</li> <br>
-                <li>Rapat Tinjauan Kinerja : {{$item->rtk ?? '-'}}</li> <br>
                 <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
                 <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
                 <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
@@ -452,16 +428,8 @@
                     <small class="badge badge-sm bg-gradient-danger">Pending</small>
                     @endif
                 </li> <br>
-                <li> Status Dokumen :
-                    @if ($item->status_docs == 1)
-                        <span class="badge badge-xxs bg-gradient-primary">Minor</span>
-                    @elseif ($item->status_docs == 2)
-                        <span class="badge badge-sm bg-gradient-danger">Major</span>
-                    @elseif ($item->status_docs == 3)
-                        <span class="badge badge-sm bg-gradient-success">Close</span>
-                    @endif
-                </li><br>
-                <li>Skor Dokumen : {{$item->score}}</li>
+
+                <li>Skor Sementara : {{$item->score}}</li>
                 </h6>
               </ul>
             </li>
@@ -469,6 +437,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"><a class="text-white" href="{{$item->tautan}}" target="_blank">Open Spreadsheet</a></button>
       </div>
     </div>
   </div>

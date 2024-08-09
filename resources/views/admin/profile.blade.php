@@ -21,7 +21,7 @@
           <div class="nav-wrapper position-relative end-0">
             <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist" id="pills-tab">
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link mb-0 px-0 py-1 active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    <a class="nav-link mb-0 px-0 py-1 {{ $tab !== 'password' ? 'active' : '' }}" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="{{ $tab !== 'password' ? 'true' : 'false' }}">
                     <svg class="text-dark" width="16px" height="16px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g transform="translate(-2319.000000, -291.000000)" fill="#FFFFFF" fill-rule="nonzero">
@@ -40,9 +40,9 @@
                   </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link mb-0 px-0 py-1" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                    <a class="nav-link mb-0 px-0 py-1 {{ $tab === 'password' ? 'actived' : '' }}" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" type="button" role="tab" aria-controls="pills-password" aria-selected="{{ $tab === 'password' ? 'true' : 'false' }}">
                     <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                      <title>Profil</title>
+                      <title>Password</title>
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF" fill-rule="nonzero">
                           <g transform="translate(1716.000000, 291.000000)">
@@ -66,7 +66,7 @@
 </div>
 
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+    <div class="tab-pane fade {{ $tab != 'password' ? 'show active' : '' }}" id="pills-home" role="tabpanel" aria-labelledby="pills-info-tab">
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+    <div class="tab-pane fade {{ $tab === 'password' ? 'show active' : '' }}" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">

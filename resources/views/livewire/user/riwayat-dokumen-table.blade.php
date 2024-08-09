@@ -25,8 +25,7 @@
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proses</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Docs</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Sementara</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Docs</th>
                                 </tr>
                             </thead>
@@ -45,19 +44,6 @@
                                             <span class="badge badge-sm bg-gradient-danger">Terlambat</span>
                                         @elseif($item->status_pengisian == 2 && $item->score != NULL)
                                             <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                        @else
-                                            <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
-                                        @endif
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        @if ($item->status_docs == 1)
-                                            <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                        @elseif ($item->status_docs == 2)
-                                            <span class="badge badge-sm bg-gradient-danger">Mayor</span>
-                                        @elseif ($item->status_docs == 3)
-                                            <span class="badge badge-sm bg-gradient-success">Close</span>
-                                        @else
-                                            <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                         @endif
                                     </td>
                                     <td class="align-middle text-center text-sm">
@@ -68,7 +54,8 @@
                                         @endif
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
+                                        <a href="{{$item->tautan}}">
+                                        <i class="fa fa-share-square-o ms-2 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></a></i>
                                     </td>
                                 </tr>
                                 @endforeach

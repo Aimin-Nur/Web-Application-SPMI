@@ -29,6 +29,7 @@ class superAdminController extends Controller
     }
 
     public function index (){
+        $pageTitle = "Dashboard";
         $today = Carbon::today();
         $admin = Auth::guard('admin')->user();
         $lembagaScores = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
@@ -81,12 +82,13 @@ class superAdminController extends Controller
         $countAdmin = Admin::count();
         $countAuditor = Auditor::count();
 
-        return view('superadmin.index', compact('admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAdmin','countAuditor'));
+        return view('superadmin.index', compact('pageTitle','admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAdmin','countAuditor'));
     }
 
     public function lembaga (){
+        $pageTitle = "Manage Lembaga";
         $getData = Lembaga::get();
-        return view('superadmin.lembaga', compact('getData'));
+        return view('superadmin.lembaga', compact('getData','pageTitle'));
     }
 
     public function addLembaga(Request $request){
@@ -132,9 +134,10 @@ class superAdminController extends Controller
     }
 
     public function displayUser(){
+        $pageTitle = "Manage User";
         $getData = User::with('lembaga')->get();
 
-        return view('superadmin.user', compact('getData'));
+        return view('superadmin.user', compact('getData', 'pageTitle'));
     }
 
     public function deleteUser($id){
@@ -191,6 +194,7 @@ class superAdminController extends Controller
     }
 
     public function dokumen (){
+        $pageTitle = "Dokumen Audit";
         $minor = Dokumen::where('status_docs', 1)->count();
         $major = Dokumen::where('status_docs', 2)->count();
         $close = Dokumen::where('status_docs', 3)->count();
@@ -211,10 +215,11 @@ class superAdminController extends Controller
                 ->orWhere('status_pengisian', 3);
         })
         ->count();
-        return view('superadmin.vieDocs', compact('close','major','minor','dokumens', 'riwayatDocs', 'countDokumens'));
+        return view('superadmin.vieDocs', compact('pageTitle','close','major','minor','dokumens', 'riwayatDocs', 'countDokumens'));
     }
 
     public function temuanAudit() {
+        $pageTitle = "Temuan Audit";
         $evaluasi = Evaluasi::with(['lembaga.user'])->where(function($query) {
             $query->where('status_pengisian', 0)
                 ->orWhere('status_pengisian', 2)
@@ -256,17 +261,21 @@ class superAdminController extends Controller
         $major = Evaluasi::where('status_docs', 2)->count();
         $close = Evaluasi::where('status_docs', 3)->count();
 
-        return view('superadmin.viewTemuan', compact('evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
+        return view('superadmin.viewTemuan', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
     }
 
     public function laporanAudit(){
-        $getData = LaporanAudit::get();
-        return view('superadmin.viewLaporan', compact('getData'));
+        $data = [
+            'pageTitle' => "Laporan Audit",
+            'getData' => LaporanAudit::get(),
+        ];
+        return view('superadmin.viewLaporan', $data);
     }
 
     public function displayAdmin(){
+        $pageTitle = "Admin SPMI";
         $getData = Admin::get();
-        return view('superadmin.manageAdmin', compact('getData'));
+        return view('superadmin.manageAdmin', compact('getData', 'pageTitle'));
     }
 
     public function registrasiAdmin(Request $request){
@@ -310,8 +319,9 @@ class superAdminController extends Controller
     }
 
     public function auditor(){
+        $pageTitle = "Auditor SPMI";
         $getData = Auditor::get();
-        return view('superadmin.auditor', compact('getData'));
+        return view('superadmin.auditor', compact('getData', 'pageTitle'));
     }
 
     public function addAuditor(Request $request){

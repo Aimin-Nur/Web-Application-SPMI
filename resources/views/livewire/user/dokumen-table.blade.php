@@ -39,7 +39,7 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <a href="{{$item->tautan}}" target="_blank">
-                                                <i class="fa fa-share-square-o ms-3 text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
+                                                <i class="fa fa-share-square-o ms-3 text-success cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Open Docs"></i>
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">

@@ -43,37 +43,14 @@ class AdminController extends BaseController
         })->sortByDesc('total_score')->values();
         $maxScore = $lembagaScores->max('total_score');
 
-       $riwayat = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
-            return [
-                'nama_lembaga' => $lembaga->nama_lembaga,
-                'total_score' => $lembaga->evaluasi->sum('score'),
-                'updated_at' => $lembaga->evaluasi->max('updated_at'),
-            ];
-        });
-
-        $previousScores = Cache::get('previousScores', []);
-        $currentScores = [];
-
-        // Bandingkan skor saat ini dengan skor sebelumnya dan tentukan 'is_increased'
-        $riwayat = $riwayat->map(function ($lembaga) use ($previousScores, &$currentScores) {
-            $previousScore = $previousScores[$lembaga['nama_lembaga']] ?? 0;
-            $currentScores[$lembaga['nama_lembaga']] = $lembaga['total_score'];
-            return array_merge($lembaga, [
-                'previous_score' => $previousScore,
-                'is_increased' => $lembaga['total_score'] > $previousScore,
-            ]);
-        })->sortByDesc('total_score')->values();
-
-        Session::put('previousScores', $currentScores);
-
-
         // Radar Dashboard
         $radar = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
             return [
                 'nama_lembaga' => $lembaga->nama_lembaga,
-                'major' => $lembaga->evaluasi->where('status_docs', 2)->count(),
-                'minor' => $lembaga->evaluasi->where('status_docs', 1)->count(),
-                'close' => $lembaga->evaluasi->where('status_docs', 3)->count()
+                'average' => $lembaga->evaluasi->where('status_docs', 2)->count(),
+                'poor' => $lembaga->evaluasi->where('status_docs', 1)->count(),
+                'good' => $lembaga->evaluasi->where('status_docs', 3)->count(),
+                'excellent' => $lembaga->evaluasi->where('status_docs', 4)->count()
             ];
         })->values();
 
@@ -84,32 +61,22 @@ class AdminController extends BaseController
         $countLaporan = LaporanAudit::count();
         $countAuditor = Auditor::count();
 
-        $lembagaScoresDocs = Lembaga::with('dokumen')->get()->map(function ($lembaga) {
-            return [
-                'nama_lembaga' => $lembaga->nama_lembaga,
-                'total_score' => $lembaga->dokumen->sum('score')
-            ];
-        })->sortByDesc('total_score')->values();
-        $maxScoreDocs = $lembagaScoresDocs->max('total_score');
-
-
-        return view('admin.index', compact('lembagaScoresDocs','pageTitle','admin', 'lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
+        return view('admin.index', compact('pageTitle','admin', 'lembagaScores','maxScore','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
     }
 
     public function dokumen (){
         $pageTitle = "Dokumen Audit";
-        $minor = Dokumen::where('status_docs', 1)->count();
-        $major = Dokumen::where('status_docs', 2)->count();
-        $close = Dokumen::where('status_docs', 3)->count();
+        $terlambat = Dokumen::where('status_pengisian', 1)->count();
+        $ontime = Dokumen::where('status_pengisian', 2)->count();
 
-        $dokumens = Dokumen::get();
+        $dokumens = Dokumen::where('status_pengisian', 0 ?? NULL)->get();
 
         $riwayatDocs = Dokumen::with(['lembaga.user'])
                         ->where('status_pengisian', 2)
                         ->orwhere('status_pengisian', 1)
                         ->get();
 
-        return view('admin.dokumen', compact('pageTitle','close','major','minor','dokumens', 'riwayatDocs'));
+        return view('admin.dokumen', compact('pageTitle','terlambat','ontime','dokumens', 'riwayatDocs'));
     }
 
     public function editStatusDocs(Request $request, $id){
@@ -157,6 +124,7 @@ class AdminController extends BaseController
             return redirect('/manageUser')->with('status', 'error')->with('message', 'Gagal Mengubah Data Akun User: ' . $e->getMessage());
         }
     }
+
 
     public function hapusUser($id){
         try {
@@ -218,15 +186,17 @@ class AdminController extends BaseController
         }
     }
 
-
+    // Halaman Temuan Audit
     public function temuanAudit() {
         $pageTitle = "Temuan Audit";
-        $evaluasi = Evaluasi::get();
+        $evaluasi = Evaluasi::where('score', NULL)->get();
 
-        $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])->where(function($query) {
-            $query->where('status_pengisian', 1)
-                  ->orWhere('status_pengisian', 2)
-                  ->where('score', '!=', NULL);
+        $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])
+        ->where(function($query) {
+            $query->where('status_pengisian', 2)
+                  ->orWhere('status_pengisian', 1)
+                  ->where('score', '!=', NULL)
+                  ->where('tgl_pengumpulan', '!=', NULL);
         })->get();
 
 
@@ -252,7 +222,7 @@ class AdminController extends BaseController
 
         // total semua skor dan jumlah temuan
         $totalSkor = $score->sum('score');
-        $totalTemuan = $evaluasi->count();
+        $totalTemuan = Evaluasi::count();
 
         $minor = Evaluasi::where('status_docs', 1)->count();
         $major = Evaluasi::where('status_docs', 2)->count();
@@ -266,10 +236,10 @@ class AdminController extends BaseController
         $evaluatedDokumenIds = Evaluasi::pluck('id_docs')->toArray();
 
         $getData = Lembaga::whereHas('dokumen', function ($query) use ($evaluatedDokumenIds) {
-                    $query->whereIn('status_docs', [1, 2])
+                    $query->whereIn('status_pengisian', [1, 2])
                           ->whereNotIn('id', $evaluatedDokumenIds);
                 })->with(['dokumen' => function ($query) use ($evaluatedDokumenIds) {
-                    $query->whereIn('status_docs', [1, 2])
+                    $query->whereIn('status_pengisian', [1, 2])
                           ->whereNotIn('id', $evaluatedDokumenIds);
                 }])
                 ->get();
@@ -292,9 +262,9 @@ class AdminController extends BaseController
             $existingTautanTemuan = Evaluasi::where('tautan_temuan', $request->input('tautan_temuan'))->first();
 
             if ($existingTautanRTK) {
-                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen RTK sudah ada.');
+                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen PTK sudah ada.');
             } elseif ($existingTautanTemuan) {
-                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen Temuan sudah ada.');
+                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen Temuan & Saran sudah ada.');
             }
 
             $send = new Evaluasi;
@@ -323,7 +293,11 @@ class AdminController extends BaseController
     public function editTemuan(Request $request, $id){
         try {
             $request->validate([
-                'status' => 'required|in:1,2,3',
+                'score' => 'required|integer|min:0',
+            ], [
+                'score.required' => 'Angka harus diisi.',
+                'score.integer' => 'Score anda tidak valid.',
+                'score.min' => 'Score Melebihi Angka Minimum.',
             ]);
 
             $temuan = Evaluasi::findOrFail($id);
@@ -526,18 +500,20 @@ class AdminController extends BaseController
         }
     }
 
-    public function profile(Request $request){
+    public function profile(Request $request, $tab = null){
         $admin = Auth::guard('admin')->user();
         $name = $admin->name;
         $email = $admin->email;
         $id = $admin->id;
         $pageTitle = "Profile";
+        $tab = $request->input('tab');
 
         return view('admin.profile', [
             'name' => $name,
             'email' => $email,
             'pageTitle' => $pageTitle,
             'id' => $id,
+            'tab' => $tab,
         ]);
     }
 
@@ -553,7 +529,7 @@ class AdminController extends BaseController
 
             if (!Hash::check($request->current_password, $admin->password)) {
                 throw ValidationException::withMessages([
-                    'current_password' => __('The provided password does not match your current password.'),
+                    'current_password' => __('Password Anda Tidak Sesuai dengan Password Anda Saat ini.'),
                 ]);
             }
 

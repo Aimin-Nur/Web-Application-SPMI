@@ -92,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div class="row mt-4">
+      {{-- <div class="row mt-4">
         <div class="col-lg-12">
           <div class="card z-index-2">
             <div class="card-header pb-0">
@@ -109,7 +109,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <div class="row my-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
@@ -119,7 +119,7 @@
                   <h6>Rangking Point</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-info" aria-hidden="true"></i>
-                    Anda Berada Diurutan ke  <span class="font-weight-bold ms-1">{{$userRanking}}</span> dari {{$lembagaScores->count()}} Lembaga
+                    Anda berada diurutan ke  <span class="font-weight-bold ms-1">{{$userRanking}}</span> dari {{$lembagaScores->count()}} Lembaga
                   </p>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">

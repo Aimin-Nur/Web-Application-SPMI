@@ -42,7 +42,7 @@ class RiwayatDokumenTable extends Component
                                 });
                       });
             })
-            ->paginate(5);
+            ->paginate(10);
 
         return view('livewire.admin.riwayat-dokumen-table', [
             'riwayatDocs' => $riwayatDocs

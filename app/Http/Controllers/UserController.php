@@ -113,7 +113,17 @@ class UserController extends Controller
         })
         ->get();
 
+        // Score Temuan
         $score = Evaluasi::with(['lembaga.user'])->where(function($query) use ($getLembaga) {
+            $query->where('status_pengisian', 1)
+                ->orWhere('status_pengisian', 2)
+                ->where('score', '!=', NULL)
+                ->where('id_lembaga', $getLembaga);
+        })
+        ->get();
+
+        // Score Dokumen
+        $scoreDocs = Dokumen::with(['lembaga.user'])->where(function($query) use ($getLembaga) {
             $query->where('status_pengisian', 1)
                 ->orWhere('status_pengisian', 2)
                 ->where('score', '!=', NULL)
@@ -134,20 +144,29 @@ class UserController extends Controller
             ->orderBy('total_score', 'desc')
             ->get();
 
-        // total semua skor dan jumlah temuan
+        // total semua skor temuan
         $totalSkor = $score->sum('score');
-        $totalTemuan = $evaluasi->count();
-        $totalTemuanMayor = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 2)->count();
-        $totalTemuanMinor = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 1)->count();
-        $totalTemuanClose = Evaluasi::where('id_lembaga', $getLembaga)->where('status_docs', 3)->count();
 
-        return view('user.temuanAudit', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan','totalTemuanMayor','totalTemuanMinor','totalTemuanClose'));
+        // Total semua skor dokumen
+        $totalSkorDocs = $scoreDocs->sum('score');
+
+        return view('user.temuanAudit', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalSkorDocs'));
     }
 
-    public function sendDocs($id){
+    public function sendDocs(Request $request, $id){
         try {
+            $request->validate([
+                'score' => 'required|integer|min:1|max:276',
+            ], [
+                'score.required' => 'Angka harus diisi.',
+                'score.integer' => 'Score anda tidak valid.',
+                'score.min' => 'Score Melebihi Angka Minimum.',
+                'score.max' => 'Score Melebihi Angka Maksimal.',
+            ]);
+
             $docs = Dokumen::findOrFail($id);
             $deadline = $docs->deadline;
+            $score = $request->input('score');
 
             $now = Carbon::now('Asia/Makassar');
 
@@ -158,6 +177,7 @@ class UserController extends Controller
             }
 
             $docs->tgl_pengumpulan = $now;
+            $docs->score = $score;
             $docs->save();
 
             return redirect('/dokumenUser')->with('status', 'success')->with('message', 'Dokumen Berhasil Dikirim.');

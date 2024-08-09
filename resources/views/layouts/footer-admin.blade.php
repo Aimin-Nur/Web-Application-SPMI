@@ -7,7 +7,7 @@
                                 document.write(new Date().getFullYear())
                                 </script>,
                             made by
-                            <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">Angkatan 2021 Sistem Informasi</a>
+                            <a href="https://aiminnur.vercel.app/home" class="font-weight-bold" target="_blank">Angkatan 2021 Sistem Informasi</a>
                             for a better web.
                 </div>
              </div>
@@ -15,16 +15,10 @@
 
     <ul class="nav nav-footer justify-content-center justify-content-lg-end">
     <li class="nav-item">
-    <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
+    <a href="https://aiminnur.vercel.app/home" class="nav-link text-muted" target="_blank">Angkatan 2021 Sistem Infromasi</a>
     </li>
     <li class="nav-item">
-    <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About Us</a>
-    </li>
-    <li class="nav-item">
-    <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-    </li>
-    <li class="nav-item">
-    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">License</a>
+    <a href="/login" class="nav-link text-muted" target="_blank">Audit Mutu Internal Kalla Institute</a>
     </li>
     </ul>
     </div>

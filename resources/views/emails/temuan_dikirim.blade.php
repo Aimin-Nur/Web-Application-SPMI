@@ -211,7 +211,7 @@
                             <div style="line-height: 35px">
 
                                 TEMUAN : <span style="color: #5caad2; text-transform: uppercase;">{{ $temuan ?? '' }}</span><br><br>
-                                 RTK : <span style="color: #5caad2; text-transform: uppercase;">{{ $rtk ?? '' }}</span>
+                                 PTK : <span style="color: #5caad2; text-transform: uppercase;">{{ $rtk ?? '' }}</span>
 
 
                             </div>

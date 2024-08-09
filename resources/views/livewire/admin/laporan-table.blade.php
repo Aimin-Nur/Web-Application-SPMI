@@ -44,7 +44,9 @@
                             </td>
                             <td>
                                 <small class="text-center ms-5">
-                                    <i class="fa fa-external-link text-center" aria-hidden="true" href="{{$item->tautan}}"></i>
+                                    <a href="{{$item->tautan}}">
+                                        <i class="fa fa-external-link text-center" aria-hidden="true"></i>
+                                    </a>
                                 </small>
                             </td>
                             <td class="align-middle text-center text-sm">

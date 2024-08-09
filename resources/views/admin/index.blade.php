@@ -154,7 +154,7 @@
         </div>
       </div>
       <div class="row my-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
@@ -200,9 +200,9 @@
                                         </div>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <div class="progress-wrapper w-75 mx-auto">
+                                        <div class="progress-wrapper w-35 mx-auto">
                                             <div class="progress-info">
-                                                <div class="progress-percentage">
+                                                <div class="progress-percentage mb-1 ms-4">
                                                     <span class="text-xs font-weight-bold">{{ $lembaga['total_score'] }}</span>
                                                 </div>
                                             </div>
@@ -219,72 +219,6 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
-            <div class="card">
-              <div class="card-header pb-0">
-                <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <h6>Ranking Point</h6>
-                    <p class="text-sm mb-0">
-                        <i class="fa fa-file text-info" aria-hidden="true"></i>
-                        <span class="font-weight-bold ms-1 text-xs">Skor Dokumen</span>
-                      </p>
-                  </div>
-                  <div class="col-lg-6 col-5 my-auto text-end">
-                    <div class="dropdown float-lg-end pe-4">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body px-0 pb-2">
-                  <div class="table-responsive">
-                      <table class="table align-items-center mb-0">
-                          <thead>
-                              <tr>
-                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Nama Lembaga</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-xxs">Total Score</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @php
-                                  $colors = ['bg-gradient-info', 'bg-gradient-success', 'bg-gradient-danger', 'bg-gradient-warning', 'bg-gradient-primary'];
-                              @endphp
-                              @foreach($lembagaScoresDocs as $index => $lembaga)
-                                  <tr>
-                                      <td>
-                                          <div class="d-flex px-2 py-1">
-                                              <div class="d-flex flex-column justify-content-center">
-                                                  <h6 class="mb-0 text-xxs">{{ $lembaga['nama_lembaga'] }}</h6>
-                                              </div>
-                                          </div>
-                                      </td>
-                                      <td class="align-middle text-center text-sm">
-                                          <div class="progress-wrapper w-75 mx-auto">
-                                              <div class="progress-info">
-                                                  <div class="progress-percentage">
-                                                      <span class="text-xxs font-weight-bold">{{ $lembaga['total_score'] }}</span>
-                                                  </div>
-                                              </div>
-                                              <div class="progress" style="width: 70px">
-                                                  <div class="progress-bar {{ $colors[$index % count($colors)] }}" role="progressbar" style="width: {{ $maxScore ? ($lembaga['total_score'] / $maxScore * 100) : 0 }}%" aria-valuenow="{{ $lembaga['total_score'] }}" aria-valuemin="0" aria-valuemax="{{ $maxScore }}"></div>
-                                              </div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                              @endforeach
-                              <td>
-                                <div class="d-flex px-2 py-1 text-center ms-5">
-                                    <div class="d-flex flex-column justify-content-center ms-5">
-                                        <h6 class="mb-0 text-xxs text-center ms-5"><i>Skor Dokumen Evaluasi Diri Setiap Lembaga</i></h6>
-                                    </div>
-                                </div>
-                            </td>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-            </div>
-        </div>
       </div>
 
 
@@ -298,16 +232,17 @@
 
             // Extract labels and data for each status
             var labels = lembagaScores.map(function (item) { return item.nama_lembaga; });
-            var majorData = lembagaScores.map(function (item) { return item.major; });
-            var minorData = lembagaScores.map(function (item) { return item.minor; });
-            var closeData = lembagaScores.map(function (item) { return item.close; });
+            var averageData = lembagaScores.map(function (item) { return item.average; });
+            var poorData = lembagaScores.map(function (item) { return item.poor; });
+            var goodData = lembagaScores.map(function (item) { return item.good; });
+            var excellentData = lembagaScores.map(function (item) { return item.excellent; });
 
             const radarData = {
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Major',
-                        data: majorData,
+                        label: 'Poor',
+                        data: poorData,
                         fill: true,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgb(255, 99, 132)',
@@ -317,8 +252,8 @@
                         pointHoverBorderColor: 'rgb(255, 99, 132)'
                     },
                     {
-                        label: 'Minor',
-                        data: minorData,
+                        label: 'Average',
+                        data: averageData,
                         fill: true,
                         backgroundColor: 'rgba(255, 205, 86, 0.2)',
                         borderColor: 'rgb(255, 205, 86)',
@@ -328,8 +263,19 @@
                         pointHoverBorderColor: 'rgb(255, 205, 86)'
                     },
                     {
-                        label: 'Close',
-                        data: closeData,
+                        label: 'Good',
+                        data: goodData,
+                        fill: true,
+                        backgroundColor: 'rgba(0, 153, 204, 0.2)', // Warna latar belakang untuk area pengisi
+                        borderColor: 'rgb(0, 153, 204)', // Warna batas garis
+                        pointBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang untuk titik
+                        pointBorderColor: '#fff', // Warna batas titik
+                        pointHoverBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang titik saat hover
+                        pointHoverBorderColor: '#fff' // Warna batas titik saat hover
+                    },
+                    {
+                        label: 'Excellent',
+                        data: excellentData,
                         fill: true,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgb(75, 192, 192)',

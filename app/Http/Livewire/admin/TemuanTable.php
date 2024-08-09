@@ -32,11 +32,8 @@ class TemuanTable extends Component
     {
         $evaluasi = Evaluasi::with(['lembaga.user'])
             ->where(function($query) {
-                $query->where('status_pengisian', 2)
-                    ->orWhere('status_pengisian', 0)
-                    ->orWhere('status_pengisian', 1);
+                $query->where('score', NULL);
             })
-            ->where('score', NULL)
             ->where(function($query) {
                 $query->where('temuan', 'like', '%' . $this->search . '%')
                       ->orWhereHas('lembaga', function($query) {

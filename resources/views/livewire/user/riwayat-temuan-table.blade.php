@@ -29,7 +29,7 @@
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Akhir</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,9 +40,9 @@
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
                                                     @if ($item->status_pengisian == 2)
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen :  <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></a></i></small>
                                                     @else
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen :  <a href="{{$item->tautan}}"><i class="fa fa-external-link text-secondary" aria-hidden="true"></a></i></small>
                                                     @endif
                                                 </div>
                                             </div>
@@ -52,9 +52,9 @@
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->rtk}}</h6>
                                                     @if ($item->status_pengisian == 2)
-                                                    <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                    <small class="text-xs mt-2">Link Dokumen :  <a href="{{$item->tautan_rtk}}"><i class="fa fa-external-link text-success" aria-hidden="true"></a></i></small>
                                                 @else
-                                                    <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                    <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan_rtk}}"><i class="fa fa-external-link text-secondary" aria-hidden="true"></a></i></small>
                                                 @endif
                                                 </div>
                                             </div>
@@ -68,11 +68,13 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             @if ($item->status_docs == 1)
-                                                <span class="badge badge-sm bg-gradient-primary">Minor</span>
+                                                <span class="badge badge-sm bg-gradient-danger">Poor</span>
                                             @elseif ($item->status_docs == 2)
-                                                <span class="badge badge-sm bg-gradient-danger">Mayor</span>
+                                                <span class="badge badge-sm bg-gradient-warning">Average</span>
                                             @elseif ($item->status_docs == 3)
-                                                <span class="badge badge-sm bg-gradient-success">Close</span>
+                                                <span class="badge badge-sm bg-gradient-info">Good</span>
+                                            @elseif ($item->status_docs == 4)
+                                                <span class="badge badge-sm bg-gradient-success">Excellent</span>
                                             @else
                                                 <span class="badge badge-sm bg-gradient-secondary">Pemeriksaan</span>
                                             @endif
@@ -88,7 +90,17 @@
                                             @endif
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            @if ($item->status_docs == 1)
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            @elseif ($item->status_docs == 2)
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            @elseif ($item->status_docs == 3)
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            @elseif ($item->status_docs == 4)
+                                                <span class="text-secondary text-xs font-weight-bold">{{$item->score}}</span>
+                                            @else
+                                                <small class="text-secondary font-weight-bold">-</small>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

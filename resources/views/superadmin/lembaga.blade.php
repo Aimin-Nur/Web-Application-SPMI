@@ -24,7 +24,7 @@
                         <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
                             <h6 class="mb-0 text-sm">{{$item->nama_lembaga}}
                                 <br>
-                                <span class="text-xs">26 March 2020, at 13:45 PM</span>
+                                <span class="text-xs">Dibuat : {{$item->created_at}}</span>
                             </h6>
                             <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#editModalCenter{{$item->id}}"  title="Edit Data"></i>
                             <i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter{{$item->id}}"  title="Hapus Data"></i>

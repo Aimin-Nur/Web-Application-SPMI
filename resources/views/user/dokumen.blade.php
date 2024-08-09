@@ -92,76 +92,6 @@
     </div>
 
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <div class="container-fluid py-4">
-            <div class="row">
-              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            {{$minor}}
-                            <span class="text-warning text-sm font-weight-bolder">Minor</span>
-                          </h5>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
-                          <h5 class="font-weight-bolder mb-0">
-                           {{$mayor}}
-                            <span class="text-danger text-sm font-weight-bolder">Mayor</span>
-                          </h5>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                  <div class="card-body p-3">
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            {{$close}}
-                            <span class="text-success text-sm font-weight-bolder">Close</span>
-                          </h5>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
         @livewire('user.riwayat-dokumen-table')
     </div>
     </div>
@@ -195,6 +125,11 @@
                   @csrf
                   @method('PUT')
                   <div class="row">
+                    <div class="form-group">
+                        <label for="score">Score</label>
+                        <input type="number" class="form-control" name="score" placeholder="1 - 276" /required>
+                        <small class="mb-0 cancel"><small><i>Score yang Anda Klaim Akan divalidasi Oleh Admin SPMI</i></small></small>
+                    </div>
                   <div class="col-6 mt-4">
                       <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                   </div>
@@ -203,7 +138,7 @@
                   </div>
                   </div>
               </form>
-              <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+              <small class="mb-0 cancel"><small>Sistem Penjaminan Mutu Internal Kalla Institute</small></small>
               </div>
           </div>
           </div>

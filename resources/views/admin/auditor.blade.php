@@ -75,10 +75,10 @@
           <div class="p-4 to-front">
             <div class="text-center">
               <div class="logo">
-                <img src="{{asset('creative')}}/assets/img/logo-ct-dark.png" alt="img-fluid" class="img-fluid mb-4 w-60">
+                <img src="{{asset('creative')}}/assets/img/spmi.png" alt="img-fluid" class="img-fluid mb-4 w-60">
               </div>
               <h5>Tambah Data Auditor</h5>
-              <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus eligendi deserunt placeat optio nesciunt.</p>
+              <p class="mb-4">Data Auditor yang Anda input, akan tampil dihalaman utama website SPMI.</p>
               <form action="/addAuditor/admin" class="mb-4" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
@@ -123,7 +123,7 @@
            <div class="p-4 to-front">
                <div class="text-center">
                <div class="logo">
-                   <img src="{{ asset('storage/' . $item->foto) }}" alt="img-fluid" class="img-fluid mb-4 w-60">
+                   <img src="{{asset('creative')}}/assets/img/spmi.png" alt="img-fluid" class="img-fluid mb-4 w-40">
                </div>
                <h4>Hapus Auditor</h4>
                <p class="mb-3 text-sm">Tindakan ini akan menghapus Auditor <b> "{{$item->nama}}"</b> secara permanen.</p>
@@ -167,10 +167,10 @@
           <div class="p-4 to-front">
             <div class="text-center">
               <div class="logo">
-                <img src="{{asset('creative')}}/assets/img/logo-ct-dark.png" alt="img-fluid" class="img-fluid mb-4 w-60">
+                <img src="{{asset('creative')}}/assets/img/spmi.png" alt="img-fluid" class="img-fluid mb-4 w-60">
               </div>
               <h5>Edit Data Auditor</h5>
-              <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus eligendi deserunt placeat optio nesciunt.</p>
+              <p class="mb-4">Edit Data Auditor Sesuai dengan ketentuan yang telah ditetapkan.</p>
               <form action="/editAuditor/{{$item->id}}" class="mb-4" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

@@ -138,7 +138,7 @@
         </div>
       </div>
       <div class="row my-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
           <div class="card">
             <div class="card-header pb-0">
               <div class="row">
@@ -146,7 +146,7 @@
                   <h6>Rangking Point</h6>
                   <p class="text-sm mb-0">
                     <i class="fa fa-check text-success" aria-hidden="true"></i>
-                    <span class="font-weight-bold ms-1">Score Temuan</span> Audit
+                    <span class="font-weight-bold ms-1">Skor Temuan</span> Audit
                   </p>
                 </div>
                 <div class="col-lg-6 col-5 my-auto text-end">
@@ -189,8 +189,8 @@
                                         </div>
                                     </td>
                                     <td class="align-middle text-center text-sm">
-                                        <div class="progress-wrapper w-75 mx-auto">
-                                            <div class="progress-info">
+                                        <div class="progress-wrapper w-35 mx-auto">
+                                            <div class="progress-info mb-1">
                                                 <div class="progress-percentage">
                                                     <span class="text-xs font-weight-bold">{{ $lembaga['total_score'] }}</span>
                                                 </div>
@@ -208,80 +208,14 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
-            <div class="card">
-              <div class="card-header pb-0">
-                <div class="row">
-                  <div class="col-lg-6 col-7">
-                    <h6>Ranking Point</h6>
-                    <p class="text-sm mb-0">
-                        <i class="fa fa-file text-info" aria-hidden="true"></i>
-                        <span class="font-weight-bold ms-1 text-xs">Score Dokumen</span> Audit
-                      </p>
-                  </div>
-                  <div class="col-lg-6 col-5 my-auto text-end">
-                    <div class="dropdown float-lg-end pe-4">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body px-0 pb-2">
-                  <div class="table-responsive">
-                      <table class="table align-items-center mb-0">
-                          <thead>
-                              <tr>
-                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Nama Lembaga</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-xxs">Total Score</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @php
-                                  $colors = ['bg-gradient-info', 'bg-gradient-success', 'bg-gradient-danger', 'bg-gradient-warning', 'bg-gradient-primary'];
-                              @endphp
-                              @foreach($lembagaScoresDocs as $index => $lembaga)
-                                  <tr>
-                                      <td>
-                                          <div class="d-flex px-2 py-1">
-                                              <div class="d-flex flex-column justify-content-center">
-                                                  <h6 class="mb-0 text-xxs">{{ $lembaga['nama_lembaga'] }}</h6>
-                                              </div>
-                                          </div>
-                                      </td>
-                                      <td class="align-middle text-center text-sm">
-                                          <div class="progress-wrapper w-75 mx-auto">
-                                              <div class="progress-info">
-                                                  <div class="progress-percentage">
-                                                      <span class="text-xxs font-weight-bold">{{ $lembaga['total_score'] }}</span>
-                                                  </div>
-                                              </div>
-                                              <div class="progress" style="width: 70px">
-                                                  <div class="progress-bar {{ $colors[$index % count($colors)] }}" role="progressbar" style="width: {{ $maxScore ? ($lembaga['total_score'] / $maxScore * 100) : 0 }}%" aria-valuenow="{{ $lembaga['total_score'] }}" aria-valuemin="0" aria-valuemax="{{ $maxScore }}"></div>
-                                              </div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                              @endforeach
-                              <td>
-                                <div class="d-flex px-2 py-1 text-center">
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-xxs text-center"><i>Skor Dokumen Evaluasi Diri Setiap Lembaga</i></h6>
-                                    </div>
-                                </div>
-                            </td>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-            </div>
-        </div>
       </div>
 
 
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-lg-6">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Temuan Minor Terbanyak</h6>
+              <h6>Status <small class="badge text-xxs bg-gradient-warning">Poor</small> Lembaga Tertinggi</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -290,30 +224,57 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lembaga</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Temuan</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Minor</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Poor</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      @foreach ($minorLembaga as $lembaga)
-                      <tr>
-                          <td>
-                            <div class="d-flex px-2 py-1 text-center">
-                              <small class="ms-2">{{$loop->iteration}}</small>
-                            </div>
-                          </td>
-                          <td>
-                            <p class="text-xs font-weight-bold mb-0">{{$lembaga['nama_lembaga']}}</p>
-                          </td>
-                          <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-warning">{{$lembaga['total_status1']}}</span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">{{$lembaga['total_score_status1']}}</span>
-                          </td>
-                        </tr>
-                      @endforeach
+                        @if (!is_null($poorLembaga) && count($poorLembaga) <= 3)
+                            @foreach ($poorLembaga as $lembaga)
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1 text-center">
+                                        <small class="ms-2">{{ $loop->iteration }}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status1'] }}</span>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1 text-center">
+                                        <small class="ms-2">-</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">-</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-danger font-weight-bold">-</span>
+                                </td>
+                            </tr>
+                        @else
+                            @foreach ($poorLembaga as $lembaga)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1 text-center">
+                                            <small class="ms-2">{{ $loop->iteration }}</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status1'] }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tr>
                   </tbody>
                 </table>
@@ -324,7 +285,7 @@
         <div class="col-lg-6">
             <div class="card mb-4">
               <div class="card-header pb-0">
-                <h6>Temuan Mayor Terbanyak</h6>
+                <h6>Status Average Tertinggi</h6>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -333,12 +294,11 @@
                       <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lembaga</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Temuan</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Minor</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Average</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach ($mayorLembaga as $lembaga)
+                        @foreach ($averageLembaga as $lembaga)
                         <tr>
                             <td>
                               <div class="d-flex px-2 py-1 text-center">
@@ -348,11 +308,8 @@
                             <td>
                               <p class="text-xs font-weight-bold mb-0">{{$lembaga['nama_lembaga']}}</p>
                             </td>
-                            <td class="align-middle text-center text-sm">
-                              <span class="badge badge-sm bg-gradient-danger">{{$lembaga['total_status2']}}</span>
-                            </td>
                             <td class="align-middle text-center">
-                              <span class="text-secondary text-xs font-weight-bold">{{$lembaga['total_score_status2']}}</span>
+                              <span class="badge badge-sm bg-gradient-warning font-weight-bold">{{$lembaga['total_score_status2']}}</span>
                             </td>
                           </tr>
                         @endforeach
@@ -362,10 +319,10 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-12">
+          <div class="col-lg-6">
             <div class="card mb-4">
               <div class="card-header pb-0">
-                <h6>Temuan Close Terbanyak</h6>
+                <h6>Status Good Lembaga Tertinggi</h6>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -374,36 +331,135 @@
                       <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lembaga</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Temuan</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Minor</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Good</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach ($closeLembaga as $lembaga)
                         <tr>
-                            <td>
-                              <div class="d-flex px-2 py-1 text-center">
-                                <small class="ms-2">{{$loop->iteration}}</small>
-                              </div>
-                            </td>
-                            <td>
-                              <p class="text-xs font-weight-bold mb-0">{{$lembaga['nama_lembaga']}}</p>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                              <span class="badge badge-sm bg-gradient-success">{{$lembaga['total_status3']}}</span>
-                            </td>
-                            <td class="align-middle text-center">
-                              <span class="text-secondary text-xs font-weight-bold">{{$lembaga['total_score_status3']}}</span>
-                            </td>
-                          </tr>
-                        @endforeach
+                            @if (!is_null($goodLembaga) && count($goodLembaga) <= 3)
+                                @foreach ($goodLembaga as $lembaga)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1 text-center">
+                                            <small class="ms-2">{{ $loop->iteration }}</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status3'] }}</span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1 text-center">
+                                            <small class="ms-2">-</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">-</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm bg-gradient-danger font-weight-bold">-</span>
+                                    </td>
+                                </tr>
+                            @else
+                                @foreach ($goodLembaga as $lembaga)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1 text-center">
+                                                <small class="ms-2">{{ $loop->iteration }}</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status3'] }}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-      </div>
+          <div class="col-lg-6">
+            <div class="card mb-4">
+              <div class="card-header pb-0">
+                <h6>Status Excellent Lembaga Tertinggi</h6>
+              </div>
+              <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                  <table class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lembaga</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Good</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @if (!is_null($excellentLembaga) && count($excellentLembaga) <= 3)
+                                @foreach ($excellentLembaga as $lembaga)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1 text-center">
+                                            <small class="ms-2">{{ $loop->iteration }}</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status4'] }}</span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1 text-center">
+                                            <small class="ms-2">-</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">-</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm bg-gradient-danger font-weight-bold">-</span>
+                                    </td>
+                                </tr>
+                            @else
+                                @foreach ($excellentLembaga as $lembaga)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1 text-center">
+                                                <small class="ms-2">{{ $loop->iteration }}</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $lembaga['nama_lembaga'] }}</p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="badge badge-sm bg-gradient-danger font-weight-bold">{{ $lembaga['total_score_status4'] }}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div> --}}
 
 
 
@@ -416,16 +472,17 @@
 
             // Extract labels and data for each status
             var labels = lembagaScores.map(function (item) { return item.nama_lembaga; });
-            var majorData = lembagaScores.map(function (item) { return item.major; });
-            var minorData = lembagaScores.map(function (item) { return item.minor; });
-            var closeData = lembagaScores.map(function (item) { return item.close; });
+            var averageData = lembagaScores.map(function (item) { return item.average; });
+            var poorData = lembagaScores.map(function (item) { return item.poor; });
+            var goodData = lembagaScores.map(function (item) { return item.good; });
+            var excellentData = lembagaScores.map(function (item) { return item.excellent; });
 
             const radarData = {
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Major',
-                        data: majorData,
+                        label: 'Poor',
+                        data: poorData,
                         fill: true,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgb(255, 99, 132)',
@@ -435,8 +492,8 @@
                         pointHoverBorderColor: 'rgb(255, 99, 132)'
                     },
                     {
-                        label: 'Minor',
-                        data: minorData,
+                        label: 'Average',
+                        data: averageData,
                         fill: true,
                         backgroundColor: 'rgba(255, 205, 86, 0.2)',
                         borderColor: 'rgb(255, 205, 86)',
@@ -446,8 +503,19 @@
                         pointHoverBorderColor: 'rgb(255, 205, 86)'
                     },
                     {
-                        label: 'Close',
-                        data: closeData,
+                        label: 'Good',
+                        data: goodData,
+                        fill: true,
+                        backgroundColor: 'rgba(0, 153, 204, 0.2)', // Warna latar belakang untuk area pengisi
+                        borderColor: 'rgb(0, 153, 204)', // Warna batas garis
+                        pointBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang untuk titik
+                        pointBorderColor: '#fff', // Warna batas titik
+                        pointHoverBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang titik saat hover
+                        pointHoverBorderColor: '#fff' // Warna batas titik saat hover
+                    },
+                    {
+                        label: 'Excellent',
+                        data: excellentData,
                         fill: true,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgb(75, 192, 192)',

@@ -30,7 +30,7 @@
                         <option value="">Pilih Dokumen</option>
                     </select>
                     <small class="form-hint">
-                        Hanya Dokumen Berstatus "Minor" & "Mayor" yang dapat dipilih.
+                        Dokumen Audit Yang Sudah Dilengkapi Lembaga
                     </small>
                 </div>
             </div>
@@ -90,22 +90,9 @@
         const dokumenSelect = document.getElementById('dokumenSelect');
         const lembagaData = @json($getData);
 
-        function getStatusText(status) {
-            switch(parseInt(status)) {
-                case 1:
-                    return 'Minor';
-                case 2:
-                    return 'Major';
-                case 3:
-                    return 'Close';
-                default:
-                    return 'Unknown';
-            }
-        }
-
         lembagaSelect.addEventListener('change', function() {
             const selectedLembagaId = this.value;
-            dokumenSelect.innerHTML = '<option value="">Pilih Dokumen</option>'; // Clear dokumen options
+            dokumenSelect.innerHTML = '<option value="">Pilih Dokumen</option>';
 
             if (selectedLembagaId) {
                 const selectedLembaga = lembagaData.find(lembaga => lembaga.id == selectedLembagaId);
@@ -114,7 +101,7 @@
                     selectedLembaga.dokumen.forEach(dokumen => {
                         const option = document.createElement('option');
                         option.value = dokumen.id;
-                        option.textContent = `${dokumen.judul} (${getStatusText(dokumen.status_docs)})`; // Include status_docs as text
+                        option.textContent = `${dokumen.judul}`;
                         dokumenSelect.appendChild(option);
                     });
                 }

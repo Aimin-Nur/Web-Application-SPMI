@@ -36,36 +36,14 @@ class HomeController extends Controller
         })->sortByDesc('total_score')->values();
         $maxScoreDocs = $lembagaScoresDocs->max('total_score');
 
-
-       $riwayat = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
-            return [
-                'nama_lembaga' => $lembaga->nama_lembaga,
-                'total_score' => $lembaga->evaluasi->sum('score'),
-                'updated_at' => $lembaga->evaluasi->max('updated_at'),
-            ];
-        });
-
-        $previousScores = Cache::get('previousScores', []);
-        $currentScores = [];
-
-        $riwayat = $riwayat->map(function ($lembaga) use ($previousScores, &$currentScores) {
-            $previousScore = $previousScores[$lembaga['nama_lembaga']] ?? 0;
-            $currentScores[$lembaga['nama_lembaga']] = $lembaga['total_score'];
-            return array_merge($lembaga, [
-                'previous_score' => $previousScore,
-                'is_increased' => $lembaga['total_score'] > $previousScore,
-            ]);
-        })->sortByDesc('total_score')->values()->take(7);
-
-        Session::put('previousScores', $currentScores);
-
         // Radar Dashboard
         $radar = Lembaga::with('evaluasi')->get()->map(function ($lembaga) {
             return [
                 'nama_lembaga' => $lembaga->nama_lembaga,
-                'major' => $lembaga->evaluasi->where('status_docs', 2)->count(),
-                'minor' => $lembaga->evaluasi->where('status_docs', 1)->count(),
-                'close' => $lembaga->evaluasi->where('status_docs', 3)->count()
+                'average' => $lembaga->evaluasi->where('status_docs', 2)->count(),
+                'poor' => $lembaga->evaluasi->where('status_docs', 1)->count(),
+                'good' => $lembaga->evaluasi->where('status_docs', 3)->count(),
+                'excellent' => $lembaga->evaluasi->where('status_docs', 4)->count()
             ];
         })->values();
 
@@ -76,9 +54,10 @@ class HomeController extends Controller
         $countLaporan = LaporanAudit::count();
         $countAuditor = Auditor::count();
 
-        $minorLembaga = Lembaga::with('evaluasi')
+        $poorLembaga = Lembaga::with('evaluasi')
             ->whereHas('evaluasi', function ($query) {
-                $query->whereNotNull('score');
+                $query->where('status_docs', 1)
+                ->whereNotNull('score');
             })
             ->get()
             ->map(function ($lembaga) {
@@ -99,9 +78,10 @@ class HomeController extends Controller
             })
             ->take(3);
 
-            $mayorLembaga = Lembaga::with('evaluasi')
+            $averageLembaga = Lembaga::with('evaluasi')
             ->whereHas('evaluasi', function ($query) {
-                $query->whereNotNull('score');
+                $query->where('status_docs', 2)
+                ->whereNotNull('score');
             })
             ->get()
             ->map(function ($lembaga) {
@@ -123,9 +103,10 @@ class HomeController extends Controller
             ->sortByDesc('total_score_status2')
             ->take(3);
 
-            $closeLembaga = Lembaga::with('evaluasi')
+            $goodLembaga = Lembaga::with('evaluasi')
             ->whereHas('evaluasi', function ($query) {
-                $query->whereNotNull('score');
+                $query->where('status_docs', 3)
+                    ->whereNotNull('score');
             })
             ->get()
             ->map(function ($lembaga) {
@@ -147,7 +128,32 @@ class HomeController extends Controller
             ->sortByDesc('total_score_status3')
             ->take(3);
 
+            $excellentLembaga = Lembaga::with('evaluasi')
+            ->whereHas('evaluasi', function ($query) {
+                $query->whereNotNull('score')
+                ->where('status_docs', 4);
+            })
+            ->get()
+            ->map(function ($lembaga) {
+                $totalStatus4 = $lembaga->evaluasi->filter(function ($evaluasi) {
+                    return $evaluasi->status_docs == 4;
+                })->count();
+                $totalScoreStatus4 = $lembaga->evaluasi->filter(function ($evaluasi) {
+                    return $evaluasi->status_docs == 4 && !is_null($evaluasi->score);
+                })->sum('score');
 
-        return view('livescore', compact('lembagaScoresDocs','lembagaScores','maxScore', 'riwayat','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor','minorLembaga','mayorLembaga','closeLembaga'));
+                return [
+                    'nama_lembaga' => $lembaga->nama_lembaga,
+                    'total_score' => $lembaga->evaluasi->sum('score'),
+                    'updated_at' => $lembaga->evaluasi->max('updated_at'),
+                    'total_status4' => $totalStatus4,
+                    'total_score_status4' => $totalScoreStatus4,
+                ];
+            })
+            ->sortByDesc('total_score_status4')
+            ->take(3);
+
+
+        return view('livescore', compact('lembagaScoresDocs','lembagaScores','maxScore','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor','poorLembaga','averageLembaga','goodLembaga','excellentLembaga'));
     }
 }

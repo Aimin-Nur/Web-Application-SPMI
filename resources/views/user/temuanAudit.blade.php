@@ -138,99 +138,65 @@
             </div>
         </div>
         @else
-        <div class="container-fluid py-4">
+        <div class="container">
             <div class="row">
-                @foreach ($skorPerLembaga as $item)
-                <div class="col-lg-12 col-sm-6 mb-xl-0 mt-4">
-                  <div class="card">
-                    <div class="card-body p-3">
-                      <div class="row">
-                        <div class="col-8">
-                          <div class="numbers">
-                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Skor Temuan Audit</p>
-                            <h5 class="font-weight-bolder mb-0">
-                              {{$item->total_score}}
-                              <span class="text-success text-sm font-weight-bolder">Point</span>
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="col-4 text-end">
-                          <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                            <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-xl-0 mt-5">
-                  <div class="card">
-                    <div class="card-body p-3">
-                      <div class="row">
-                        <div class="col-8">
-                          <div class="numbers">
-                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Temuan Status Minor</p>
-                            <h5 class="font-weight-bolder mb-0">
-                                {{$totalTemuanMinor}}
-                              <span class="text-warning text-sm font-weight-bolder">Minor</span>
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="col-4 text-end">
-                          <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                            <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-xl-0 mt-5">
-                  <div class="card">
-                    <div class="card-body p-3">
-                      <div class="row">
-                        <div class="col-8">
-                          <div class="numbers">
-                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Temuan Status Mayor</p>
-                            <h5 class="font-weight-bolder mb-0">
-                              {{$totalTemuanMayor}}
-                              <span class="text-danger text-sm font-weight-bolder">Mayot</span>
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="col-4 text-end">
-                          <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                            <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-xl-0 mt-5">
-                    <div class="card">
-                      <div class="card-body p-3">
+                <div class="col-md-12 mt-4">
+                    <div class="card h-100 mb-4">
+                      <div class="card-header pb-0 px-3">
                         <div class="row">
-                          <div class="col-8">
-                            <div class="numbers">
-                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Temuan Status Close</p>
-                              <h5 class="font-weight-bolder mb-0">
-                                {{$totalTemuanClose}}
-                                <span class="text-success text-sm font-weight-bolder">Close</span>
-                              </h5>
-                            </div>
-                          </div>
-                          <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                              <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
+                          <div class="col-md-6">
+                            <h6 class="mb-0">Detail Skor Audit</h6>
                           </div>
                         </div>
                       </div>
+                      <div class="card-body pt-4 p-3">
+                        <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Dokumen Evaluasi Lembaga</h6>
+                        <ul class="list-group">
+                          <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                            <div class="d-flex align-items-center">
+                              <button class="btn btn-icon-only btn-rounded btn-outline-info mb-0 me-3 btn-sm d-flex align-items-center justify-content-center">-</button>
+                              <div class="d-flex flex-column">
+                                <h6 class="mb-1 text-dark text-sm">Score Sementara</h6>
+                                <span class="text-xs">Skor yang Anda Ajukan Sebelum Audit Lapangan SPMI</span>
+                              </div>
+                            </div>
+                            <div class="d-flex align-items-center text-dark text-gradient text-sm font-weight-bold">
+                              {{$totalSkorDocs}} Poin
+                            </div>
+                          </li>
+                          <h6 class="text-uppercase text-body text-xs font-weight-bolder mt-4">Audit Lapangan SPMI</h6>
+                          <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                            <div class="d-flex align-items-center">
+                                @if ($totalSkorDocs > $totalSkor)
+                                    <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 btn-sm d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </button>
+                                @else
+                                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 btn-sm d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </button>
+                                @endif
+                                <div class="d-flex flex-column">
+                                    <h6 class="mb-1 text-dark text-sm">Score Akhir</h6>
+                                    <span class="text-xs">Skor Akhir Hasil Audit Lapangan SPMI</span>
+                                </div>
+                            </div>
+                            @if ($totalSkorDocs > $totalSkor)
+                                <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
+                                    {{$totalSkor}} Poin
+                                </div>
+                            @else
+                                <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
+                                    {{$totalSkor}} Poin
+                                </div>
+                            @endif
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-              </div>
-              @endforeach
+                </div>
+            </div>
         </div>
         @endif
     </div>

@@ -9,10 +9,16 @@
                 <div class="empty">
                 <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="420px">
                 </div>
-                <p class="empty-title text-bold">Belum Ada Data Laporan Audit</p>
+                <p class="empty-title text-bold">Data Administator Belum Ada</p>
                 <p class="empty-subtitle text-secondary">
                     Try adjusting your search or filter to find what you're looking for.
-                  </p>
+                </p>
+                  <div class="empty-action mt-3">
+                    <a href="/addDokumen" class="btn btn-primary"data-toggle="modal" data-target="#exampleModalCenter">
+                        <i class="fas fa-plus"></i>&nbsp;&nbsp;
+                    Tambah Admin
+                    </a>
+                </div>
                 </div>
             </div>
         </div>

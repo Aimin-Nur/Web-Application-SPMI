@@ -123,10 +123,10 @@
            <div class="p-4 to-front">
                <div class="text-center">
                <div class="logo">
-                   <img src="{{ asset('storage/' . $item->foto) }}" alt="img-fluid" class="img-fluid mb-4 w-60">
+                    <img src="{{asset('creative')}}/assets/img/spmi.png" alt="img-fluid" class="img-fluid mb-4 w-40">
                </div>
-               <h4>Hapus Auditor</h4>
-               <p class="mb-3 text-sm">Tindakan ini akan menghapus Auditor <b> "{{$item->nama}}"</b> secara permanen.</p>
+               <h4 class="mb-4">Hapus Auditor</h4>
+               <p class="mb-2 text-sm">Tindakan ini akan menghapus Auditor <b> "{{$item->nama}}"</b> secara permanen.</p>
                <form action="/hapusAuditor/superadmin/{{$item->id}}" class="mb-4" method="POST">
                    @csrf
                    @method("DELETE")

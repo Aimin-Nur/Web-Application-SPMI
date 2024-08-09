@@ -26,8 +26,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score Sementara</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                                 </tr>
                             </thead>
@@ -44,7 +43,7 @@
                                     </td>
                                     <td class="">
                                         <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
+                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></a></i></small>
                                     </td>
                                     <td class="align-middle text-center text-sm">
                                         @if ($item->status_pengisian == 1)
@@ -53,15 +52,6 @@
                                             <span class="badge badge-sm bg-gradient-success">Selesai</span>
                                         @else
                                             <span class="badge badge-sm bg-gradient-secondary">Revisi</span>
-                                        @endif
-                                    </td>
-                                    <td class="align-middle text-center text-sm">
-                                        @if ($item->status_docs == 1)
-                                            <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                        @elseif ($item->status_docs == 2)
-                                            <span class="badge badge-sm bg-gradient-danger">Major</span>
-                                        @elseif ($item->status_docs == 3)
-                                            <span class="badge badge-sm bg-gradient-success">Close</span>
                                         @endif
                                     </td>
                                     <td class="align-middle text-center">

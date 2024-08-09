@@ -48,9 +48,9 @@
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->temuan}}</h6>
                                                     @if ($item->status_pengisian == 2 || $item->status_pengisian == 1)
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></a></i></small>
                                                     @else
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-secondary" aria-hidden="true"></a></i></small>
                                                     @endif
                                                 </div>
                                             </div>
@@ -60,9 +60,9 @@
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$item->rtk}}</h6>
                                                     @if ($item->status_pengisian == 2 || $item->status_pengisian == 1)
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan_rtk}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan_rtk}}"><i class="fa fa-external-link text-success" aria-hidden="true"></a></i></small>
                                                     @else
-                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan_rtk}}"></i></small>
+                                                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan_rtk}}"><i class="fa fa-external-link text-secondary" aria-hidden="true"></a></i></small>
                                                     @endif
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                         </td>
                                         <td class="align-middle">
                                             @if($item->status_pengisian == 2 || $item->status_pengisian == 1)
-                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#exampleModalCenter{{$item->id}}" title="Edit Status"></i>
+                                                <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#editModalCenter{{$item->id}}" title="Edit Status"></i>
                                             @else
                                                 <i class="fas fa-pencil-alt ms-auto text-dark cursor-pointer" data-toggle="modal" data-target="#unsend{{$item->id}}" title="Edit Status"></i>
                                             @endif
@@ -108,3 +108,5 @@
         </div>
     </div>
 </div>
+
+

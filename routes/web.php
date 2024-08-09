@@ -19,11 +19,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/livescore', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 // Auth User
 // Route::get('/dashboard', function () {
@@ -77,7 +74,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::DELETE('/hapusAuditor/{id}', [AdminController::class, 'hapusAuditor']);
     Route::put('/editAuditor/{id}', [AdminController::class, 'editAuditor']);
 
-    Route::get('/profile/admin', [AdminController::class, 'profile']);
+    Route::get('/profile/admin/{tab?}', [AdminController::class, 'profile'])->name('profile.admin');
     Route::put('/gantiPassword/{id}', [AdminController::class, 'updatePassword'])->name('password.update.admin');
 
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
