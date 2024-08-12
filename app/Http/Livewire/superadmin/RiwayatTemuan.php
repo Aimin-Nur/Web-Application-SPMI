@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\admin;
+namespace App\Http\Livewire\superadmin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,7 +45,7 @@ class RiwayatTemuan extends Component
             })
             ->paginate(10);
 
-        return view('livewire.admin.riwayat-temuan', [
+        return view('livewire.superadmin.riwayat-temuan', [
             'riwayat' => $riwayat
         ]);
     }

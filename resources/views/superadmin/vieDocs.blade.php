@@ -1,6 +1,7 @@
 @include('layouts.header-admin')
 @include('layouts.navbar-admin')
 
+
 <div class="container-fluid">
     <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('{{asset('creative')}}/assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
       <span class="mask bg-gradient-primary opacity-6"></span>
@@ -10,7 +11,7 @@
         <div class="col-auto my-auto">
           <div class="h-100">
             <h5 class="mb-1">
-              Daftar Dokumen Audit
+              Pengajuan Dokumen
             </h5>
             <p class="mb-0 font-weight-bold text-xs">
               SPMI Kalla Institute
@@ -75,7 +76,7 @@
                         <div class="empty">
                         <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
                         </div>
-                        <p class="empty-title text-bold">Admin SPMI Belum Menambahkan Dokumen Audit</p>
+                        <p class="empty-title text-bold">Belum Ada Dokumen yang Ditambahkan oleh Admin SPMI.</p>
                         </div>
                     </div>
                 </div>
@@ -83,84 +84,7 @@
             </div>
         </div>
        @else
-       <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header col-lg-12 pb-0">
-                            <div class="row mb-3">
-                                <div class="col-4">
-                                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                                        <div class="input-group">
-                                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                                            <input type="text" class="form-control" placeholder="Type here...">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($dokumens as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                                        @if ($item->status_pengisian == 2)
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link text-success" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @else
-                                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <i class="fa fa-external-link" aria-hidden="true" href="{{$item->tautan}}"></i></small>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                @if ($item->status_pengisian == 2)
-                                                    <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                                                @else
-                                                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <small class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</small>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                @if ($item->deadline != 0)
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$item->deadline}}</span>
-                                                @else
-                                                    <span class="text-secondary text-xs font-weight-bold">-</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       @livewire('superadmin.dokumen-table')
     </div>
     @endif
 
@@ -171,15 +95,9 @@
                 <div class="row">
                     <div class="col-lg-12 d-flex flex-column justify-content-center text-center">
                         <div class="empty">
-                        <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
+                            <div class="img-fluid"><img src="{{asset('creative')}}/assets/img/empty.png" alt="RTM Kosong" width="300px">
                         </div>
-                        <p class="empty-title text-bold">Tidak Ada Dokumen Yang Menunggu Untuk Diperiksa.</p>
-                        <div class="empty-action">
-                            <a href="/addDokumen" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>&nbsp;&nbsp;
-                            Tambah Dokumen
-                            </a>
-                        </div>
+                            <p class="empty-title text-bold">Belum Ada Dokumen yang Ditambahkan oleh Admin SPMI.</p>
                         </div>
                     </div>
                 </div>
@@ -193,16 +111,16 @@
                 <div class="card">
                   <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                        <div class="col-lg-6 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                               <div class="card-body p-3">
                                 <div class="row">
                                   <div class="col-8">
                                     <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Minor</p>
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Terlambat Menyelesaikan Dokumen</p>
                                       <h5 class="font-weight-bolder mb-0">
-                                        {{$minor}}
-                                        <span class="text-warning text-sm font-weight-bolder">Minor</span>
+                                        {{$terlambat}}
+                                        <span class="text-warning text-sm font-weight-bolder">Lembaga/Biro</span>
                                       </h5>
                                     </div>
                                   </div>
@@ -215,38 +133,16 @@
                               </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
+                        <div class="col-lg-6 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                               <div class="card-body p-3">
                                 <div class="row">
                                   <div class="col-8">
                                     <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Mayor</p>
+                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Tepat Waktu Menyelesaikan Dokumen</p>
                                       <h5 class="font-weight-bolder mb-0">
-                                        {{$major}}
-                                        <span class="text-danger text-sm font-weight-bolder">Mayor</span>
-                                      </h5>
-                                    </div>
-                                  </div>
-                                  <div class="col-4 text-end">
-                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                      <i class="fa fa-gavel text-lg opacity-10" aria-hidden="true"></i>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 mb-xl-0 mb-4">
-                            <div class="card">
-                              <div class="card-body p-3">
-                                <div class="row">
-                                  <div class="col-8">
-                                    <div class="numbers">
-                                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Dokumen Status Close</p>
-                                      <h5 class="font-weight-bolder mb-0">
-                                        {{$close}}
-                                        <span class="text-success text-sm font-weight-bolder">Close</span>
+                                        {{$ontime}}
+                                        <span class="text-success text-sm font-weight-bolder">Lembaga/Biro</span>
                                       </h5>
                                     </div>
                                   </div>
@@ -265,76 +161,55 @@
               </div>
             </div>
         </div>
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                  <div class="card mb-4">
-                    <div class="card-header pb-0">
-                      <h6>Riwayat Dokumen Lembaga</h6>
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($riwayatDocs as $item)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{$item->lembaga->nama_lembaga}}</h6>
-                                                    <p class="text-xs text-secondary mb-0">{{$item->lembaga->user->name}}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="">
-                                            <h6 class="mb-0 text-sm">{{$item->judul}}</h6>
-                                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="{{$item->tautan}}"><i class="fa fa-external-link text-success" aria-hidden="true"></i></a></small>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            @if ($item->status_pengisian == 1)
-                                                <span class="badge badge-sm bg-gradient-danger">Terlambat</span>
-                                            @elseif($item->status_pengisian == 2)
-                                                <span class="badge badge-sm bg-gradient-success">Selesai</span>
-                                            @else
-                                                <span class="badge badge-sm bg-gradient-secondary">Revisi</span>
-                                            @endif
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            @if ($item->status_docs == 1)
-                                                <span class="badge badge-sm bg-gradient-primary">Minor</span>
-                                            @elseif ($item->status_docs == 2)
-                                                <span class="badge badge-sm bg-gradient-danger">Major</span>
-                                            @elseif ($item->status_docs == 3)
-                                                <span class="badge badge-sm bg-gradient-success">Close</span>
-                                            @endif
-                                        </td>
-                                        <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">{{$item->score}}</span>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-           </div>
-        </div>
+        @livewire('superadmin.riwayat-dokumen-table')
         @endif
     </div>
 
   </div>
+
+  {{-- Detail Riwayat --}}
+@foreach ($riwayatDocs as $item)
+<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+              <ul>
+                <h6 class="text-sm py-3">
+                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
+                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
+                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
+                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
+                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}
+                </li> <br>
+                <li>Status Pengisian :
+                    @if ($item->status_pengisian == 2)
+                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                    @else
+                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                    @endif
+                </li> <br>
+
+                <li>Skor Sementara : {{$item->score}}</li>
+                </h6>
+              </ul>
+            </li>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"><a class="text-white" href="{{$item->tautan}}" target="_blank">Open Spreadsheet</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

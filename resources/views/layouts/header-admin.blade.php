@@ -15,9 +15,8 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="canonical" href="https://www.creative-tim.com/product/soft-ui-dashboard" />
 
-<meta name="keywords" content="Santuan Penjaminan Mutu Kalla Institute">
+<meta name="keywords" content="SPMI Kalla Institute">
 <meta name="description" content="Santuan Penjaminan Mutu Kalla Institute">
 
 <meta name="twitter:card" content="Santuan Penjaminan Mutu Kalla Institute">
@@ -30,7 +29,7 @@
 <meta property="og:title" content="Audit Mutu Internal Kalla Institute" />
 <meta property="og:type" content="article" />
 <meta property="og:description" content="SPMI Kalla Institute" />
-<meta property="og:site_name" content=https://aimin-nur.github.io/Profile/ />
+<meta property="og:site_name" content=https://aiminnur.vercel.app/home/>
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 <link href="{{asset('creative')}}/assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -122,8 +121,9 @@
 
 
 <script defer data-site="demos.creative-tim.com" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-@livewireStyles
+    @livewireStyles
 </head>
+
 <body class="g-sidenav-show  bg-gray-100">
     @livewireScripts
 
@@ -227,16 +227,5 @@
             toast.className = toast.className.replace('show', '');
         }, 3000);
     @endif
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth'
-      });
-      calendar.render();
-    });
-
 </script>
 

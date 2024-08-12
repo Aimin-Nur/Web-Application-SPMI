@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\admin;
+namespace App\Http\Livewire\superadmin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,7 +13,7 @@ use App\Models\Superadmin;
 use Illuminate\Pagination\Paginator;
 
 
-class RiwayatTemuan extends Component
+class RiwayatDokumenTable extends Component
 {
     use WithPagination;
 
@@ -30,14 +30,13 @@ class RiwayatTemuan extends Component
 
     public function render()
     {
-        $riwayat = Evaluasi::with(['lembaga.user'])
+        $riwayatDocs = Dokumen::with(['lembaga.user'])
             ->where(function($query) {
-                $query->where('status_pengisian', 2)
-                    ->where('score', '!=', NULL)
-                    ->where('tgl_pengumpulan', '!=', NULL)
-                    ->orwhere('status_pengisian', 1)
+                $query->where('score', '!=', NULL)
+                    ->where('status_pengisian', 2)
+                      ->orWhere('status_pengisian', 1)
                       ->where(function($query) {
-                          $query->where('temuan', 'like', '%' . $this->search . '%')
+                          $query->where('judul', 'like', '%' . $this->search . '%')
                                 ->orWhereHas('lembaga', function($query) {
                                     $query->where('nama_lembaga', 'like', '%' . $this->search . '%');
                                 });
@@ -45,8 +44,8 @@ class RiwayatTemuan extends Component
             })
             ->paginate(10);
 
-        return view('livewire.admin.riwayat-temuan', [
-            'riwayat' => $riwayat
+        return view('livewire.superadmin.riwayat-dokumen-table', [
+            'riwayatDocs' => $riwayatDocs
         ]);
     }
 }

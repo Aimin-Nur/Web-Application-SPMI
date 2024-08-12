@@ -195,9 +195,8 @@ class superAdminController extends Controller
 
     public function dokumen (){
         $pageTitle = "Dokumen Audit";
-        $minor = Dokumen::where('status_docs', 1)->count();
-        $major = Dokumen::where('status_docs', 2)->count();
-        $close = Dokumen::where('status_docs', 3)->count();
+        $terlambat = Dokumen::where('status_pengisian', 1)->count();
+        $ontime = Dokumen::where('status_pengisian', 2)->count();
 
         $dokumens = Dokumen::with(['lembaga.user'])
                     ->where(function($query) {
@@ -215,7 +214,7 @@ class superAdminController extends Controller
                 ->orWhere('status_pengisian', 3);
         })
         ->count();
-        return view('superadmin.vieDocs', compact('pageTitle','close','major','minor','dokumens', 'riwayatDocs', 'countDokumens'));
+        return view('superadmin.vieDocs', compact('pageTitle','terlambat','ontime','dokumens', 'riwayatDocs', 'countDokumens'));
     }
 
     public function temuanAudit() {
