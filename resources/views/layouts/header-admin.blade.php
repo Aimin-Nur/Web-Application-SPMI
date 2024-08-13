@@ -39,6 +39,9 @@
 <link rel="stylesheet" href="{{asset('creative')}}/assets/css/font-awesome.css">
 <link href="{{asset('creative')}}/assets/css/nucleo-svg.css" rel="stylesheet" />
 <link id="pagestyle" href="{{asset('creative')}}/assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+<link id="pagestyle" href="{{asset('creative')}}/assets/css/custom.css" rel="stylesheet" />
+
+
 
 
 {{-- Alert --}}
@@ -229,3 +232,9 @@
     @endif
 </script>
 
+{{-- Disabled Modal Popup soft UI --}}
+<style>
+    #ofBar {
+        display: none !important;
+    }
+</style>
