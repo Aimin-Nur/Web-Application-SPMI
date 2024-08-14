@@ -191,16 +191,7 @@
         <tr>
             <td align="center">
                 <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-                    <tr>
 
-                        <td align="center" class="section-img">
-                            <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="https://mdbootstrap.com/img/Mockups/Lightbox/Original/img (67).jpg" style="display: block; width: 590px;" width="590" border="0" alt="" /></a>
-
-
-
-
-                        </td>
-                    </tr>
                     <tr>
                         <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
                     </tr>
@@ -245,7 +236,7 @@
 
                                         <div style="line-height: 24px">
 
-                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Temuan Auditgit Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ \Carbon\Carbon::parse($deadline)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}</b>
+                                            Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Temuan Audit Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ \Carbon\Carbon::parse($deadline)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}</b>
                                         </div>
                                     </td>
                                 </tr>
@@ -270,7 +261,7 @@
 
 
                                         <div style="line-height: 26px;">
-                                            <a href="https://career.kallagroup.co.id/auth/login" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a>
+                                            <a href="/temuan" style="color: #ffffff; text-decoration: none;" target="_blank">Buka Temuan Audit</a>
                                         </div>
                                     </td>
                                 </tr>

@@ -5,10 +5,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
-    <!--[if !mso]--><!-- -->
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700' rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel="stylesheet">
-    <!-- <![endif]-->
 
     <title>Dokumen Evaluasi Diri SPMI Kalla Institute</title>
 
@@ -177,12 +175,7 @@
         <tr>
             <td align="center">
                 <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-                    <tr>
 
-                        <td align="center" class="section-img">
-                            <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="https://mdbootstrap.com/img/Mockups/Lightbox/Original/img (67).jpg" style="display: block; width: 590px;" width="590" border="0" alt="" /></a>
-                        </td>
-                    </tr>
                     <tr>
                         <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
                     </tr>
@@ -225,7 +218,6 @@
 
 
                                         <div style="line-height: 24px">
-
                                             Admin SPMI Kalla Institue Baru Saja Mengirimkan Dokumen Untuk Lembaga Anda, Lengkapi Kelengkapan Dokumen Sebelum <b>{{ \Carbon\Carbon::parse($deadline)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}</b>
                                         </div>
                                     </td>
@@ -251,7 +243,9 @@
 
 
                                         <div style="line-height: 26px;">
-                                            <button type="button"> <a href="https://ewako.kallabs.ac.id/" style="color: #ffffff; text-decoration: none;">Buka Dokumen</a></button>
+                               <button onclick="window.location.href='https://ami.kallainstitute.ac.id/dokumenUser'" style="background-color: transparent; color: #ffff; border: none; padding: 10px 20px; cursor: pointer; text-decoration: none;">
+    Buka Dokumen
+</button>
                                         </div>
                                     </td>
                                 </tr>

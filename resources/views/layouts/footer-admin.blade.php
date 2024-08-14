@@ -7,8 +7,8 @@
                                         document.write(new Date().getFullYear())
                                         </script>,
                                     made by
-                                    <a href="https://aiminnur.vercel.app/home" class="font-weight-bold" target="_blank">Angkatan 2021 Sistem Informasi</a>
-                                    for a better web.
+                                    <a href="https://kallainstitute.ac.id/" class="font-weight-bold" target="_blank">ICT Kalla Institute</a>
+                                    for a better web V.1.0.
                         </div>
                     </div>
                     <div class="col-lg-6">
