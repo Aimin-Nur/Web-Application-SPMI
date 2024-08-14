@@ -460,7 +460,7 @@
                     @csrf
                 </form>
                 <a href="#" class="nav-link text-body font-weight-bold px-0" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
-                    <i class="fa fa-user me-sm-1"></i>
+                    <i class="fa-solid fa-right-from-bracket me-sm-1"></i>
                     <span class="d-sm-inline d-none">Logout</span>
                 </a>
                 @endauth
@@ -470,7 +470,7 @@
                     @csrf
                 </form>
                 <a href="#" class="nav-link text-body font-weight-bold px-0" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
-                    <i class="fa fa-user me-sm-1"></i>
+                    <i class="fa-solid fa-right-from-bracket me-sm-1"></i>
                     <span class="d-sm-inline d-none">Logout</span>
                 </a>
                 @endauth
@@ -480,7 +480,7 @@
                     @csrf
                 </form>
                 <a href="#" class="nav-link text-body font-weight-bold px-0" onclick="event.preventDefault(); document.getElementById('admin-logout-form').submit();">
-                    <i class="fa fa-user me-sm-1"></i>
+                    <i class="fa-solid fa-right-from-bracket me-sm-1"></i>
                     <span class="d-sm-inline d-none">Logout</span>
                 </a>
                 @endauth
@@ -494,10 +494,11 @@
                 </a>
                 <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                   <li>
-                    <a href="{{ route('profile.admin') }}?tab=password" class="nav-link {{ $tab ?? '' === 'password' ? 'active' : '' }}" id="pills-password-tab" role="tab" aria-controls="pills-profile">
-                      <div class="d-flex py-1">
+                    {{-- <a href="{{ route('profile.admin') }}?tab=password" class="nav-link {{ $tab ?? '' === 'password' ? 'active' : '' }}" id="pills-password-tab" role="tab" aria-controls="pills-profile"> --}}
+                    <a href="/profile">
+                      <div class="d-flex ms-2">
                         <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                            <svg class="w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                            <svg class="w-40 h-40 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h4.5M7 11V7a3 3 0 0 1 6 0v1.5m2.5 5.5v1.5l1 1m3.5-1a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/>
                               </svg>
                         </div>

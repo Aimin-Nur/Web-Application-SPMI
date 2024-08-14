@@ -51,7 +51,6 @@ class superAdminController extends Controller
         $previousScores = Cache::get('previousScores', []);
         $currentScores = [];
 
-        // Bandingkan skor saat ini dengan skor sebelumnya dan tentukan 'is_increased'
         $riwayat = $riwayat->map(function ($lembaga) use ($previousScores, &$currentScores) {
             $previousScore = $previousScores[$lembaga['nama_lembaga']] ?? 0;
             $currentScores[$lembaga['nama_lembaga']] = $lembaga['total_score'];

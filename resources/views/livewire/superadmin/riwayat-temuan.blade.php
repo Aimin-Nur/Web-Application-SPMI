@@ -127,11 +127,13 @@
                 </li> <br>
                 <li> Status Dokumen :
                     @if ($item->status_docs == 1)
-                        <span class="badge badge-xxs bg-gradient-primary">Minor</span>
+                        <span class="badge badge-sm bg-gradient-danger">Poor</span>
                     @elseif ($item->status_docs == 2)
-                        <span class="badge badge-sm bg-gradient-danger">Major</span>
+                        <span class="badge badge-sm bg-gradient-warning">Average</span>
                     @elseif ($item->status_docs == 3)
-                        <span class="badge badge-sm bg-gradient-success">Close</span>
+                        <span class="badge badge-sm bg-gradient-info">Good</span>
+                        @elseif ($item->status_docs == 4)
+                        <span class="badge badge-sm bg-gradient-success">Excellent</span>
                     @endif
                 </li><br>
                 <li>Skor Akhir : {{$item->score}}</li>
