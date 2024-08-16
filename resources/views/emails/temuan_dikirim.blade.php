@@ -259,10 +259,11 @@
                                 <tr>
                                     <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
 
-
-                                        <div style="line-height: 26px;">
-                                            <a href="/temuan" style="color: #ffffff; text-decoration: none;" target="_blank">Buka Temuan Audit</a>
-                                        </div>
+                                        <a href="https://ami.kallainstitute.ac.id/temuan" style="color: #ffffff; text-decoration: none;" target="_blank">
+                                            <div style="line-height: 26px;">
+                                                Buka Temuan Audit
+                                            </div>
+                                        </a>
                                     </td>
                                 </tr>
 

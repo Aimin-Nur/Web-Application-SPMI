@@ -239,14 +239,13 @@
                                 </tr>
 
                                 <tr>
-                                    <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
+                                    <td align="center" font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
 
-
-                                        <div style="line-height: 26px;">
-                               <button onclick="window.location.href='https://ami.kallainstitute.ac.id/dokumenUser'" style="background-color: transparent; color: #ffff; border: none; padding: 10px 20px; cursor: pointer; text-decoration: none;">
-    Buka Dokumen
-</button>
-                                        </div>
+                                        <a href="https://ami.kallainstitute.ac.id/temuan" style="color: #ffffff; text-decoration: none;" target="_blank">
+                                            <div style="line-height: 26px;">
+                                                Buka Temuan Audit
+                                            </div>
+                                        </a>
                                     </td>
                                 </tr>
 

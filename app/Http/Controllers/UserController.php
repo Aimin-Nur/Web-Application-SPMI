@@ -160,7 +160,7 @@ class UserController extends Controller
             ], [
                 'score.required' => 'Angka harus diisi.',
                 'score.integer' => 'Score anda tidak valid.',
-                'score.min' => 'Score Melebihi Angka Minimum.',
+                'score.min' => 'Score Melewati Angka Minimum.',
                 'score.max' => 'Score Melebihi Angka Maksimal.',
             ]);
 

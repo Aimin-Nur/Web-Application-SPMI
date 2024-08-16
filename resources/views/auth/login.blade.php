@@ -13,9 +13,8 @@
                   <p class="mb-0">Easy Way to Access SPMI Kalla Business School</p>
                 </div>
                 <div class="card-body">
-                    <!-- Session Status -->
                     @if (session('status'))
-                        <div class="alert alert-info d-flex align-items-center text-white" role="alert">
+                        <div class="alert alert-success d-flex align-items-center text-white" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif

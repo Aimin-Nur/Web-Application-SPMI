@@ -473,6 +473,30 @@
                     <i class="fa-solid fa-right-from-bracket me-sm-1"></i>
                     <span class="d-sm-inline d-none">Logout</span>
                 </a>
+                <li class="nav-item px-3 d-flex align-items-center">
+                </li>
+                <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                  <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-cog cursor-pointer"></i>
+                  </a>
+                  <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      {{-- <a href="{{ route('profile.admin') }}?tab=password" class="nav-link {{ $tab ?? '' === 'password' ? 'active' : '' }}" id="pills-password-tab" role="tab" aria-controls="pills-profile"> --}}
+                      <a href="/profile">
+                        <div class="d-flex ms-2">
+                          <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
+                              <svg class="w-40 h-40 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none" viewBox="0 0 24 24">
+                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h4.5M7 11V7a3 3 0 0 1 6 0v1.5m2.5 5.5v1.5l1 1m3.5-1a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/>
+                                </svg>
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <span class="text-sm font-weight-normal mb-1">
+                              Ganti Sandi
+                            </span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
                 @endauth
 
                 @auth('superadmin')
@@ -484,32 +508,7 @@
                     <span class="d-sm-inline d-none">Logout</span>
                 </a>
                 @endauth
-
               </li>
-              <li class="nav-item px-3 d-flex align-items-center">
-              </li>
-              <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cog cursor-pointer"></i>
-                </a>
-                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                  <li>
-                    {{-- <a href="{{ route('profile.admin') }}?tab=password" class="nav-link {{ $tab ?? '' === 'password' ? 'active' : '' }}" id="pills-password-tab" role="tab" aria-controls="pills-profile"> --}}
-                    <a href="/profile">
-                      <div class="d-flex ms-2">
-                        <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                            <svg class="w-40 h-40 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 11H5a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h4.5M7 11V7a3 3 0 0 1 6 0v1.5m2.5 5.5v1.5l1 1m3.5-1a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z"/>
-                              </svg>
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <span class="text-sm font-weight-normal mb-1">
-                            Ganti Sandi
-                          </span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
                 </ul>
               </li>
             </ul>

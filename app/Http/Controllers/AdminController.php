@@ -25,6 +25,8 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Mail\SendDocument;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends BaseController
 {
@@ -143,16 +145,22 @@ class AdminController extends BaseController
         return view('admin.formDokumen', compact('pageTitle','getData'));
     }
 
-    public function addDokumen(Request $request){
+    public function addDokumen(Request $request)
+    {
         try {
             $request->validate([
                 'field_judul' => 'required|string|max:255',
                 'field_tautan' => 'required|string|max:255|url',
                 'id_lembaga' => 'required|string|exists:lembaga,id',
+                'field_durasi' => 'required|date',
             ]);
+
             $existingDokumen = Dokumen::where('tautan', $request->input('field_tautan'))->first();
             if ($existingDokumen) {
-                return redirect('/dokumen')->with('status', 'error')->with('message', 'Tautan dokumen sudah ada.');
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Link Spredsheet yang Anda Masukkan Sudah Tersimpan di dalam Databases.',
+                ]);
             }
 
             $send = new Dokumen;
@@ -166,15 +174,19 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                SendDokumenEmail::dispatch($user->email, $send->judul, $send->deadline);
+                Mail::to($user->email)->send(new SendDocument($user->email, $send->judul, $send->deadline));
             }
-
-            return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dokumen berhasil ditambahkan dan email notifikasi sudah dikirim.',
+            ]);
         } catch (\Exception $e) {
-            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menambahkan dokumen: ' . $e->getMessage(),
+            ]);
         }
     }
-
 
     public function hapusDokumen($id){
         try {
@@ -247,7 +259,8 @@ class AdminController extends BaseController
             return view('admin.formTemuan', compact('pageTitle','getData'));
     }
 
-    public function addTemuan(Request $request){
+    public function addTemuan(Request $request)
+    {
         try {
             $request->validate([
                 'temuan' => 'required|string|max:255',
@@ -256,15 +269,22 @@ class AdminController extends BaseController
                 'tautan_rtk' => 'required|string|max:255|url',
                 'id_lembaga' => 'required|string|exists:lembaga,id',
                 'id_docs' => 'required|string|exists:dokumen,id',
+                'deadline' => 'required|date',
             ]);
 
             $existingTautanRTK = Evaluasi::where('tautan_rtk', $request->input('tautan_rtk'))->first();
             $existingTautanTemuan = Evaluasi::where('tautan_temuan', $request->input('tautan_temuan'))->first();
 
             if ($existingTautanRTK) {
-                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen PTK sudah ada.');
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tautan dokumen PTK sudah ada.',
+                ]);
             } elseif ($existingTautanTemuan) {
-                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Tautan dokumen Temuan & Saran sudah ada.');
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tautan dokumen Temuan & Saran sudah ada.',
+                ]);
             }
 
             $send = new Evaluasi;
@@ -281,14 +301,22 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                SendTemuanEmail::dispatch($user->email, $send->temuan, $send->rtk, $send->deadline);
+                Mail::to($user->email)->send(new SendDocument($user->email, $send->temuan, $send->deadline));
             }
 
-            return redirect('/temuanAudit')->with('status', 'success')->with('message', 'Temuan Audit Berhasil Ditambakan.');
-            } catch (\Exception $e) {
-                return redirect('/temuanAudit')->with('status', 'error')->with('message', 'Gagal Menambahkan Temuan Audit: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Temuan Audit Berhasil Ditambahkan dan email notifikasi sudah dikirim.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal Menambahkan Temuan Audit : ' . $e->getMessage(),
+            ]);
         }
     }
+
+
 
     public function editTemuan(Request $request, $id){
         try {

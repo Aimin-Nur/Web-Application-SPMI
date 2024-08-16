@@ -1,7 +1,6 @@
 @include('layouts.header-admin')
 @include('layouts.navbar-admin')
 
-
 <div class="container-fluid">
     <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('{{asset('creative')}}/assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
       <span class="mask bg-gradient-primary opacity-6"></span>
@@ -333,25 +332,25 @@
                     const selectedValue = this.value;
                     if (selectedValue === '1' || selectedValue === '2') {
                         deadlineForm.style.display = 'block';
-                        hiddenScore.name = ''; // Disable hidden score input
-                        scoreInput.name = 'score'; // Enable visible score input
+                        hiddenScore.name = '';
+                        scoreInput.name = 'score';
                     } else {
                         deadlineForm.style.display = 'none';
-                        hiddenScore.name = 'score'; // Enable hidden score input
-                        scoreInput.name = ''; // Disable visible score input
-                        hiddenScore.value = '4'; // Default value for hidden score
-                        scoreInput.value = ''; // Clear visible score input
+                        hiddenScore.name = 'score';
+                        scoreInput.name = '';
+                        hiddenScore.value = '4';
+                        scoreInput.value = '';
                     }
                 });
 
                 if (statusSelect.value === '1' || statusSelect.value === '2') {
                     deadlineForm.style.display = 'block';
-                    hiddenScore.name = ''; // Disable hidden score input
-                    scoreInput.name = 'score'; // Enable visible score input
+                    hiddenScore.name = '';
+                    scoreInput.name = 'score'; /
                 } else {
                     deadlineForm.style.display = 'none';
-                    hiddenScore.name = 'score'; // Enable hidden score input
-                    scoreInput.name = ''; // Disable visible score input
+                    hiddenScore.name = 'score';
+                    scoreInput.name = '';
                 }
             });
         });

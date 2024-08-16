@@ -232,9 +232,16 @@
     @endif
 </script>
 
-{{-- Disabled Modal Popup soft UI --}}
 <style>
     #ofBar {
+        visibility: hidden !important;
+    }
+
+    .hidden {
         display: none !important;
     }
 </style>
+
+<script>
+    document.getElementById('ofBar').classList.add('hidden');
+</script>
