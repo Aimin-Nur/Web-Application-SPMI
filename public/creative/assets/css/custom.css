@@ -36,6 +36,17 @@
     --bs-btn-disabled-border-color: #2a834c;
     --bs-gradient: none;
 }
+.spinner-grow{
+    background-color: #2a834c;
+    border-color: #2a834c;
+    color: #fff
+}
+
+.progress-bar-primary{
+    background-color: #2a834c;
+    border-color: #2a834c;
+    color: #fff
+}
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus,
@@ -1568,6 +1579,31 @@ Github: https://github.com/fiduswriter/Simple-dataTabless
 .dataTables-table thead td,
 .dataTables-table thead th {
     vertical-align: middle !important
+}
+
+
+.table tbody tr {
+    color: gainsboro;
+    border-bottom: none !important;
+}
+.table th {
+    color: gainsboro;
+    border-bottom: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: transparent;
+    border: #2a834c;
+    padding: 0;
+    margin: 0 0.3rem;
+    cursor: pointer;
+    color: #2a834c !important;
+}
+
+.custom-info {
+    text-align: right;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 @media (max-width:575.98px) {

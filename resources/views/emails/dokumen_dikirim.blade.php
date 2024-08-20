@@ -243,7 +243,7 @@
 
                                         <a href="https://ami.kallainstitute.ac.id/temuan" style="color: #ffffff; text-decoration: none;" target="_blank">
                                             <div style="line-height: 26px;">
-                                                Buka Temuan Audit
+                                                Buka Dokumen Audit
                                             </div>
                                         </a>
                                     </td>

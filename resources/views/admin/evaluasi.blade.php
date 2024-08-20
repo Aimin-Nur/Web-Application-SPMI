@@ -106,7 +106,64 @@
             </div>
         </div>
         @else
-        @livewire('admin.temuan-table')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                    <a class="float-star btn-md btn bg-gradient-dark mb-0" href="/addTemuan">
+                                        <i class="fas fa-plus"></i>&nbsp;&nbsp;Tambah Temuan Audit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="temuanTable" class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">create</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                                <th class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                var table = $('#temuanTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route("temuanAudit") }}',
+                    columns: [
+                        { data: 'lembaga', name: 'lembaga' },
+                        { data: 'temuan', name: 'temuan' },
+                        { data: 'rtk', name: 'rtk' },
+                        { data: 'status_pengisian', name: 'status_pengisian', className: 'text-center' },
+                        { data: 'create', name: 'create'},
+                        { data: 'deadline', name: 'deadline', className: 'text-center' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false }
+                    ]
+                });
+
+                $('#search-field').on('keyup', function () {
+                    table.search(this.value).draw();
+                });
+            });
+        </script>
         @endif
     </div>
 
@@ -130,8 +187,71 @@
             </div>
         </div>
         @else
-        @livewire('admin.riwayat-temuan')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                   <h6>Riwayat Temuan Audit</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="container-fluid table-responsive p-0">
+                                    <table id="history-temuan-table" class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">PTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
+        <script>
+            $(document).ready(function() {
+                $('#history-temuan-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route("temuanAudit") }}',
+                        type: 'GET',
+                        data: function(d) {
+                            d.history = true;
+                        },
+                        error: function(xhr, error, thrown) {
+                            console.log('Error:', error);
+                        }
+                    },
+                    columns: [
+                        { data: 'lembaga', name: 'lembaga' },
+                        { data: 'temuan', name: 'temuan' },
+                        { data: 'rtk', name: 'rtk' },
+                        { data: 'status_pengisian', name: 'status_pengisian' },
+                        { data: 'status_docs', name: 'status_dokumen' },
+                        { data: 'score', name: 'score' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false }
+                    ],
+                    language: {
+                        processing: "Processing..."
+                    }
+                });
+            });
+        </script>
     </div>
 
     <div class="tab-pane" id="pills-score" role="tabpanel" aria-labelledby="pills-score-tab">
@@ -209,6 +329,103 @@
 
 </div>
 </div>
+
+{{-- Modal Detail --}}
+@foreach ($riwayat as $item)
+<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+              <ul>
+                <h6 class="text-sm py-3">
+                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, DD MMMM YYYY') }} : {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</li> <br>
+                <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
+                <li>Temuan Audit : {{$item->temuan}}</li> <br>
+                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
+                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
+                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
+                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
+                <li>Status Pengisian :
+                    @if ($item->status_pengisian == 2)
+                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                    @else
+                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                    @endif
+                </li> <br>
+                <li> Status Dokumen :
+                    @if ($item->status_docs == 1)
+                        <span class="badge badge-sm bg-gradient-danger">Poor</span>
+                    @elseif ($item->status_docs == 2)
+                        <span class="badge badge-sm bg-gradient-warning">Average</span>
+                    @elseif ($item->status_docs == 3)
+                        <span class="badge badge-sm bg-gradient-info">Good</span>
+                    @elseif ($item->status_docs == 4)
+                        <span class="badge badge-sm bg-gradient-success">Excellent</span>
+                    @endif
+                </li><br>
+                <li>Skor Akhir : {{$item->score}}</li>
+                </h6>
+              </ul>
+            </li>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
+
+
+{{-- {{-- Modal Hapus Riwayat --}}
+@foreach ($riwayat as $item)
+<div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content rounded-0">
+        <div class="modal-body bg-3">
+        <div class="px-3 to-front">
+            <div class="row align-items-center">
+            <div class="col text-right">
+                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><span class="icon-close2"></span></span>
+                </a>
+            </div>
+            </div>
+        </div>
+        <div class="p-4 to-front">
+            <div class="text-center">
+            <div class="logo">
+                <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+            </div>
+            <h4>Hapus Temuan Audit</h4>
+            <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
+            <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="row">
+                <div class="col-6 mt-4">
+                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                </div>
+                <div class="col-6 mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
+                </div>
+                </div>
+            </form>
+            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+@endforeach
 
 {{-- Modal Edit Status --}}
 @foreach ($evaluasi as $item)

@@ -20,7 +20,7 @@
                 <div class="mb-3 row">
                     <label class="col-3 col-form-label required">Tautan Dokumen</label>
                     <div class="col">
-                        <input name="field_tautan" type="text" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/..." required>
+                        <input name="field_tautan" type="url" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/..." required>
                         <small class="form-hint">Masukkan Link Spredsheet Dokumen Anda. Pastikan Dokumen Dapat Diakses Oleh Orang Lain</small>
                     </div>
                 </div>

@@ -84,7 +84,6 @@
 </div>
 
 <div class="tab-content" id="pills-tabContent">
-    <!-- Existing tabs content -->
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         @if ($evaluasi->isEmpty())
         <div class="container-fluid py-4">
@@ -100,7 +99,35 @@
             </div>
         </div>
         @else
-        @livewire('user.temuan-table')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="temuanTable" class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                                <th class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 opacity-7">Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
     </div>
 
@@ -119,7 +146,40 @@
             </div>
         </div>
         @else
-        @livewire('user.riwayat-temuan')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                   <h6>Riwayat Temuan Audit</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="history-temuan-table" class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor Akhir</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
     </div>
 
@@ -206,49 +266,96 @@
 </div>
 
 
-
-    {{-- Modal Send Docs --}}
-    @foreach ($evaluasi as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+{{-- Modal Send Docs --}}
+@foreach ($evaluasi as $item)
+<div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content rounded-0">
-          <div class="modal-body bg-3">
-          <div class="px-3 to-front">
-              <div class="row align-items-center">
-              <div class="col text-right">
-                  <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true"><span class="icon-close2"></span></span>
-                  </a>
-              </div>
-              </div>
-          </div>
-          <div class="p-4 to-front">
-              <div class="text-center">
-              <div class="logo">
-                  <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-              </div>
-              <h4>Kirim Temuan Audit</h4>
-              <p class="mb-3 text-sm">Pastikan bahwa Anda telah mengisi Temuan Audit dengan lengkap. Admin SPMI dapat secara langsung melihat kelengkapan dokumen Anda saat ini.</p>
-              <form action="/sendTemuan/{{$item->id}}" class="mb-4" method="POST">
-                  @csrf
-                  @method('PUT')
-                  <div class="row">
-                  <div class="col-6 mt-4">
-                      <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                  </div>
-                  <div class="col-6 mt-4">
-                      <button type="submit" class="btn btn-primary btn-block">Kirim Dokumen</button>
-                  </div>
-                  </div>
-              </form>
-              <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-              </div>
-          </div>
-          </div>
+        <div class="modal-content rounded-0">
+            <div class="modal-body bg-3">
+                <div class="px-3 to-front">
+                    <div class="row align-items-center">
+                        <div class="col text-right">
+                            <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><span class="icon-close2"></span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 to-front">
+                    <div class="text-center">
+                        <div class="logo">
+                            <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                        </div>
+                        <h4>Kirim Temuan Audit</h4>
+                        <p class="mb-3 text-sm">Pastikan bahwa Anda telah mengisi Temuan Audit dengan lengkap. Admin SPMI dapat secara langsung melihat kelengkapan dokumen Anda saat ini.</p>
+                        <form action="/sendTemuan/{{$item->id}}" class="mb-4" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="row">
+                            <div class="col-6 mt-4">
+                                <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                            </div>
+                            <div class="col-6 mt-4">
+                                <button type="submit" class="btn btn-primary btn-block">Kirim Dokumen</button>
+                            </div>
+                            </div>
+                        </form>
+                        <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
-      </div>
-  </div>
-    @endforeach
+</div>
+@endforeach
+<script>
+    $(document).ready(function() {
+        var table = $('#temuanTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("temuan-audit-users") }}',
+            type: 'GET',
+            columns: [
+                { data: 'temuan', name: 'temuan', orderable: true, searchable: true },
+                { data: 'rtk', name: 'rtk', orderable: true, searchable: true },
+                { data: 'create', name: 'create', orderable: true, searchable: true},
+                { data: 'deadline', name: 'deadline', orderable: true, searchable: true },
+                { data: 'action', name: 'Actions', orderable: true, searchable: true },
+            ]
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#history-temuan-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("temuan-audit-users") }}',
+                type: 'GET',
+                data: function(d) {
+                    d.history = true;
+                },
+                error: function(xhr, error, thrown) {
+                    console.log('Error:', error);
+                }
+            },
+            columns: [
+                { data: 'temuan', name: 'temuan', orderable: true, searchable: true, className : 'text-center'  },
+                { data: 'rtk', name: 'rtk', orderable: true, searchable: true, className : 'text-center'  },
+                { data: 'status_pengisian', name: 'status_pengisian', orderable: true, searchable: false, className : 'text-center'  },
+                { data: 'status_docs', name: 'status_dokumen', orderable: true, searchable: false, className : 'text-center'  },
+                { data: 'create', name: 'create', orderable: true, searchable: false, className : 'text-center'  },
+                { data: 'deadline', name: 'deadline', orderable: true, searchable: false, className : 'text-center'  },
+                { data: 'score', name: 'score', orderable: true, searchable: false }
+            ],
+            language: {
+                processing: "Processing..."
+            }
+        });
+    });
+</script>
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

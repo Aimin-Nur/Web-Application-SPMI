@@ -79,20 +79,20 @@
               </div>
               <h5>Tambah Data Auditor</h5>
               <p class="mb-4">Data Auditor yang Anda input, akan tampil dihalaman utama website SPMI.</p>
-              <form action="/addAuditor/admin" class="mb-4" method="POST" enctype="multipart/form-data">
+              <form id="addAuditorForm" action="/addAuditor/admin" class="mb-4" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <input type="text" class="form-control w-100 mr-3" name="nama" placeholder="Fulan bin Fulan, S.T., M.Kom." required>
+                  <input type="text" class="form-control w-100 mr-3" name="nama" placeholder="Fulan bin Fulan, S.T., M.Kom." /required>
                 </div>
                 <div class="form-group">
-                    <input type="file" class="form-control w-100 mr-3" name="foto" accept="image/*" required>
+                    <input type="file" class="form-control w-100 mr-3" name="foto" accept="image/*" />required>
                   </div>
                 <div class="row">
                   <div class="col-6 mt-4">
                     <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
                   </div>
                   <div class="col-6 mt-4">
-                    <button type="submit" class="btn btn-primary btn-block">Tambah</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-block">Submit</button>
                   </div>
                 </div>
               </form>
@@ -103,6 +103,19 @@
       </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('addAuditorForm');
+        var submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(event) {
+            submitBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
+            submitBtn.classList.add('disabled');
+            submitBtn.setAttribute('type', 'button');
+        });
+    });
+</script>
 
 
 {{-- Modal Hapus Lembaga --}}
@@ -196,8 +209,8 @@
       </div>
     </div>
 </div>
-
 @endforeach
+
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

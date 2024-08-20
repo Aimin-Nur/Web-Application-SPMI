@@ -38,12 +38,12 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label>Nama User</label>
-                                <input type="text" class="form-control" name="name" placeholder="{{$item->name}}">
+                                <input type="text" class="form-control" name="name" placeholder="{{$item->name}}" /required>
                             </div>
                              <div class="deadline-form">
                                  <div class="form-group">
                                      <label for="score">Email User</label>
-                                     <input type="text" class="form-control" name="email" placeholder="{{$item->email}}">
+                                     <input type="text" class="form-control" name="email" placeholder="{{$item->email}}" /required>
                                  </div>
                              </div>
                             <div class="row">

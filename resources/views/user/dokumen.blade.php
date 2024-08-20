@@ -87,66 +87,167 @@
 
         </div>
         @else
-        @livewire('user.dokumen-table')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                                <div class="col-4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="documentTable" class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Docs</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deadline Pengerjaan</th>
+                                                <th class="text-secondary text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
     </div>
 
     <div class="tab-pane" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        @livewire('user.riwayat-dokumen-table')
-    </div>
-    </div>
-
-  </div>
-
-
-    {{-- Modal Send Docs --}}
-    @foreach ($dokumens as $item)
-    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content rounded-0">
-          <div class="modal-body bg-3">
-          <div class="px-3 to-front">
-              <div class="row align-items-center">
-              <div class="col text-right">
-                  <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true"><span class="icon-close2"></span></span>
-                  </a>
-              </div>
-              </div>
-          </div>
-          <div class="p-4 to-front">
-              <div class="text-center">
-              <div class="logo">
-                  <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-              </div>
-              <h4>Kirim Dokumen</h4>
-              <p class="mb-3 text-sm">Pastikan bahwa Anda telah mengisi dokumen dengan lengkap. Admin SPMI dapat secara langsung melihat kelengkapan dokumen Anda saat ini.</p>
-              <form action="/sendDocs/{{$item->id}}" class="mb-4" method="POST">
-                  @csrf
-                  @method('PUT')
-                  <div class="row">
-                    <div class="form-group">
-                        <label for="score">Score</label>
-                        <input type="number" class="form-control" name="score" placeholder="1 - 276" /required>
-                        <small class="mb-0 cancel"><small><i>Score yang Anda Klaim Akan divalidasi Oleh Admin SPMI</i></small></small>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <div class="card-header col-lg-12 pb-0">
+                        <div class="row mb-3">
+                            <div class="col-8">
+                               <h6>Riwayat Dokumen Lembaga</h6>
+                            </div>
+                            <div class="col-4">
+                            </div>
+                        </div>
                     </div>
-                  <div class="col-6 mt-4">
-                      <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="container">
+                            <div class="table-responsive p-0">
+                                <table id="historyTable" class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proses</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tautan</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                   </div>
-                  <div class="col-6 mt-4">
-                      <button type="submit" class="btn btn-primary btn-block">Kirim Dokumen</button>
-                  </div>
-                  </div>
-              </form>
-              <small class="mb-0 cancel"><small>Sistem Penjaminan Mutu Internal Kalla Institute</small></small>
+                </div>
               </div>
-          </div>
-          </div>
-      </div>
-      </div>
+           </div>
+        </div>
+    </div>
+    </div>
+
   </div>
-    @endforeach
 
 
+{{-- Modal Send Docs --}}
+@foreach ($dokumens as $item)
+    <div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-body bg-3">
+            <div class="px-3 to-front">
+                <div class="row align-items-center">
+                <div class="col text-right">
+                    <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><span class="icon-close2"></span></span>
+                    </a>
+                </div>
+                </div>
+            </div>
+            <div class="p-4 to-front">
+                <div class="text-center">
+                <div class="logo">
+                    <img src="{{asset('creative')}}/assets/img/send-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
+                </div>
+                <h4>Kirim Dokumen</h4>
+                <p class="mb-3 text-sm">Pastikan bahwa Anda telah mengisi dokumen dengan lengkap. Admin SPMI dapat secara langsung melihat kelengkapan dokumen Anda saat ini.</p>
+                <form action="/sendDocs/{{$item->id}}" class="mb-4" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="score">Score</label>
+                            <input type="number" class="form-control" name="score" placeholder="1 - 276" /required>
+                            <small class="mb-0 cancel"><small><i>Score yang Anda Klaim Akan divalidasi Oleh Admin SPMI</i></small></small>
+                        </div>
+                    <div class="col-6 mt-4">
+                        <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
+                    </div>
+                    <div class="col-6 mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">Kirim Dokumen</button>
+                    </div>
+                    </div>
+                </form>
+                <small class="mb-0 cancel"><small>Sistem Penjaminan Mutu Internal Kalla Institute</small></small>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+@endforeach
+
+
+<script>
+$(document).ready(function() {
+    $('#documentTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('dokumen-user') }}",
+        type: 'GET',
+        columns: [
+            { data: 'dokumen', name: 'judul', orderable: true, searchable: true },
+            { data: 'tautan', name: 'tautan', orderable: false, searchable: false, className: 'text-center' },
+            { data: 'deadline', name: 'deadline', orderable: true, searchable: false, className: 'text-center' },
+            { data: 'actions', name: '', orderable: false, searchable: false, className: 'text-center' }
+        ],
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+        var table = $('#historyTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('dokumen-user') }}",
+                data: {
+                    history: true
+                }
+            },
+            type : 'GET',
+            columns: [
+                { data: 'dokumen', name: 'judul', orderable: true, searchable: true },
+                { data: 'status_pengisian', name: 'status_pengisian', orderable: false, searchable: false, className: 'text-center' },
+                { data: 'score', name: 'score', orderable: true, searchable: false, className: 'text-center' },
+                { data: 'tautan', name: 'tautan', orderable: false, searchable: false, className: 'text-center' }
+            ]
+        });
+        table.columns.adjust().draw();
+    });
+</script>
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

@@ -8,17 +8,17 @@
                       <div class="col-4 d-flex align-items-center">
                         <h6 class="mb-0">Laporan Audit</h6>
                       </div>
-                      <div class="col-4 text-end">
-                        <a class="btn bg-gradient-dark mb-0" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp;</a>
+                      <div class="col-8 text-end">
+                        <a class="btn bg-gradient-dark mb-0" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>&nbsp;&nbsp; Tambah Laporan Audit</a>
                       </div>
-                      <div class="col-4">
+                      {{-- <div class="col-4">
                             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                                 <div class="input-group">
                                     <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
                                     <input type="text" class="form-control" placeholder="Type here..." wire:model="search">
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                   </div>
               <div class="card-body px-0 pt-0 pb-2">

@@ -84,7 +84,34 @@
             </div>
         </div>
        @else
-       @livewire('superadmin.dokumen-table')
+       <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header col-lg-12 pb-0">
+
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="container">
+                            <div class="table-responsive p-0">
+                                <table id="dokumenTable" class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     @endif
 
@@ -161,55 +188,226 @@
               </div>
             </div>
         </div>
-        @livewire('superadmin.riwayat-dokumen-table')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <div class="card-header col-lg-12 pb-0">
+                        <div class="row mb-3">
+                            <div class="col-8">
+                               <h6>Riwayat Dokumen Lembaga</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <div class="container">
+                                <table id="historyTable" class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Dokumen</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Score Sementara</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+        </div>
         @endif
     </div>
-
   </div>
 
   {{-- Detail Riwayat --}}
-@foreach ($riwayatDocs as $item)
-<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-unstyled">
-              <ul>
-                <h6 class="text-sm py-3">
-                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
-                </li> <br>
-                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
-                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
-                </li> <br>
-                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}
-                </li> <br>
-                <li>Status Pengisian :
-                    @if ($item->status_pengisian == 2)
-                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                    @else
-                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                    @endif
-                </li> <br>
+    @foreach ($riwayatDocs as $item)
+    <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul class="list-unstyled">
+                <ul>
+                    <h6 class="text-sm py-3">
+                    <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}
+                    </li> <br>
+                    <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
+                    <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
+                    <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}
+                    </li> <br>
+                    <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}
+                    </li> <br>
+                    <li>Status Pengisian :
+                        @if ($item->status_pengisian == 2)
+                            <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                        @else
+                        <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                        @endif
+                    </li> <br>
 
-                <li>Skor Sementara : {{$item->score}}</li>
-                </h6>
-              </ul>
-            </li>
-          </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"><a class="text-white" href="{{$item->tautan}}" target="_blank">Open Spreadsheet</a></button>
-      </div>
+                    <li>Skor Sementara : {{$item->score}}</li>
+                    </h6>
+                </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary"><a class="text-white" href="{{$item->tautan}}" target="_blank">Open Spreadsheet</a></button>
+        </div>
+        </div>
     </div>
-  </div>
-</div>
-@endforeach
+    </div>
+    @endforeach
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#dokumenTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('dokumen-superadmin') }}',
+            columns: [
+                {
+                    data: 'lembaga',
+                    name: 'lembaga',
+                    render: function(data, type, row) {
+                        return `
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">${row.lembaga}</h6>
+                                </div>
+                            </div>`;
+                    }
+                },
+                {
+                    data: 'dokumen',
+                    name: 'dokumen',
+                    render: function(data, type, row) {
+                        return `
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">${row.judul}</h6>
+                                    ${row.status_pengisian == 2 || row.status_pengisian == 1 ?
+                                        `<small class="text-xs text-secondary mt-2">Link Dokumen : <a href="${row.tautan}"><i class="fa fa-external-link text-success"></i></a></small>` :
+                                        `<small class="text-xs text-secondary mt-2">Link Dokumen : <a href="${row.tautan}"><i class="fa fa-external-link text-secondary"></i></a></small>`}`;
+                    }
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, row) {
+                        return row.status_pengisian == 2 ?
+                            '<small class="badge badge-sm bg-gradient-success align-items-center">Selesai</small>' :
+                            (row.status_pengisian == 1 ?
+                                '<small class="badge badge-sm bg-gradient-danger align-items-center">Terlambat</small>' :
+                                '<small class="badge badge-sm bg-gradient-secondary align-items-center ms-4">Pending</small>');
+                    }
+                },
+                {
+                    data: 'created',
+                    name: 'created',
+                    render: function(data, type, row) {
+                        return `<small class="text-secondary text-xs font-weight-bold">${row.created}</small>`;
+                    },
+                    className: 'align-middle text-center'
+                },
+                {
+                    data: 'deadline',
+                    name: 'deadline',
+                    render: function(data, type, row) {
+                        return row.deadline != 0 ?
+                            `<span class="text-secondary text-xs font-weight-bold">${row.deadline}</span>` :
+                            '<span class="text-secondary text-xs font-weight-bold">-</span>';
+                    },
+                    className: 'align-middle text-center'
+                },
+            ]
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+    $('#dokumenTable').DataTable({
+        "searching": true,
+        "processing": true,
+        "serverSide": true,
+        "ajax": '{{ route('dokumen-superadmin') }}',
+       "columns": [
+            { data: 'nama_lembaga', searchable: true },
+            { data: 'judul', searchable: true }
+        ];
+        "language": {
+            "processing": ""
+        }
+    });
+
+    $('.dataTables_processing').html(`
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    `);
+
+    table.on('processing.dt', function(e, settings, processing) {
+        if (processing) {
+            $('.dataTables_processing').html(`
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            `);
+        }
+    });
+});
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#historyTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("dokumen-superadmin") }}',
+                data: {
+                    history: true;
+                },
+            },
+            columns: [
+                { data: 'lembaga', name: 'lembaga', orderable: false, searchable: false },
+                { data: 'dokumen', name: 'dokumen' orderable: true, searchable: true},
+                { data: 'status_pengisian', name: 'status_pengisian', orderable: false, searchable: false },
+                { data: 'score', name: 'score', orderable: true, searchable: false },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            ]
+        });
+    });
+</script>
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

@@ -31,8 +31,8 @@ Route::get('/', [HomeController::class, 'index']);
 // Auth User
 Route::middleware(['auth:web', 'verified'])->group(function () {
     Route::get('/dashboardUser', [UserController::class, 'index']);
-    Route::get('/dokumenUser', [UserController::class, 'dokumenUser']);
-    Route::get('/temuan', [UserController::class, 'temuanAudit']);
+    Route::get('/dokumenUser', [UserController::class, 'dokumenUser'])->name('dokumen-user');
+    Route::get('/temuan', [UserController::class, 'temuanAudit'])->name('temuan-audit-users');
     Route::put('/sendDocs/{id}', [UserController::class, 'sendDocs']);
     Route::put('/sendTemuan/{id}', [UserController::class, 'sendTemuan']);
     Route::post('/user/logout', [AuthenticatedSessionController::class, 'destroy'])->name('user.logout');
@@ -46,13 +46,13 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::put('/editUser/{id}', [AdminController::class, 'editUser']);
     Route::delete('/hapusUser/{id}', [AdminController::class, 'hapusUser']);
 
-    Route::get('/dokumen', [AdminController::class, 'dokumen']);
+    Route::get('/dokumen', [AdminController::class, 'dokumen'])->name('dokumen');
     Route::get('/addDokumen', [AdminController::class, 'formDokumen']);
     Route::post('/sendDokumen', [AdminController::class, 'addDokumen']);
     Route::put('/editStatus/{id}', [AdminController::class, 'editStatusDocs']);
     Route::post('/hapusDocs/{id}', [AdminController::class, 'hapusDokumen']);
 
-    Route::get('/temuanAudit', [AdminController::class, 'temuanAudit']);
+    Route::get('/temuanAudit', [AdminController::class, 'temuanAudit'])->name('temuanAudit');
     Route::get('/addTemuan', [AdminController::class, 'formTemuan']);
     Route::post('/sendTemuan', [AdminController::class, 'addTemuan']);
     Route::delete('/hapusTemuan/{id}', [AdminController::class, 'hapusTemuan']);
@@ -90,8 +90,8 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::get('/user', [superAdminController::class, 'displayUser']);
     Route::put('/editUser/superadmin/{id}', [superAdminController::class, 'editUser']);
     Route::post('/superadmin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('superadmin.logout');
-    Route::get('/dokumen/superadmin', [superAdminController::class, 'dokumen']);
-    Route::get('/temuan/superadmin', [superAdminController::class, 'temuanAudit']);
+    Route::get('/dokumen/superadmin', [superAdminController::class, 'dokumen'])->name('dokumen-superadmin');
+    Route::get('/temuan/superadmin', [superAdminController::class, 'temuanAudit'])->name('temuan-audit-superadmin');
     Route::get('/laporanAudit/superadmin', [superAdminController::class, 'laporanAudit']);
     Route::DELETE('/hapususer/superadmin/{id}', [superAdminController::class, 'deleteUser']);
     Route::DELETE('/hapususer/dokumen/superadmin/{id}', [superAdminController::class, 'deleteUserAndDocuments']);

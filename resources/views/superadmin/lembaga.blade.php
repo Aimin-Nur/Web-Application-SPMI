@@ -66,7 +66,7 @@
                   <form action="/addLembaga" class="mb-4" method="POST">
                     @csrf
                     <div class="form-group">
-                      <input type="text" class="form-control w-100 mr-3" name="filed_lembaga" placeholder="exp: Information Comunication Technology (ICT)">
+                      <input type="text" class="form-control w-100 mr-3" name="filed_lembaga" placeholder="exp: Information Comunication Technology (ICT)" /required>
                     </div>
                     <div class="row">
                       <div class="col-6 mt-4">

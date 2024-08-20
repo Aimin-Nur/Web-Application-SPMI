@@ -177,7 +177,7 @@
                                     <td class="text-center">
                                         <div class="d-flex px-2 py-1 text-center">
                                             <div class="d-flex flex-column align-items-center text-center">
-                                                <p class="mb-0 text-sm text-center ms-4">{{ $index + 1 }}</p>
+                                                <p class="mb-0 text-sm text-center ms-4 text-dark">{{ $index + 1 }}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -192,7 +192,7 @@
                                         <div class="progress-wrapper w-35 mx-auto">
                                             <div class="progress-info mb-1">
                                                 <div class="progress-percentage">
-                                                    <span class="text-xs font-weight-bold">{{ $lembaga['total_score'] }}</span>
+                                                    <span class="text-xs font-weight-bold text-dark">{{ $lembaga['total_score'] }}</span>
                                                 </div>
                                             </div>
                                             <div class="progress">
@@ -214,10 +214,8 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             var ctx2 = document.getElementById("chart-line").getContext("2d");
 
-            // Data from server
             var lembagaScores = <?php echo json_encode($radar)?>;
 
-            // Extract labels and data for each status
             var labels = lembagaScores.map(function (item) { return item.nama_lembaga; });
             var averageData = lembagaScores.map(function (item) { return item.average; });
             var poorData = lembagaScores.map(function (item) { return item.poor; });
@@ -253,12 +251,12 @@
                         label: 'Good',
                         data: goodData,
                         fill: true,
-                        backgroundColor: 'rgba(0, 153, 204, 0.2)', // Warna latar belakang untuk area pengisi
-                        borderColor: 'rgb(0, 153, 204)', // Warna batas garis
-                        pointBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang untuk titik
-                        pointBorderColor: '#fff', // Warna batas titik
-                        pointHoverBackgroundColor: 'rgb(0, 153, 204)', // Warna latar belakang titik saat hover
-                        pointHoverBorderColor: '#fff' // Warna batas titik saat hover
+                        backgroundColor: 'rgba(0, 153, 204, 0.2)',
+                        borderColor: 'rgb(0, 153, 204)',
+                        pointBackgroundColor: 'rgb(0, 153, 204)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: 'rgb(0, 153, 204)',
+                        pointHoverBorderColor: '#fff'
                     },
                     {
                         label: 'Excellent',

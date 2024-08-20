@@ -1,0 +1,38 @@
+/* datatables-custom.css *//* Styling untuk header tabel */.dataTables_wrapper.dataTables_paginate.paginate_button {
+    padding: 0.5rem1rem;
+    margin: 00.125rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e3e3e3;
+    background: #ffffff;
+    color: #333333;
+}
+
+/* Hover dan active state pada tombol pagination */.dataTables_wrapper.dataTables_paginate.paginate_button:hover,
+.dataTables_wrapper.dataTables_paginate.paginate_button:active {
+    background: #f5f5f5;
+    border-color: #e3e3e3;
+}
+
+/* Styling untuk tabel */.dataTables_wrapper.dataTables_scroll.dataTables_scrollBody {
+    overflow: auto;
+}
+
+/* Menghilangkan border pada tabel */.table.dataTabletheadth,
+.table.dataTabletbodytd {
+    border: none;
+}
+
+/* Menyelaraskan text header tabel */.table.dataTabletheadth {
+    text-align: center;
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Styling untuk baris tabel */.table.dataTabletbodytr {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+/* Hover state pada baris tabel */.table.dataTabletbodytr:hover {
+    background-color: #f8f9fa;
+}

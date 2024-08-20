@@ -188,7 +188,7 @@
                                     <td class="text-center">
                                         <div class="d-flex px-2 py-1 text-center">
                                             <div class="d-flex flex-column justify-content-center text-center">
-                                                <p class="mb-0 text-sm text-center ms-4">{{ $index + 1 }}</p>
+                                                <p class="mb-0 text-sm text-center ms-4 text-dark">{{ $index + 1 }}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -203,7 +203,7 @@
                                         <div class="progress-wrapper w-35 mx-auto">
                                             <div class="progress-info">
                                                 <div class="progress-percentage mb-1 ms-4">
-                                                    <span class="text-xs font-weight-bold">{{ $lembaga['total_score'] }}</span>
+                                                    <span class="text-xs font-weight-bold text-dark">{{ $lembaga['total_score'] }}</span>
                                                 </div>
                                             </div>
                                             <div class="progress">

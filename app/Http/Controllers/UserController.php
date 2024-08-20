@@ -12,9 +12,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Services\Document;
+use App\Services\HistoryDocument;
+use App\Services\Temuan;
+use App\Services\HistoryTemuan;
 
 class UserController extends Controller
 {
+    protected $dokumenService;
+    protected $historyDokumensUsers;
+    protected $temuanServiceUsers;
+    protected $historyTemuan;
+
+    public function __construct(Document $dokumenService, HistoryDocument $historyDokumensUsers, Temuan $temuanServiceUsers, HistoryTemuan $historyTemuan)
+    {
+        $this->dokumenService = $dokumenService;
+        $this->historyDokumensUsers = $historyDokumensUsers;
+        $this->temuanServiceUsers = $temuanServiceUsers;
+        $this->historyTemuan = $historyTemuan;
+    }
+
     public function index (){
         $pageTitle = "Dashboard";
         $today = Carbon::today();
@@ -63,10 +80,20 @@ class UserController extends Controller
         return view('user.index', compact('pageTitle','lembagaScores','radar','maxScore','totalTemuan','getLembaga','userRanking','countDocs','countDocsUnsend','countTemuan','countEvalUnsend'));
     }
 
-    public function dokumenUser() {
+    public function dokumenUser(Request $request) {
         $pageTitle = "Dokumen Audit";
         $user = Auth::user();
         $idLembaga = $user->id_lembaga;
+
+        if ($request->ajax() && $request->has('history')) {
+            $dokumensHistoryUsers = $this->historyDokumensUsers->getUserDokumensHistory();
+            return $this->historyDokumensUsers->generateUserHistoryDataTable($dokumensHistoryUsers);
+        }
+
+        if ($request->ajax()) {
+            $dokumensQueryUsers = $this->dokumenService->getUserDokumens();
+            return $this->dokumenService->generateUserDataTable($dokumensQueryUsers);
+        }
 
         $dokumens = Dokumen::where('id_lembaga', $idLembaga)
                     ->where(function($query) {
@@ -76,7 +103,6 @@ class UserController extends Controller
                     ->where('deadline', '!=',0)
                     ->get();
 
-
         $finishDocs = Dokumen::where('id_lembaga', $idLembaga)->where('status_pengisian', 2)->orwhere('status_pengisian', 1)->get();
 
         $cekDokumens = Dokumen::where('id_lembaga', $idLembaga)->where(function($query) {
@@ -85,15 +111,22 @@ class UserController extends Controller
         })
         ->count();
 
-        $minor = Dokumen::where('status_docs', 1)->where('id_lembaga', $idLembaga)->count();
-        $mayor = Dokumen::where('status_docs', 2)->where('id_lembaga', $idLembaga)->count();
-        $close = Dokumen::where('status_docs', 3)->where('id_lembaga', $idLembaga)->count();
-
-        return view('user.dokumen', compact('pageTitle','dokumens', 'finishDocs', 'cekDokumens','minor','mayor','close'));
+        return view('user.dokumen', compact('pageTitle','dokumens', 'finishDocs', 'cekDokumens'));
     }
 
-    public function temuanAudit() {
+    public function temuanAudit(Request $request) {
         $pageTitle = "Temuan Audit";
+
+        if ($request->ajax()) {
+            if ($request->has('history') && $request->get('history')) {
+                $riwayat = $this->historyTemuan->getRiwayatUsers();
+                return $this->historyTemuan->generateDataTable($riwayat);
+            } else {
+                $evaluasi = $this->temuanServiceUsers->getTemuanUsers();
+                return $this->temuanServiceUsers->generateDataTableUsers($evaluasi);
+            }
+        }
+
         $user = Auth::user();
         $getLembaga = $user->id_lembaga;
 
@@ -102,8 +135,8 @@ class UserController extends Controller
                 ->where('score', NULL)
                 ->where('id_lembaga', $getLembaga);
         })
+        ->where('deadline', '!=',0)
         ->get();
-
 
         $riwayat = Evaluasi::with(['lembaga.user'])->where(function($query) use ($getLembaga) {
             $query->where('status_pengisian', 1)
@@ -117,18 +150,18 @@ class UserController extends Controller
         $score = Evaluasi::with(['lembaga.user'])->where(function($query) use ($getLembaga) {
             $query->where('status_pengisian', 1)
                 ->orWhere('status_pengisian', 2)
-                ->where('score', '!=', NULL)
-                ->where('id_lembaga', $getLembaga);
+                ->where('score', '!=', NULL);
         })
+        ->where('id_lembaga', $getLembaga)
         ->get();
 
         // Score Dokumen
         $scoreDocs = Dokumen::with(['lembaga.user'])->where(function($query) use ($getLembaga) {
             $query->where('status_pengisian', 1)
                 ->orWhere('status_pengisian', 2)
-                ->where('score', '!=', NULL)
-                ->where('id_lembaga', $getLembaga);
+                ->where('score', '!=', NULL);
         })
+        ->where('id_lembaga', $getLembaga)
         ->get();
 
         // total skor dan jumlah temuan per lembaga
@@ -156,12 +189,11 @@ class UserController extends Controller
     public function sendDocs(Request $request, $id){
         try {
             $request->validate([
-                'score' => 'required|integer|min:1|max:276',
+                'score' => 'required|integer|min:0',
             ], [
                 'score.required' => 'Angka harus diisi.',
                 'score.integer' => 'Score anda tidak valid.',
                 'score.min' => 'Score Melewati Angka Minimum.',
-                'score.max' => 'Score Melebihi Angka Maksimal.',
             ]);
 
             $docs = Dokumen::findOrFail($id);

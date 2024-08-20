@@ -87,9 +87,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="container py-2 ms-auto mt-2 me-5">
-                                {{ $riwayat->links() }}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,99 +95,4 @@
     </div>
 </div>
 
-{{-- Modal Detail --}}
-@foreach ($riwayat as $item)
-<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-unstyled">
-              <ul>
-                <h6 class="text-sm py-3">
-                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, DD MMMM YYYY') }} : {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</li> <br>
-                <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
-                <li>Temuan Audit : {{$item->temuan}}</li> <br>
-                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
-                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
-                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
-                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
-                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
-                <li>Status Pengisian :
-                    @if ($item->status_pengisian == 2)
-                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
-                    @else
-                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
-                    @endif
-                </li> <br>
-                <li> Status Dokumen :
-                    @if ($item->status_docs == 1)
-                        <span class="badge badge-sm bg-gradient-danger">Poor</span>
-                    @elseif ($item->status_docs == 2)
-                        <span class="badge badge-sm bg-gradient-warning">Average</span>
-                    @elseif ($item->status_docs == 3)
-                        <span class="badge badge-sm bg-gradient-info">Good</span>
-                    @elseif ($item->status_docs == 4)
-                        <span class="badge badge-sm bg-gradient-success">Excellent</span>
-                    @endif
-                </li><br>
-                <li>Skor Akhir : {{$item->score}}</li>
-                </h6>
-              </ul>
-            </li>
-          </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-@endforeach
 
-
-{{-- {{-- Modal Hapus Riwayat --}}
-@foreach ($riwayat as $item)
-<div class="modal fade" id="hapusModalCenter{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content rounded-0">
-        <div class="modal-body bg-3">
-        <div class="px-3 to-front">
-            <div class="row align-items-center">
-            <div class="col text-right">
-                <a href="#" class="close-btn" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><span class="icon-close2"></span></span>
-                </a>
-            </div>
-            </div>
-        </div>
-        <div class="p-4 to-front">
-            <div class="text-center">
-            <div class="logo">
-                <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
-            </div>
-            <h4>Hapus Temuan Audit</h4>
-            <p class="mb-3 text-sm">Tindakan ini akan menghapus Temuan Audit <b> "{{$item->temuan}}"</b> secara permanen.</p>
-            <form action="/hapusTemuan/{{$item->id}}" class="mb-4" method="POST">
-                @csrf
-                @method('DELETE')
-                <div class="row">
-                <div class="col-6 mt-4">
-                    <button class="btn btn-secondary btn-block" data-dismiss="modal">Batalkan</button>
-                </div>
-                <div class="col-6 mt-4">
-                    <button type="submit" class="btn btn-primary btn-block">Hapus Dokumen</button>
-                </div>
-                </div>
-            </form>
-            <small class="mb-0 cancel"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
-            </div>
-        </div>
-        </div>
-    </div>
-  </div>
-</div>
-@endforeach

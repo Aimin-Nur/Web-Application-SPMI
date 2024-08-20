@@ -101,7 +101,35 @@
             </div>
         </div>
         @else
-        @livewire('superadmin.temuan-table')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="temuanTable" class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tenggat Pengerjaan</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
     </div>
 
@@ -125,7 +153,40 @@
             </div>
         </div>
         @else
-        @livewire('superadmin.riwayat-temuan')
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header col-lg-12 pb-0">
+                            <div class="row mb-3">
+                                <div class="col-8">
+                                   <h6>Riwayat Temuan Audit</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="container">
+                                <div class="table-responsive p-0">
+                                    <table id="history-temuan-table" class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Lembaga</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Temuan & Saran</th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">RTK</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pengisian</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Dokumen</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Skor</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @endif
     </div>
 
@@ -178,8 +239,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex flex-column justify-content-center me-5">
-                                                    <p class="text-lg font-weight-bold text- ms-5 mb-0">{{$item->total_score}}</p>
+                                                <div class="d-flex flex-column justify-content-center me-4">
+                                                    <p class="text-lg font-weight-bold text-secondary ms-4 mb-0">{{$item->total_score}}</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -199,6 +260,112 @@
 
 </div>
 </div>
+
+{{-- Modal Detail --}}
+@foreach ($riwayat as $item)
+<div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-unstyled">
+              <ul>
+                <h6 class="text-sm py-3">
+                <li>Dibuat : {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('dddd, DD MMMM YYYY') }} : {{ \Carbon\Carbon::parse($item->created_at)->format('H:i') }}</li> <br>
+                <li>Dokumen Evaluasi Diri : {{$item->Dokumen->judul ?? '-'}}</li> <br>
+                <li>Temuan Audit : {{$item->temuan}}</li> <br>
+                <li>Rapat Tinjauan Kinerja : {{$item->rtk}}</li> <br>
+                <li>Lembaga : {{$item->lembaga->nama_lembaga}}</li> <br>
+                <li>Admin Lembaga : {{$item->lembaga->user->name}}</li> <br>
+                <li>Deadline Pengerjaan : {{ \Carbon\Carbon::parse($item->deadline)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
+                <li>Diselesaikan oleh lembaga : {{ \Carbon\Carbon::parse($item->tgl_pengumpulan)->locale('id')->translatedFormat('l, d F Y') }}</li> <br>
+                <li>Status Pengisian :
+                    @if ($item->status_pengisian == 2)
+                        <small class="badge badge-sm bg-gradient-success">Selesai</small>
+                    @else
+                    <small class="badge badge-sm bg-gradient-danger">Pending</small>
+                    @endif
+                </li> <br>
+                <li> Status Dokumen :
+                    @if ($item->status_docs == 1)
+                        <span class="badge badge-sm bg-gradient-danger">Poor</span>
+                    @elseif ($item->status_docs == 2)
+                        <span class="badge badge-sm bg-gradient-warning">Average</span>
+                    @elseif ($item->status_docs == 3)
+                        <span class="badge badge-sm bg-gradient-info">Good</span>
+                        @elseif ($item->status_docs == 4)
+                        <span class="badge badge-sm bg-gradient-success">Excellent</span>
+                    @endif
+                </li><br>
+                <li>Skor Akhir : {{$item->score}}</li>
+                </h6>
+              </ul>
+            </li>
+          </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
+
+<script>
+    $(document).ready(function() {
+        var table = $('#temuanTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("temuan-audit-superadmin") }}',
+            columns: [
+                { data: 'lembaga', name: 'lembaga' },
+                { data: 'temuan', name: 'temuan' },
+                { data: 'rtk', name: 'rtk' },
+                { data: 'status_pengisian', name: 'status_pengisian', className: 'text-center' },
+                { data: 'create', name: 'create'},
+                { data: 'deadline', name: 'deadline', className: 'text-center' },
+            ]
+        });
+
+        $('#search-field').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#history-temuan-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("temuan-audit-superadmin") }}',
+                type: 'GET',
+                data: function(d) {
+                    d.history = true;
+                },
+                error: function(xhr, error, thrown) {
+                    console.log('Error:', error);
+                }
+            },
+            columns: [
+                { data: 'lembaga', name: 'lembaga' },
+                { data: 'temuan', name: 'temuan' },
+                { data: 'rtk', name: 'rtk' },
+                { data: 'status_pengisian', name: 'status_pengisian' },
+                { data: 'status_docs', name: 'status_dokumen' },
+                { data: 'score', name: 'score' },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ],
+            language: {
+                processing: "Processing..."
+            }
+        });
+    });
+</script>
 
 
 

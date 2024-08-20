@@ -27,10 +27,28 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Mail\SendDocument;
 use Illuminate\Support\Facades\Mail;
+use Yajra\DataTables\Facades\DataTables;
+use App\Services\Document;
+use App\Services\HistoryDocument;
+use App\Services\Temuan;
+use App\Services\HistoryTemuan;
 
 class AdminController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $dokumenService;
+    protected $historyDocument;
+    protected $temuanService;
+    protected $historyTemuan;
+
+    public function __construct(Document $dokumenService, HistoryDocument $historyDocument, Temuan $temuanService, HistoryTemuan $historyTemuan)
+    {
+        $this->dokumenService = $dokumenService;
+        $this->historyDocument = $historyDocument;
+        $this->temuanService = $temuanService;
+        $this->historyTemuan = $historyTemuan;
+    }
 
     public function index()
     {
@@ -66,20 +84,38 @@ class AdminController extends BaseController
         return view('admin.index', compact('pageTitle','admin', 'lembagaScores','maxScore','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
     }
 
-    public function dokumen (){
+    public function dokumenTest(Request $request)
+    {
+        $dokumensQuery = $this->dokumenService->getDokumens();
+
+        if ($request->ajax()) {
+            return$this->dokumenService->generateDataTable($dokumensQuery);
+        }
+
+        return view('admin.test');
+    }
+
+    public function dokumen(Request $request)
+    {
         $pageTitle = "Dokumen Audit";
         $terlambat = Dokumen::where('status_pengisian', 1)->count();
         $ontime = Dokumen::where('status_pengisian', 2)->count();
 
-        $dokumens = Dokumen::where('status_pengisian', 0 ?? NULL)->get();
+        if ($request->ajax() && $request->has('history')) {
+            return $this->historyDocument->getHistoryDocument();
+        }
 
-        $riwayatDocs = Dokumen::with(['lembaga.user'])
-                        ->where('status_pengisian', 2)
-                        ->orwhere('status_pengisian', 1)
-                        ->get();
+        if ($request->ajax()) {
+            $dokumensQuery = $this->dokumenService->getDokumens();
+            return $this->dokumenService->generateDataTable($dokumensQuery);
+        }
 
-        return view('admin.dokumen', compact('pageTitle','terlambat','ontime','dokumens', 'riwayatDocs'));
+        $riwayatDocs = Dokumen::where('score', '!=', NULL)->get();
+        $dokumens = Dokumen::where('score', NULL)->get();
+
+        return view('admin.dokumen', compact('pageTitle', 'terlambat', 'ontime', 'riwayatDocs', 'dokumens'));
     }
+
 
     public function editStatusDocs(Request $request, $id){
         try {
@@ -111,8 +147,11 @@ class AdminController extends BaseController
     public function editUser(Request $request, $id){
         try {
             $request->validate([
-                'name' => 'required',
+                'name' => 'required|unique:users,name',
                 'email' => 'required|unique:users,email,' . time(),
+            ], [
+                'name.unique' => 'Nama Users Sudah Terdaftar',
+                'email.unique' => 'Email Users Sudah Terdaftar',
             ]);
 
             $user = User::findOrFail($id);
@@ -198,50 +237,32 @@ class AdminController extends BaseController
         }
     }
 
-    // Halaman Temuan Audit
-    public function temuanAudit() {
+    public function temuanAudit(Request $request)
+    {
         $pageTitle = "Temuan Audit";
-        $evaluasi = Evaluasi::where('score', NULL)->get();
 
-        $riwayat = Evaluasi::with(['lembaga.user', 'dokumen'])
-        ->where(function($query) {
-            $query->where('status_pengisian', 2)
-                  ->orWhere('status_pengisian', 1)
-                  ->where('score', '!=', NULL)
-                  ->where('tgl_pengumpulan', '!=', NULL);
-        })->get();
+        if ($request->ajax()) {
+            if ($request->has('history') && $request->get('history')) {
+                $riwayat = $this->historyTemuan->getRiwayat();
+                return $this->historyTemuan->generateDataTable($riwayat);
+            } else {
+                $evaluasi = $this->temuanService->getTemuans();
+                return $this->temuanService->generateDataTable($evaluasi);
+            }
+        }
 
+        $evaluasi = $this->temuanService->getTemuans();
+        $riwayat = $this->historyTemuan->getRiwayat();
+        $score = $this->temuanService->getScores();
+        $skorPerLembaga = $this->temuanService->getScoresPerLembaga();
 
-        $score = Evaluasi::with(['lembaga.user'])
-        ->where(function($query) {
-            $query->where('status_pengisian', 1)
-                ->orWhere('status_pengisian', 2)
-                ->where('score', '!=', NULL);
-        })
-        ->get();
-
-        // total skor dan jumlah temuan per lembaga
-        $skorPerLembaga = Evaluasi::select(
-                'id_lembaga',
-                DB::raw('SUM(score) as total_score'),
-                DB::raw('COUNT(id) as total_temuan')
-            )
-            ->groupBy('id_lembaga')
-            ->with('lembaga.user')
-            ->where('score', '!=', NULL)
-            ->orderBy('total_score', 'desc')
-            ->get();
-
-        // total semua skor dan jumlah temuan
         $totalSkor = $score->sum('score');
         $totalTemuan = Evaluasi::count();
 
-        $minor = Evaluasi::where('status_docs', 1)->count();
-        $major = Evaluasi::where('status_docs', 2)->count();
-        $close = Evaluasi::where('status_docs', 3)->count();
-
-        return view('admin.evaluasi', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
+        return view('admin.evaluasi', compact('pageTitle', 'evaluasi', 'riwayat', 'skorPerLembaga', 'totalSkor', 'totalTemuan'));
     }
+
+
 
     public function formTemuan() {
         $pageTitle = "Form Temuan Audit";
@@ -420,6 +441,12 @@ class AdminController extends BaseController
 
     public function addLaporan(Request $request){
         try {
+
+            $existingLaporan = laporanAudit::where('tautan', $request->input('tautan'))->first();
+            if ($existingLaporan) {
+                return redirect('/laporan')->with('status', 'error')->with('message', 'Tautan Laporan Audit Sudah Terdaftar.');
+            }
+
             $send = new LaporanAudit;
             $send->judul = $request->input('judul');
             $send->tautan = $request->input('tautan');
@@ -445,7 +472,9 @@ class AdminController extends BaseController
         try {
             $request->validate([
                 'laporan' => 'required|',
-                'tautan' => 'required|',
+                'tautan' => 'required|unique:laporan_audit,tautan',
+            ], [
+                'tautan.unique' => 'Link Tautan Sudah Terdaftar',
             ]);
 
             $laporan = laporanAudit::findOrFail($id);
@@ -504,12 +533,19 @@ class AdminController extends BaseController
     }
 
     public function editAuditor(Request $request, $id){
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,PNG,jpg|max:8096',
-        ]);
-
         try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'foto' => 'nullable|image|mimes:jpeg,png,PNG,jpg|max:2096',
+            ], [
+                'nama.required' => 'Nama harus diisi.',
+                'nama.string' => 'Nama harus berupa teks.',
+                'nama.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+                'foto.image' => 'Foto harus berupa gambar.',
+                'foto.mimes' => 'Format foto yang diperbolehkan adalah JPEG, PNG, atau JPG.',
+                'foto.max' => 'Ukuran foto tidak boleh lebih dari 2MB.',
+            ]);
+
             $auditor = Auditor::findOrFail($id);
             $auditor->nama = $request->input('nama');
 

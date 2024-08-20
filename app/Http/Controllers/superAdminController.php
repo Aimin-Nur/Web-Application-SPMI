@@ -21,10 +21,26 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use App\Services\Document;
+use App\Services\HistoryDocument;
+use App\Services\Temuan;
+use App\Services\HistoryTemuan;
 
 class superAdminController extends Controller
 {
-    public function __construct(){
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $dokumenService;
+    protected $historyDocument;
+    protected $temuanService;
+    protected $historyTemuan;
+
+    public function __construct(Document $dokumenService, HistoryDocument $historyDocument, Temuan $temuanService, HistoryTemuan $historyTemuan)
+    {
+        $this->dokumenService = $dokumenService;
+        $this->historyDocument = $historyDocument;
+        $this->temuanService = $temuanService;
+        $this->historyTemuan = $historyTemuan;
         $this->middleware('auth:superadmin');
     }
 
@@ -92,13 +108,18 @@ class superAdminController extends Controller
 
     public function addLembaga(Request $request){
         try {
+            $existingLembaga = Lembaga::where('nama_lembaga', $request->input('filed_lembaga'))->first();
+            if ($existingLembaga) {
+                return redirect('/lembaga')->with('status', 'error')->with('message', 'Lembaga Sudah Terdaftar.');
+            }
+
             $send = new Lembaga;
             $send->nama_lembaga = $request->input('filed_lembaga');
             $send->save();
 
-            return redirect('/lembaga')->with('status', 'success')->with('message', 'Data Lemabaga Berhasil Ditambakan.');
+            return redirect('/lembaga')->with('status', 'success')->with('message', 'Data Lembaga Berhasil Ditambahkan.');
         } catch (\Exception $e) {
-            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menambahakan Data Lembaga' . $e->getMessage());
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Menambahkan Data Lembaga: ' . $e->getMessage());
         }
     }
 
@@ -117,9 +138,15 @@ class superAdminController extends Controller
 
     public function editLembaga(Request $request, $id){
         try {
+
             $request->validate([
                 'nama_lembaga' => 'required',
             ]);
+
+            $existingLembaga = Lembaga::where('nama_lembaga', $request->input('nama_lembaga'))->first();
+            if ($existingLembaga) {
+                return redirect('/lembaga')->with('status', 'error')->with('message', 'Lembaga Sudah Terdaftar.');
+            }
 
             $lembaga = Lembaga::findOrFail($id);
 
@@ -128,7 +155,7 @@ class superAdminController extends Controller
 
             return redirect('/lembaga')->with('status', 'success')->with('message', 'Data Lembaga Berhasil Diedit.');
         } catch (\Exception $e) {
-            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Status Dokumen: ' . $e->getMessage());
+            return redirect('/lembaga')->with('status', 'error')->with('message', 'Gagal Mengubah Status Dokumen: ' . '$e->getMessage()');
         }
     }
 
@@ -155,6 +182,11 @@ class superAdminController extends Controller
             $request->validate([
                 'name' => 'required',
             ]);
+
+            $existingUser = User::where('name', $request->input('name'))->first();
+            if ($existingUser) {
+                return redirect('/user')->with('status', 'error')->with('message', 'Nama User Sudah Terdaftar');
+            }
 
             $user = User::findOrFail($id);
 
@@ -192,7 +224,7 @@ class superAdminController extends Controller
         }
     }
 
-    public function dokumen (){
+    public function dokumen (Request $request){
         $pageTitle = "Dokumen Audit";
         $terlambat = Dokumen::where('status_pengisian', 1)->count();
         $ontime = Dokumen::where('status_pengisian', 2)->count();
@@ -213,11 +245,32 @@ class superAdminController extends Controller
                 ->orWhere('status_pengisian', 3);
         })
         ->count();
+
+        if ($request->ajax()) {
+            $dokumensQuery = $this->dokumenService->getDokumens();
+            return $this->dokumenService->generateDataTable($dokumensQuery);
+        }
+
+        if ($request->ajax() && $request->has('history')) {
+            return $this->historyDocument->getHistoryDocument();
+        }
+
         return view('superadmin.vieDocs', compact('pageTitle','terlambat','ontime','dokumens', 'riwayatDocs', 'countDokumens'));
     }
 
-    public function temuanAudit() {
+    public function temuanAudit(Request $request) {
         $pageTitle = "Temuan Audit";
+
+        if ($request->ajax()) {
+            if ($request->has('history') && $request->get('history')) {
+                $riwayat = $this->historyTemuan->getRiwayat();
+                return $this->historyTemuan->generateDataTable($riwayat);
+            } else {
+                $evaluasi = $this->temuanService->getTemuans();
+                return $this->temuanService->generateDataTable($evaluasi);
+            }
+        }
+
         $evaluasi = Evaluasi::with(['lembaga.user'])->where(function($query) {
             $query->where('status_pengisian', 0)
                 ->orWhere('status_pengisian', 2)
@@ -255,11 +308,7 @@ class superAdminController extends Controller
         $totalSkor = $score->sum('score');
         $totalTemuan = $evaluasi->count();
 
-        $minor = Evaluasi::where('status_docs', 1)->count();
-        $major = Evaluasi::where('status_docs', 2)->count();
-        $close = Evaluasi::where('status_docs', 3)->count();
-
-        return view('superadmin.viewTemuan', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan', 'minor','major','close'));
+        return view('superadmin.viewTemuan', compact('pageTitle','evaluasi', 'riwayat','skorPerLembaga','totalSkor','totalTemuan'));
     }
 
     public function laporanAudit(){
@@ -276,22 +325,53 @@ class superAdminController extends Controller
         return view('superadmin.manageAdmin', compact('getData', 'pageTitle'));
     }
 
-    public function registrasiAdmin(Request $request){
+    public function registrasiAdmin(Request $request)
+    {
         try {
+            $existingAdmin = Admin::where('name', $request->input('name'))->first();
+            $existingEmail = Admin::where('email', $request->input('email'))->first();
+
+            if ($existingAdmin) {
+                return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Administator Sudah Terdaftar.');
+            } elseif ($existingEmail) {
+                return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Email Admin Sudah Terdaftar.');
+            }
+
+            $request->validate([
+                'name' => 'required|string|max:255|unique:admins,name',
+                'email' => 'required|email|max:255|unique:admins,email',
+                'password' => 'required|string|min:8',
+            ]);
+
             $admin = new Admin;
             $admin->name = $request->input('name');
             $admin->email = $request->input('email');
-            $admin->password = Hash::make($request->input('email'));
+            $admin->password = Hash::make($request->input('password'));
             $admin->save();
 
             return redirect('/manageAdmin/superadmin')->with('status', 'success')->with('message', 'Registrasi Admin Berhasil.');
         } catch (\Exception $e) {
-            return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Registrasi Admin' . $e->getMessage());
+            return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Gagal Registrasi Admin: ' . $e->getMessage());
         }
     }
 
+
     public function editAdmin(Request $request, $id){
         try {
+            $existingAdmin = Admin::where('name', $request->input('name'))->first();
+            $existingEmail = Admin::where('email', $request->input('email'))->first();
+
+            if ($existingAdmin) {
+                return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Administator Sudah Terdaftar.');
+            } elseif ($existingEmail) {
+                return redirect('/manageAdmin/superadmin')->with('status', 'error')->with('message', 'Email Admin Sudah Terdaftar.');
+            }
+
+            $request->validate([
+                'name' => 'required|string|max:255|unique:admins,name',
+                'email' => 'required|email|max:255|unique:admins,email',
+            ]);
+
             $admin = Admin::findOrFail($id);
 
             $admin->name = $request->input('name');

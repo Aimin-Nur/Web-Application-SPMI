@@ -44,7 +44,7 @@
             <div class="mb-3 row">
               <label class="col-3 col-form-label required">Tautan Temuan & Saran</label>
               <div class="col">
-                <input name="tautan_temuan" type="text" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/1cvO-luocDUgA9vBxjvKtd76ZSWY9WDeIvwAHj0CmQAA/edit?gid=0#gid=0" /required>
+                <input name="tautan_temuan" type="url" class="form-control" placeholder="https://docs.google.com/spreadsheets/d/1cvO-luocDUgA9vBxjvKtd76ZSWY9WDeIvwAHj0CmQAA/edit?gid=0#gid=0" /required>
                 <small class="form-hint">
                   Masukkan Link Spredsheet Dokumen Anda. Pastikan Dokumen Dapat Diakses Oleh Orang Lain
                 </small>
@@ -86,14 +86,14 @@
 
 <!-- Progress Modal -->
 <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centere4d">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Detail Info</h5>
             </div>
             <div class="modal-body text-center">
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-primary " role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-primary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <p class="mt-3">Sedang memproses, harap tunggu...</p>
             </div>
