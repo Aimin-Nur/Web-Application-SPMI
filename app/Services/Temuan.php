@@ -113,18 +113,17 @@ class Temuan
             ->addColumn('action', function ($row) {
                 if (Auth::guard('admin')->check()) {
                     $edit = '';
-                    $unsend='';
-                    if ($row->status_pengisian == 2) {
+                    $unsend = '';
+                    if (in_array($row->status_pengisian, [1, 2])) {
                         $edit = '<i class="fas fa-pencil-alt ms-3 text-success cursor-pointer" data-toggle="modal" data-target="#editModalCenter' . $row->id . '" title="Edit Status"></i>';
-                        $delete = '<i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter' . $row->id . '" title="Hapus Data"></i>';
-                    }else{
+                    } else {
                         $unsend = '<i class="fas fa-pencil-alt ms-3 text-dark cursor-pointer" data-toggle="modal" data-target="#unsend' . $row->id . '" title="Edit Status"></i>';
-                        $delete = '<i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter' . $row->id . '" title="Hapus Data"></i>';
                     }
                     $delete = '<i class="far fa-trash-alt ms-2 text-danger cursor-pointer" data-toggle="modal" data-target="#hapusModalCenter' . $row->id . '" title="Hapus Data"></i>';
 
-                    return $edit . ' ' . $unsend .' ' . $delete;
+                    return $edit . ' ' . $unsend . ' ' . $delete;
                 }
+
                 return '';
             })
             ->rawColumns(['lembaga', 'temuan', 'rtk', 'status_pengisian', 'create', 'deadline','action'])

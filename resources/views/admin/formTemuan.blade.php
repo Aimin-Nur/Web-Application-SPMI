@@ -3,7 +3,7 @@
 
 <div class="container-fluid py-4">
     <div class="col-lg-12">
-        <form class="card" action="/sendTemuan" method="post" id="formTemuan">
+        <form class="card" action="/sendTemuan" method="post" id="sendDocs">
             @csrf
           <div class="card-header">
             <h5 class="card-title">Data Dokumen</h5>
@@ -123,7 +123,7 @@
                         <h5 class="modal-title" id="resultModalLabel">Dokumen Berhasil Disimpan</h5>
                         <p id="resultMessageSuccess" class="mt-3 text-sm fw-bold text-dark"><b></b></p>
                         <div class="col-12 mt-4">
-                            <button type="button" aria-label="Close" class="btn btn-primary btn-block"><a href="/dokumen" class="text-white">Close</a></button>
+                            <button type="button" aria-label="Close" class="btn btn-primary btn-block"><a href="/temuanAudit" class="text-white">Close</a></button>
                         </div>
                         <small class="mb-0 cancel text-center"><small><i>Sistem Penjaminan Mutu Internal Kalla Institute</i></small></small>
                     </div>
@@ -168,7 +168,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('formTemuan');
+    const form = document.getElementById('sendDocs');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();

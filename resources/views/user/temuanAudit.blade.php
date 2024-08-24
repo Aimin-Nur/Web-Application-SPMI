@@ -321,7 +321,7 @@
                 { data: 'create', name: 'create', orderable: true, searchable: true},
                 { data: 'deadline', name: 'deadline', orderable: true, searchable: true },
                 { data: 'action', name: 'Actions', orderable: true, searchable: true },
-            ]
+            ],
         });
     });
 </script>
@@ -350,9 +350,6 @@
                 { data: 'deadline', name: 'deadline', orderable: true, searchable: false, className : 'text-center'  },
                 { data: 'score', name: 'score', orderable: true, searchable: false }
             ],
-            language: {
-                processing: "Processing..."
-            }
         });
     });
 </script>

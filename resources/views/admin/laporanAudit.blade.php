@@ -236,31 +236,25 @@
    document.addEventListener('DOMContentLoaded', function() {
     const judulLaporanInput = document.getElementById('judulLaporanInput');
     const scoreInput = document.getElementById('scoreInput');
-    const deadlineForm = document.querySelector('.deadline-form'); // Sesuaikan selektor ini sesuai dengan struktur HTML Anda
+    const deadlineForm = document.querySelector('.deadline-form');
 
-    // Fungsi untuk menampilkan input score saat pengguna menulis judul laporan
     function showScoreInput() {
         scoreInput.style.display = 'block';
-        deadlineForm.style.display = 'none'; // Anda mungkin ingin menyesuaikan tampilan form tenggat waktu berdasarkan kebutuhan
+        deadlineForm.style.display = 'none';
     }
 
-    // Mendengarkan peristiwa input pada judul laporan
     judulLaporanInput.addEventListener('input', function() {
         showScoreInput();
     });
 
-    // Fungsi untuk mengatur kembali tampilan input score
     function resetScoreInput() {
         scoreInput.style.display = 'none';
-        scoreInput.value = ''; // Kosongkan nilai score jika diperlukan
+        scoreInput.value = '';
     }
-
-    // Panggil fungsi reset saat halaman dimuat
     resetScoreInput();
 });
+</script>
 
-
- </script>
 
 
 @include('layouts.footer-admin')

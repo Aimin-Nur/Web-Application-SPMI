@@ -263,7 +263,7 @@
             <div class="logo">
                 <img src="{{asset('creative')}}/assets/img/hapus-docs.jpg" alt="img-fluid" class="img-fluid mb-4 w-60">
             </div>
-            <h4>Hapus Dokuemn</h4>
+            <h4>Hapus Dokumen</h4>
             <p class="mb-3 text-sm">Tindakan ini akan menghapus Dokumen <b> "{{$item->judul}}"</b> secara permanen.</p>
             <form action="/hapusDocs/{{$item->id}}" class="mb-4" method="POST">
                 @csrf
@@ -538,7 +538,7 @@
                     },
                     className: 'align-middle'
                 }
-            ]
+            ],
         });
     });
 </script>
@@ -560,7 +560,7 @@
                 { data: 'status_pengisian', name: 'status_pengisian', orderable: false, searchable: false },
                 { data: 'score', name: 'score', orderable: false, searchable: false },
                 { data: 'actions', name: 'actions', orderable: false, searchable: false, width: "10px" }
-            ]
+            ],
         });
         table.columns.adjust().draw();
     });
@@ -577,9 +577,6 @@
             { data: 'nama_lembaga', searchable: true },
             { data: 'judul', searchable: true }
         ];
-        "language": {
-            "processing": ""
-        }
     });
 
     $('.dataTables_processing').html(`

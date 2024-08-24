@@ -360,9 +360,6 @@
                 { data: 'score', name: 'score' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ],
-            language: {
-                processing: "Processing..."
-            }
         });
     });
 </script>

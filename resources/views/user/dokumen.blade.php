@@ -137,7 +137,7 @@
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="container">
                             <div class="table-responsive p-0">
-                                <table id="historyTable" class="table align-items-center mb-0">
+                                <table id="historyTable" class="table align-items-center mb-0 w-100">
                                     <thead>
                                         <tr>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dokumen</th>
@@ -240,10 +240,10 @@ $(document).ready(function() {
             },
             type : 'GET',
             columns: [
-                { data: 'dokumen', name: 'judul', orderable: true, searchable: true },
+                { data: 'dokumen', name: 'judul', orderable: true, searchable: true},
                 { data: 'status_pengisian', name: 'status_pengisian', orderable: false, searchable: false, className: 'text-center' },
                 { data: 'score', name: 'score', orderable: true, searchable: false, className: 'text-center' },
-                { data: 'tautan', name: 'tautan', orderable: false, searchable: false, className: 'text-center' }
+                { data: 'tautan', name: 'tautan', orderable: false, searchable: false, className: 'text-center'}
             ]
         });
         table.columns.adjust().draw();

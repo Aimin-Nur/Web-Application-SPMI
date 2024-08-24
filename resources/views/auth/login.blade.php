@@ -9,6 +9,8 @@
             <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
+                  <img class="mb-3" src="{{asset('creative')}}/assets/img/spmi.png" alt="SPMI Kalla Institute"
+                                width="100">
                   <h3 class="font-weight-bolder text-info text-primary">Selamat Datang</h3>
                   <p class="mb-0">Easy Way to Access SPMI Kalla Business School</p>
                 </div>
@@ -58,31 +60,32 @@
                     <a href="{{ route('password.request') }}" class="text-info text-primary font-weight-bold">Send email</a>
                   </p>
                 </div>
+                <footer class="footer">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12 mx-auto text-center mt-1">
+                          <p class="mb-5 text-secondary">
+                            Copyright © <b>ICT Kalla Institute <script>
+                              document.write(new Date().getFullYear())
+                            </script></b>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                </footer>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{asset('creative')}}/assets/img/curved-images/login-page.png')"></div>
-              </div>
+              <div class="col-md-6">
+                <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                    <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n30"
+                        style="background-image:url('{{asset('creative/assets/img/curved-images/sampul.jpg')}}')"></div>
+                </div>
             </div>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-8 mx-auto text-center mt-1">
-          <p class="mt-5 text-secondary">
-            Copyright © <script>
-              document.write(new Date().getFullYear())
-            </script> <a href="https://aiminnur.vercel.app/home">Angkatan 3 Sistem Informasi - Kalla Institute.</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
 </body>
 
 </html>

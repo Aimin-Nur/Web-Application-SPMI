@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="{{asset('creative')}}/assets/css/font-awesome.css">
 <link href="{{asset('creative')}}/assets/css/nucleo-svg.css" rel="stylesheet" />
 <link id="pagestyle" href="{{asset('creative')}}/assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
-<link href="https://cdn.datatables.net/v/bs5/dt-1.13.8/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/r-2.5.0/sc-2.3.0/datatables.min.css"rel="stylesheet" />
+<link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.0.1/af-2.7.0/b-3.0.0/b-colvis-3.0.0/b-html5-3.0.0/b-print-3.0.0/cr-2.0.0/date-1.5.2/fc-5.0.0/kt-2.12.0/r-3.0.0/rg-1.5.0/rr-1.5.0/sc-2.4.0/sb-1.7.0/sp-2.3.0/sl-2.0.0/sr-1.4.0/datatables.min.css"rel="stylesheet" />
 <link id="pagestyle" href="{{asset('creative')}}/assets/css/custom.css" rel="stylesheet" />
 <style>
     #ofBar {
@@ -82,6 +82,26 @@
       opacity: 0 !important
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var forms = document.querySelectorAll('form');
+        var excludedFormId = 'sendDocs';
+
+        forms.forEach(function(form) {
+            if (form.id !== excludedFormId) {
+                var submitBtn = form.querySelector('[type="submit"]');
+                if (submitBtn) {
+                    form.addEventListener('submit', function(event) {
+                        submitBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
+                        submitBtn.classList.add('disabled');
+                        submitBtn.setAttribute('type', 'button');
+                    });
+                }
+            }
+        });
+    });
+</script>
 
 
 <script>

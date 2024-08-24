@@ -4,7 +4,7 @@
 
 <div class="container-fluid py-4">
     <div class="col-lg-12">
-        <form class="card" action="/sendDokumen" method="post" id="form">
+        <form class="card" action="/sendDokumen" method="post" id="sendDocs">
             @csrf
             <div class="card-header">
                 <h5 class="card-title">Data Dokumen</h5>
@@ -136,7 +136,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('form');
+    const form = document.getElementById('sendDocs');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
