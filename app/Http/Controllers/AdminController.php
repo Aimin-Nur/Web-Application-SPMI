@@ -26,6 +26,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Mail\SendDocument;
+use App\Mail\SendTemuan;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 use App\Services\Document;
@@ -213,17 +214,17 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                Mail::to($user->email)->send(new SendDocument($user->email, $send->judul, $send->deadline));
+                // Kirim email ke setiap pengguna
+                SendDokumenEmail::dispatch($user->email, $user->deadline, $user->judul);
             }
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Dokumen berhasil ditambahkan dan email notifikasi sudah dikirim.',
-            ]);
+            return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Gagal menambahkan dokumen: ' . $e->getMessage(),
-            ]);
+            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Gagal menambahkan dokumen: ' . $e->getMessage(),
+        //     ]);
         }
     }
 
@@ -322,7 +323,7 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                Mail::to($user->email)->send(new SendDocument($user->email, $send->temuan, $send->deadline));
+                Mail::to($user->email)->send(new SendTemuan($user->email, $send->temuan, $send->deadline, $send->rtk));
             }
 
             return response()->json([

@@ -103,6 +103,7 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::post('/addAuditor', [superAdminController::class, 'addAuditor']);
     Route::DELETE('/hapusAuditor/superadmin/{id}', [superAdminController::class, 'hapusAuditor']);
     Route::put('/editAuditor/superadmin/{id}', [superAdminController::class, 'editAuditor']);
+
 });
 
 

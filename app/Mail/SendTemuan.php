@@ -18,7 +18,7 @@ class SendTemuan extends Mailable
 
     public function build()
     {
-        return $this->subject('Temuan Audit : ' . $this->rtk . ' - Deadline: ' . $this->deadline. '- PTK: ' . $this->rtk)
+        return $this->subject('Temuan Audit SPMI')
                     ->view('emails.temuan_dikirim')
                     ->with([
                         'email' => $this->email,

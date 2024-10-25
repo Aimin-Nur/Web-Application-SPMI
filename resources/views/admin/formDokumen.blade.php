@@ -4,7 +4,7 @@
 
 <div class="container-fluid py-4">
     <div class="col-lg-12">
-        <form class="card" action="/sendDokumen" method="post" id="sendDocs">
+        <form class="card" action="/sendDokumen" method="post">
             @csrf
             <div class="card-header">
                 <h5 class="card-title">Data Dokumen</h5>
@@ -134,7 +134,7 @@
 </div>
 
 
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('sendDocs');
 
@@ -209,7 +209,7 @@
         });
     });
 });
-</script>
+</script> --}}
 
 @include('layouts.footer-admin')
 @include('layouts.script-admin')

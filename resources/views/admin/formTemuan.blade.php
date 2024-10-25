@@ -69,7 +69,7 @@
             <div class="mb-3 row">
                 <label class="col-3 col-form-label">Deadline Pengerjaan</label>
                 <div class="col">
-                  <input class="form-control" type="date" name="deadline" placeholder="3 Hari" /required>
+                  <input class="form-control" type="date" name="deadline" placeholder="12/02/2024" /required>
                   <small class="form-hint">
                       Tentukan Tanggal Deadline Pengerjaan Dokumen Lembaga.
                   </small>
@@ -193,7 +193,9 @@
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.json().then(err => {
+                    throw new Error(err.message || 'Koneksi Internet Lemah, Silahkan Coba Lagi beberapa saat kemudian.');
+                });
             }
             return response.json();
         })
@@ -226,7 +228,7 @@
                     keyboard: false
                 });
 
-                document.getElementById('resultMessageFail').textContent = data.message || 'An error occurred';
+                document.getElementById('resultMessageFail').textContent = data.message || 'Terjadi kesalahan, silakan coba lagi.';
                 failModal.show();
             }
         })
@@ -242,6 +244,8 @@
     });
 });
 </script>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
