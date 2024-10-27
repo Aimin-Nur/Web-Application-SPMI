@@ -13,6 +13,7 @@ use Carbon\Carbon;
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    
     protected $table = "admin";
     protected $primaryKey = 'id';
     public $incrementing = false;

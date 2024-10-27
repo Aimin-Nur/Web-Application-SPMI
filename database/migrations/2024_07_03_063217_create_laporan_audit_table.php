@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('laporan_audit', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('judul');
-            $table->string('tautan');
+            $table->string('judul', 255);
+            $table->string('tautan', 255);
             $table->timestamps();
         });
+
     }
 
     /**

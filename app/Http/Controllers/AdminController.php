@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Lembaga;
 use App\Models\Dokumen;
 use App\Models\Evaluasi;
@@ -82,7 +83,7 @@ class AdminController extends BaseController
         $countLaporan = LaporanAudit::count();
         $countAuditor = Auditor::count();
 
-        return view('admin.index', compact('pageTitle','admin', 'lembagaScores','maxScore','radar','countUser','countLembaga','countDocs','countTemuan','countLaporan','countAuditor'));
+        return view('admin.index', compact('pageTitle', 'admin', 'lembagaScores', 'maxScore', 'radar', 'countUser', 'countLembaga', 'countDocs', 'countTemuan', 'countLaporan', 'countAuditor'));
     }
 
     public function dokumenTest(Request $request)
@@ -90,7 +91,7 @@ class AdminController extends BaseController
         $dokumensQuery = $this->dokumenService->getDokumens();
 
         if ($request->ajax()) {
-            return$this->dokumenService->generateDataTable($dokumensQuery);
+            return $this->dokumenService->generateDataTable($dokumensQuery);
         }
 
         return view('admin.test');
@@ -118,7 +119,8 @@ class AdminController extends BaseController
     }
 
 
-    public function editStatusDocs(Request $request, $id){
+    public function editStatusDocs(Request $request, $id)
+    {
         try {
             $request->validate([
                 'status' => 'required|in:1,2,3',
@@ -139,13 +141,15 @@ class AdminController extends BaseController
         }
     }
 
-    public function displayUser() {
+    public function displayUser()
+    {
         $pageTitle = "Manage User";
         $getData = User::with('lembaga')->get();
-        return view('admin.displayUser', compact('pageTitle','getData'));
+        return view('admin.displayUser', compact('pageTitle', 'getData'));
     }
 
-    public function editUser(Request $request, $id){
+    public function editUser(Request $request, $id)
+    {
         try {
             $request->validate([
                 'name' => 'required|unique:users,name',
@@ -168,7 +172,8 @@ class AdminController extends BaseController
     }
 
 
-    public function hapusUser($id){
+    public function hapusUser($id)
+    {
         try {
             $user = User::findOrFail($id);
             $user->delete();
@@ -179,10 +184,11 @@ class AdminController extends BaseController
         }
     }
 
-    public function formDokumen() {
+    public function formDokumen()
+    {
         $pageTitle = "Form Dokumen";
         $getData = Lembaga::has('user')->with('user')->get();
-        return view('admin.formDokumen', compact('pageTitle','getData'));
+        return view('admin.formDokumen', compact('pageTitle', 'getData'));
     }
 
     public function addDokumen(Request $request)
@@ -214,21 +220,22 @@ class AdminController extends BaseController
 
             $users = User::where('id_lembaga', $request->input('id_lembaga'))->get();
             foreach ($users as $user) {
-                // Kirim email ke setiap pengguna
-                SendDokumenEmail::dispatch($user->email, $user->deadline, $user->judul);
+                Mail::to($user->email)->send(new SendDocument($user->email, $send->judul, $send->deadline));
             }
-            return redirect('/dokumen')->with('status', 'success')->with('message', 'Dokumen Berhasil Ditambakan.');
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dokumen berhasil ditambahkan dan email notifikasi sudah dikirim.',
+            ]);
         } catch (\Exception $e) {
-            return redirect('/dokumen')->with('status', 'error')->with('message', 'Gagal Menambahkan Dokumen: ' . $e->getMessage());
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Gagal menambahkan dokumen: ' . $e->getMessage(),
-        //     ]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal menambahkan dokumen: ' . $e->getMessage(),
+            ]);
         }
     }
 
-    public function hapusDokumen($id){
+    public function hapusDokumen($id)
+    {
         try {
             $dokumen = Dokumen::findOrFail($id);
             $dokumen->delete();
@@ -265,20 +272,21 @@ class AdminController extends BaseController
 
 
 
-    public function formTemuan() {
+    public function formTemuan()
+    {
         $pageTitle = "Form Temuan Audit";
         $evaluatedDokumenIds = Evaluasi::pluck('id_docs')->toArray();
 
         $getData = Lembaga::whereHas('dokumen', function ($query) use ($evaluatedDokumenIds) {
-                    $query->whereIn('status_pengisian', [1, 2])
-                          ->whereNotIn('id', $evaluatedDokumenIds);
-                })->with(['dokumen' => function ($query) use ($evaluatedDokumenIds) {
-                    $query->whereIn('status_pengisian', [1, 2])
-                          ->whereNotIn('id', $evaluatedDokumenIds);
-                }])
-                ->get();
+            $query->whereIn('status_pengisian', [1, 2])
+                ->whereNotIn('id', $evaluatedDokumenIds);
+        })->with(['dokumen' => function ($query) use ($evaluatedDokumenIds) {
+            $query->whereIn('status_pengisian', [1, 2])
+                ->whereNotIn('id', $evaluatedDokumenIds);
+        }])
+            ->get();
 
-            return view('admin.formTemuan', compact('pageTitle','getData'));
+        return view('admin.formTemuan', compact('pageTitle', 'getData'));
     }
 
     public function addTemuan(Request $request)
@@ -340,7 +348,8 @@ class AdminController extends BaseController
 
 
 
-    public function editTemuan(Request $request, $id){
+    public function editTemuan(Request $request, $id)
+    {
         try {
             $request->validate([
                 'score' => 'required|integer|min:0',
@@ -364,7 +373,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function hapusTemuan($id){
+    public function hapusTemuan($id)
+    {
         try {
             $temuan = Evaluasi::findOrFail($id);
             $temuan->delete();
@@ -375,7 +385,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function displayRTM(){
+    public function displayRTM()
+    {
         $getData = RTM::with(['lembaga.user'])->get();
 
         $count = RTM::count();
@@ -383,17 +394,19 @@ class AdminController extends BaseController
             $query->where('status_docs', 2);
         })->with('dokumen')->get();
 
-        return view('admin.rtm', compact('getData','count', 'getLembaga'));
+        return view('admin.rtm', compact('getData', 'count', 'getLembaga'));
     }
 
-    public function addRTM(){
+    public function addRTM()
+    {
         $getLembaga = Lembaga::whereHas('dokumen', function ($query) {
             $query->where('status_docs', 2);
         })->with('dokumen')->get();
         return view('admin.addRTM', compact('getLembaga'));
     }
 
-    public function postRTM(Request $request){
+    public function postRTM(Request $request)
+    {
         try {
             $send = new RTM;
             $send->tgl_rapat = $request->input('selectedDate');
@@ -408,7 +421,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function hapusRTM($id){
+    public function hapusRTM($id)
+    {
         try {
             $rtm = RTM::findOrFail($id);
             $rtm->delete();
@@ -418,7 +432,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function editRTM(Request $request, $id) {
+    public function editRTM(Request $request, $id)
+    {
         try {
             $rtm = RTM::findOrFail($id);
 
@@ -434,13 +449,15 @@ class AdminController extends BaseController
     }
 
 
-    public function laporanAudit(){
+    public function laporanAudit()
+    {
         $pageTitle = "Laporan";
         $getData = LaporanAudit::get();
-        return view('admin.laporanAudit', compact('pageTitle','getData'));
+        return view('admin.laporanAudit', compact('pageTitle', 'getData'));
     }
 
-    public function addLaporan(Request $request){
+    public function addLaporan(Request $request)
+    {
         try {
 
             $existingLaporan = laporanAudit::where('tautan', $request->input('tautan'))->first();
@@ -459,7 +476,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function hapusLaporan($id) {
+    public function hapusLaporan($id)
+    {
         try {
             $laporan = laporanAudit::findOrFail($id);
             $laporan->delete();
@@ -469,7 +487,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function editLaporan(Request $request, $id){
+    public function editLaporan(Request $request, $id)
+    {
         try {
             $request->validate([
                 'laporan' => 'required|',
@@ -490,13 +509,15 @@ class AdminController extends BaseController
         }
     }
 
-    public function auditor(){
+    public function auditor()
+    {
         $pageTitle = "Auditor";
         $getData = Auditor::get();
-        return view('admin.auditor', compact('pageTitle','getData'));
+        return view('admin.auditor', compact('pageTitle', 'getData'));
     }
 
-    public function addAuditor(Request $request){
+    public function addAuditor(Request $request)
+    {
         try {
             $request->validate([
                 'nama' => 'required|string|max:255',
@@ -521,19 +542,20 @@ class AdminController extends BaseController
         }
     }
 
-    public function hapusAuditor($id){
+    public function hapusAuditor($id)
+    {
         try {
             $auditor = Auditor::findOrFail($id);
             $auditor->delete();
 
             return redirect('/auditor')->with('status', 'success')->with('message', 'Auditor Berhasil Dihapus.');
-
         } catch (\Exception $e) {
             return redirect('/auditor')->with('status', 'error')->with('message', 'Gagal Menghapus Auditor: ' . $e->getMessage());
         }
     }
 
-    public function editAuditor(Request $request, $id){
+    public function editAuditor(Request $request, $id)
+    {
         try {
             $request->validate([
                 'nama' => 'required|string|max:255',
@@ -565,7 +587,8 @@ class AdminController extends BaseController
         }
     }
 
-    public function profile(Request $request, $tab = null){
+    public function profile(Request $request, $tab = null)
+    {
         $admin = Auth::guard('admin')->user();
         $name = $admin->name;
         $email = $admin->email;
@@ -584,7 +607,7 @@ class AdminController extends BaseController
 
     public function updatePassword(Request $request): RedirectResponse
     {
-        try{
+        try {
             $request->validate([
                 'current_password' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -602,14 +625,31 @@ class AdminController extends BaseController
                 'password' => Hash::make($request->password),
             ])->save();
 
-                return redirect('/profile/admin')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
-            } catch (\Exception $e) {
-                return redirect('/profile/admin')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());
+            return redirect('/profile/admin')->with('status', 'success')->with('message', 'Password Berhasil Diubah.');
+        } catch (\Exception $e) {
+            return redirect('/profile/admin')->with('status', 'error')->with('message', 'Gagal Mengubah Password: ' . $e->getMessage());
         }
     }
 
 
+    public function updateProfile(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'name' => ['required', 'string'],
+                'email' => ['required', 'string', 'email', 'unique:admin,email,' . auth()->id()],
+            ]);
 
+            $admin = Admin::findOrFail($id);
 
+            // Update data user
+            $admin->name = $request->input('name');
+            $admin->email = $request->input('email');
+            $admin->save();
 
+            return redirect('/profile/admin')->with('status', 'success')->with('message', 'Profil berhasil diubah.');
+        } catch (\Exception $e) {
+            return redirect('/profile/admin')->with('status', 'error')->with('message', 'Gagal Mengubah Profil: ' . $e->getMessage());
+        }
+    }
 }

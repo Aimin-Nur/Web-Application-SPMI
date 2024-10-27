@@ -62,6 +62,7 @@ class HistoryTemuan
             ->make(true);
         }
 
+        if (Auth::guard('admin')->check()) {
             return DataTables::of($query)
             ->addColumn('lembaga', function($row) {
                 return $this->generateLembagaColumn($row);
@@ -86,6 +87,7 @@ class HistoryTemuan
             })
             ->rawColumns(['lembaga', 'temuan', 'rtk', 'status_pengisian', 'status_docs', 'score','action'])
             ->make(true);
+        }
     }
 
     private function generateLembagaColumn($row)

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name', 255);
+            $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password', 255);
             $table->uuid('id_lembaga')->nullable();
-            $table->rememberToken();
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
 
             $table->foreign('id_lembaga')->references('id')->on('lembaga')->onDelete('cascade');

@@ -75,6 +75,10 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::put('/editAuditor/{id}', [AdminController::class, 'editAuditor']);
 
     Route::get('/profile/admin/{tab?}', [AdminController::class, 'profile'])->name('profile.admin');
+
+    Route::patch('/profile/admin/{id}', [AdminController::class, 'updateProfile'])->name('profile.update.admin');
+    Route::delete('/profile/admin', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::put('/gantiPassword/{id}', [AdminController::class, 'updatePassword'])->name('password.update.admin');
 
     Route::post('/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
@@ -105,7 +109,6 @@ Route::middleware(['auth:superadmin', 'verified'])->group(function () {
     Route::put('/editAuditor/superadmin/{id}', [superAdminController::class, 'editAuditor']);
 
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

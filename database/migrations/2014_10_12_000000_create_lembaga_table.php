@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('lembaga', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama_lembaga');
+            $table->string('nama_lembaga', 255);
             $table->timestamps();
         });
     }

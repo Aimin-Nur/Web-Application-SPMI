@@ -338,15 +338,14 @@ class superAdminController extends Controller
             }
 
             $request->validate([
-                'name' => 'required|string|max:255|unique:admins,name',
-                'email' => 'required|email|max:255|unique:admins,email',
-                'password' => 'required|string|min:8',
+                'name' => 'required|string|max:255|unique:admin,name',
+                'email' => 'required|email|max:255|unique:admin,email',
             ]);
 
             $admin = new Admin;
             $admin->name = $request->input('name');
             $admin->email = $request->input('email');
-            $admin->password = Hash::make($request->input('password'));
+            $admin->password = Hash::make($request->input('email'));
             $admin->save();
 
             return redirect('/manageAdmin/superadmin')->with('status', 'success')->with('message', 'Registrasi Admin Berhasil.');

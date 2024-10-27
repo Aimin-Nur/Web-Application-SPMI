@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('RTM', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('id_lembaga');
-            $table->string('tgl_rapat');
-            $table->string('tempat');
-            $table->string('status');
+            $table->string('tgl_rapat', 255);
+            $table->string('tempat', 255);
+            $table->string('status', 255);
             $table->timestamps();
 
             // Foreign key constraint

@@ -83,7 +83,7 @@ class Temuan
                 <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm">' . $row->temuan . '</h6>
-                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="' . $row->tautan . '"><i class="fa fa-external-link ' . $linkClass . '" aria-hidden="true"></a></i></small>
+                        <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="' . $row->tautan_temuan . '"><i class="fa fa-external-link ' . $linkClass . '" aria-hidden="true"></a></i></small>
                     </div>
                 </div>';
             })
@@ -140,7 +140,7 @@ class Temuan
                     <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">' . $row->temuan . '</h6>
-                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="' . $row->tautan . '"><i class="fa fa-external-link ' . $linkClass . '" aria-hidden="true"></a></i></small>
+                            <small class="text-xs text-secondary mt-2">Link Dokumen : <a href="' . $row->tautan_temuan . '"><i class="fa fa-external-link ' . $linkClass . '" aria-hidden="true"></a></i></small>
                         </div>
                     </div>
                 </td>';

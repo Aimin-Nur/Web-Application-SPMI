@@ -15,13 +15,15 @@ return new class extends Migration
     {
         Schema::create('dokumen', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('judul');
-            $table->string('tautan')->unique();
-            $table->string('status_pengisian');
-            $table->integer('deadline');
+            $table->string('judul', 255);
+            $table->string('tautan', 255);
+            $table->string('status_pengisian', 255);
+            $table->date('deadline');
             $table->uuid('id_lembaga');
-            $table->string('status_docs');
+            $table->string('status_docs', 255);
             $table->timestamps();
+            $table->integer('score')->nullable();
+            $table->date('tgl_pengumpulan')->nullable();
 
             $table->foreign('id_lembaga')->references('id')->on('lembaga')->onDelete('cascade');
         });

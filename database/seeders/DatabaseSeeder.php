@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Superadmin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +23,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        Superadmin::create([
+            'name' => 'Superadmin ICT',
+            'email' => 'ict@kallabs.ac.id',
+            'password'  => Hash::make('password'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

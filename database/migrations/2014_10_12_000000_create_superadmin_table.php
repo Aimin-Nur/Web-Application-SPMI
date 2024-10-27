@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('superadmin', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('password', 255);
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
         });
     }
